@@ -6,6 +6,7 @@
 
 body {
   margin: 0;
+  font-family: "Montserrat", sans-serif;
 }
 
 h1,
@@ -55,4 +56,74 @@ img {
   block-size: 1px;
   clip-path: inset(50%);
   white-space: nowrap;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: Montserrat;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: 32px;
+  line-height: 150%;
+  /* letter-spacing: 18%; */
+  letter-spacing: 5.76px;
+}
+
+h2 {
+  font-size: 24px;
+  line-height: 152%;
+  letter-spacing: 16%;
+}
+
+h3 {
+  font-size: 16px;
+  line-height: 152%;
+  letter-spacing: 8%;
+}
+
+h4 {
+  font-size: 12px;
+  line-height: 130%;
+  letter-spacing: 5%;
+}
+
+p {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 148%;
+}
+
+.action-large {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 152%;
+  letter-spacing: 16%;
+  text-transform: uppercase;
+}
+
+.action-small {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 130%;
+  letter-spacing: 5%;
+  text-transform: uppercase;
+}
+
+.caption {
+  font-family: "Allura", cursive;
+  font-size: 24px;
+  line-height: 100%;
+  /* letter-spacing: 5%; */
+  letter-spacing: 1.2px;
+}
+
+.slider-text {
+  font-weight: 600;
+  font-size: 80px;
+  text-transform: uppercase;
 }

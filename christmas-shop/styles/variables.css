@@ -1,0 +1,13 @@
+:root {
+  --primary: #ff4646;
+  --primary-alpha: rgba(255, 70, 70, 0.1);
+  --dark: #181c29;
+  --static-white: #ffffff;
+  --static-white-four: rgba(255, 255, 255, 0.4);
+  --static-white-two: rgba(255, 255, 255, 0.2);
+  --tag-purple: #4361ff;
+  --tag-pink: #ff43f7;
+  --tag-green: #06a44f;
+  --content-bc: #ecf3f8;
+  --overlay: rgba(24, 28, 41, 0.8);
+}
