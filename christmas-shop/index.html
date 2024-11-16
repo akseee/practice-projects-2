@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>christmas-shop</title>
+    <link rel="icon" href="./assets/snowflake.ico" sizes="any" />
+    <link rel="icon" href="./assets/snowflake.svg" type="image/svg+xml" />
+
+    <link rel="stylesheet" href="fonts/fonts.css" />
+    <link rel="stylesheet" href="styles/variables.css" />
+    <link rel="stylesheet" href="styles/global.css" />
+    <link rel="stylesheet" href="styles/styles.css" />
+  </head>
+  <body class="page">
+    <div class="overlay visually-hidden" id="overlay"></div>
+    <header class="header">
+      <div class="header__content container">
+        <a class="header__logo" href="../index.html">
+          <svg viewBox="0 0 24 24">
+            <use href="./assets/snowflake.svg#snowflake"></use>
+          </svg>
+          <span class="header__logo-text">The gifts</span>
+        </a>
+        <nav class="header__nav">
+          <ul class="header__nav-list">
+            <li class="header__nav-item">
+              <a class="header__nav-link" href="./pages/toys.html">Gifts</a>
+            </li>
+            <li class="header__nav-item">
+              <a class="header__nav-link" href="#about">About</a>
+            </li>
+            <li class="header__nav-item">
+              <a class="header__nav-link" href="#special">Best</a>
+            </li>
+            <li class="header__nav-item">
+              <a class="header__nav-link" href="#footer">Contacts</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main class="main">
+      <section class="hero section">
+        <div class="hero__content container">
+          <div class="content">
+            <p class="hero__caption caption">Merry Christmas</p>
+            <h1 class="hero__title">
+              Gift yourself the magic of new possibilities
+            </h1>
+            <a
+              href="./pages/toys.html"
+              class="hero__button button action-small"
+            >
+              Explore Magical Gifts
+            </a>
+            <p class="hero__caption caption">and Happy New Year</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="about section">
+        <div class="about__content container">
+          <div class="content">
+            <div class="about__article__content">
+              <article class="about__article">
+                <p class="about__caption caption">About</p>
+                <h2 class="about__title">Unleash your inner superhero!</h2>
+                <p class="about__text">
+                  This New Year marks the beginning of your journey to inner
+                  harmony and new strengths. We offer unique gifts that will
+                  help you improve your life.
+                </p>
+              </article>
+            </div>
+            <img
+              class="about__image"
+              src="./assets/santa.png"
+              alt="Santa and snowman"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section id="slider" class="slider section">
+        <div class="slider__content container">
+          <div class="content">
+            <div class="slider__header">
+              <p class="slider__caption caption">Become Happier!</p>
+              <h2 class="slider__title">in the new 2025</h2>
+            </div>
+            <ul class="slider__list">
+              <li class="slider__item">
+                <h3 class="slider-text">Live</h3>
+              </li>
+              <li class="slider__item">
+                <img
+                  class="slider__image"
+                  src="./assets/snowman.png"
+                  alt="snowman"
+                />
+              </li>
+              <li class="slider__item">
+                <h3 class="slider-text">Create</h3>
+              </li>
+              <li class="slider__item">
+                <img
+                  class="slider__image"
+                  src="./assets/christmas-trees.png"
+                  alt="trees"
+                />
+              </li>
+              <li class="slider__item">
+                <h3 class="slider-text">Love</h3>
+              </li>
+              <li class="slider__item">
+                <img
+                  class="slider__image"
+                  src="./assets/christmas-tree-ball.png"
+                  alt="tree-ball"
+                />
+              </li>
+              <li class="slider__item">
+                <h3 class="slider-text">Dream</h3>
+              </li>
+              <li class="slider__item">
+                <img
+                  class="slider__image"
+                  src="./assets/fairytale-house.png"
+                  alt="snowman"
+                />
+              </li>
+            </ul>
+            <div class="slider__controls">
+              <button
+                class="slider__button arrow-left control-inactive"
+                type="button"
+              >
+                <svg viewBox="0 0 24 24">
+                  <use href="./assets/arrow-left.svg#arrow-left"></use>
+                </svg>
+              </button>
+              <button
+                class="slider__button arrow-right control-active"
+                type="button"
+              >
+                <svg viewBox="0 0 24 24">
+                  <use href="./assets/arrow-right.svg#arrow-right"></use>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="special" class="special section">
+        <div class="special__content container">
+          <div class="content">
+            <div class="special__header">
+              <p class="special__caption caption">Best Gifts</p>
+              <h2 class="special__title">especially for you</h2>
+            </div>
+            <ul class="special__list">
+              <li class="special__list-item">
+
+                  <div class="special__image">
+                    <img src="./assets/gift-for-work.png" alt="gift for work" />
+                  </div>
+                  <div class="special__item-header">
+                    <h4 class="special__subtitle green">For work</h4>
+                    <h3 class="special__description">Console.log Guru</h3>
+
+              </li>
+              <li class="special__list-item">
+
+                  <div class="special__image">
+                    <img
+                      src="./assets/gift-for-health.png"
+                      alt="gift for work"
+                    />
+                  </div>
+                  <div class="special__item-header">
+                    <h4 class="special__subtitle green purple">For health</h4>
+                    <h3 class="special__description">Hydration Bot</h3>
+                  </div>
+
+              </li>
+              <li class="special__list-item">
+
+                  <div class="special__image">
+                    <img src="./assets/gift-for-work.png" alt="gift for work" />
+                  </div>
+                  <div class="special__item-header">
+                    <h4 class="special__subtitle green">For work</h4>
+                    <h3 class="special__description">Merge Master</h3>
+                  </div>
+
+              </li>
+              <li>
+                <a href="#" class="special__list-item">
+                  <div class="special__image">
+                    <img
+                      src="./assets/gift-for-harmony.png"
+                      alt="gift for work"
+                    />
+                  </div>
+                  <div class="special__item-header">
+                    <h4 class="special__subtitle pink">For harmony</h4>
+                    <h3 class="special__description">
+                      Spontaneous Coding Philosopher
+                    </h3>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="timer" class="timer section">
+        <div class="timer__content container">
+          <div class="content">
+            <h2 class="timer__title">
+              Ready to start your journey to a better version of yourself?
+            </h2>
+            <button class="timer__button button action-small" type="button">
+              Explore Magical Gifts
+            </button>
+
+            <div class="timer__container">
+              <p class="timer__caption caption">
+                The New Year is Coming Soon...
+              </p>
+              <ul class="timer__list">
+                <li class="timer__item timer__item--days">
+                  <h2 class="timer__value">47</h2>
+                  <h4 class="timer__label">days</h4>
+                </li>
+                <li class="timer__item timer__item--hours">
+                  <h2 class="timer__value">5</h2>
+                  <h4 class="timer__label">hours</h4>
+                </li>
+                <li class="timer__item timer__item--minutes">
+                  <h2 class="timer__value">34</h2>
+                  <h4 class="timer__label">minutes</h4>
+                </li>
+                <li class="timer__item timer__item--seconds">
+                  <h2 class="timer__value">12</h2>
+                  <h4 class="timer__label">seconds</h4>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer id="footer" class="footer section">
+      <div class="footer__content container">
+        <div class="content">
+          <ul class="footer__contacts-list">
+            <li class="footer__contacts-item">
+              <a class="contact" href="tel:+375-29-111-22-33">
+                <div>
+                  <svg viewBox="0 0 81 80">
+                    <use href="./assets/santa-claus.svg#santa-claus"></use>
+                  </svg>
+                </div>
+                <p class="footer__text action-large">+375 (29) 111-22-33</p>
+                <h3 class="footer__title">Call Us</h3>
+              </a>
+            </li>
+            <li class="footer__contacts-item">
+              <a
+                class="contact"
+                href="https://www.google.com/maps/place/1+Central+St,+Manchester+M2+5WR,+UK/data=!4m2!3m1!1s0x487bb1c216961535:0xc1551b68a0371bae?sa=X&ved=1t:242&ictx=111"
+              >
+                <div>
+                  <svg viewBox="0 0 81 80">
+                    <use
+                      href="./assets/christmas-tree.svg#christmas-tree"
+                    ></use>
+                  </svg>
+                </div>
+                <p class="footer__text action-large">Magic forest</p>
+                <h3 class="footer__title">Meet Us</h3>
+              </a>
+            </li>
+            <li class="footer__contacts-item">
+              <a class="contact" href="mailto:gifts@magic.com">
+                <div>
+                  <svg viewBox="0 0 81 80">
+                    <use href="./assets/snake.svg#snake"></use>
+                  </svg>
+                </div>
+                <p class="footer__text action-large">gifts@magic.com</p>
+                <h3 class="footer__title">Write Us</h3>
+              </a>
+            </li>
+          </ul>
+          <div class="footer__socials">
+            <ul class="footer__icons-list">
+              <li>
+                <a class="footer__icon-item" href="https://telegram.org/">
+                  <svg viewBox="0 0 24 24">
+                    <use href="./assets/telegram.svg#tg"></use>
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a href="https://www.facebook.com/" class="footer__icon-item">
+                  <svg viewBox="0 0 24 24">
+                    <use href="./assets/facebook.svg#fb"></use>
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a href="https://www.instagram.com/" class="footer__icon-item">
+                  <svg viewBox="0 0 24 24">
+                    <use href="./assets/instagram.svg#ins"></use>
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a href="https://x.com" class="footer__icon-item">
+                  <svg viewBox="0 0 24 24">
+                    <use href="./assets/x.svg#x"></use>
+                  </svg>
+                </a>
+              </li>
+            </ul>
+            <p class="footer__text">© Copyright 2025, All Rights Reserved</p>
+            <a href="https://rs.school/" class="footer__caption caption"
+              >Made in Rolling Scopes School</a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="scripts/script.js"></script>
+  </body>
+</html>
