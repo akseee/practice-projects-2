@@ -16,7 +16,7 @@
     <div class="overlay visually-hidden" id="overlay"></div>
     <header class="header">
       <div class="header__content container">
-        <a class="header__logo" href="#">
+        <a class="header__logo" href="../index.html">
           <svg viewBox="0 0 24 24">
             <use href="./assets/snowflake.svg#snowflake"></use>
           </svg>
@@ -25,16 +25,16 @@
         <nav class="header__nav">
           <ul class="header__nav-list">
             <li class="header__nav-item">
-              <a class="header__nav-link" href="">Gifts</a>
+              <a class="header__nav-link" href="./pages/toys.html">Gifts</a>
             </li>
             <li class="header__nav-item">
-              <a class="header__nav-link" href="">About</a>
+              <a class="header__nav-link" href="#about">About</a>
             </li>
             <li class="header__nav-item">
-              <a class="header__nav-link" href="">Best</a>
+              <a class="header__nav-link" href="#special">Best</a>
             </li>
             <li class="header__nav-item">
-              <a class="header__nav-link" href="">Contacts</a>
+              <a class="header__nav-link" href="#footer">Contacts</a>
             </li>
           </ul>
         </nav>
@@ -48,15 +48,18 @@
             <h1 class="hero__title">
               Gift yourself the magic of new possibilities
             </h1>
-            <button class="hero__button button" type="button">
+            <a
+              href="./pages/toys.html"
+              class="hero__button button action-small"
+            >
               Explore Magical Gifts
-            </button>
+            </a>
             <p class="hero__caption caption">and Happy New Year</p>
           </div>
         </div>
       </section>
 
-      <section class="about section">
+      <section id="about" class="about section">
         <div class="about__content container">
           <div class="content">
             <div class="about__article__content">
@@ -79,7 +82,7 @@
         </div>
       </section>
 
-      <section class="slider section">
+      <section id="slider" class="slider section">
         <div class="slider__content container">
           <div class="content">
             <div class="slider__header">
@@ -129,12 +132,18 @@
               </li>
             </ul>
             <div class="slider__controls">
-              <button class="slider__button arrow-left" type="button">
+              <button
+                class="slider__button arrow-left control-inactive"
+                type="button"
+              >
                 <svg viewBox="0 0 24 24">
                   <use href="./assets/arrow-left.svg#arrow-left"></use>
                 </svg>
               </button>
-              <button class="slider__button arrow-right" type="button">
+              <button
+                class="slider__button arrow-right control-active"
+                type="button"
+              >
                 <svg viewBox="0 0 24 24">
                   <use href="./assets/arrow-right.svg#arrow-right"></use>
                 </svg>
@@ -144,7 +153,7 @@
         </div>
       </section>
 
-      <section class="special section">
+      <section id="special" class="special section">
         <div class="special__content container">
           <div class="content">
             <div class="special__header">
@@ -152,19 +161,18 @@
               <h2 class="special__title">especially for you</h2>
             </div>
             <ul class="special__list">
-              <li>
-                <a href="#" class="special__list-item">
+              <li class="special__list-item">
+
                   <div class="special__image">
                     <img src="./assets/gift-for-work.png" alt="gift for work" />
                   </div>
                   <div class="special__item-header">
                     <h4 class="special__subtitle green">For work</h4>
                     <h3 class="special__description">Console.log Guru</h3>
-                  </div>
-                </a>
+
               </li>
-              <li>
-                <a href="#" class="special__list-item">
+              <li class="special__list-item">
+
                   <div class="special__image">
                     <img
                       src="./assets/gift-for-health.png"
@@ -175,10 +183,10 @@
                     <h4 class="special__subtitle green purple">For health</h4>
                     <h3 class="special__description">Hydration Bot</h3>
                   </div>
-                </a>
+
               </li>
-              <li>
-                <a href="#" class="special__list-item">
+              <li class="special__list-item">
+
                   <div class="special__image">
                     <img src="./assets/gift-for-work.png" alt="gift for work" />
                   </div>
@@ -186,7 +194,7 @@
                     <h4 class="special__subtitle green">For work</h4>
                     <h3 class="special__description">Merge Master</h3>
                   </div>
-                </a>
+
               </li>
               <li>
                 <a href="#" class="special__list-item">
@@ -209,13 +217,13 @@
         </div>
       </section>
 
-      <section class="timer section">
+      <section id="timer" class="timer section">
         <div class="timer__content container">
           <div class="content">
             <h2 class="timer__title">
               Ready to start your journey to a better version of yourself?
             </h2>
-            <button class="timer__button button" type="button">
+            <button class="timer__button button action-small" type="button">
               Explore Magical Gifts
             </button>
 
@@ -247,23 +255,26 @@
       </section>
     </main>
 
-    <footer class="footer section">
+    <footer id="footer" class="footer section">
       <div class="footer__content container">
         <div class="content">
           <ul class="footer__contacts-list">
             <li class="footer__contacts-item">
-              <a class="contact" href="#">
+              <a class="contact" href="tel:+375-29-111-22-33">
                 <div>
                   <svg viewBox="0 0 81 80">
                     <use href="./assets/santa-claus.svg#santa-claus"></use>
                   </svg>
                 </div>
-                <p class="footer__text">+375 (29) 111-22-33</p>
+                <p class="footer__text action-large">+375 (29) 111-22-33</p>
                 <h3 class="footer__title">Call Us</h3>
               </a>
             </li>
             <li class="footer__contacts-item">
-              <a class="contact" href="#">
+              <a
+                class="contact"
+                href="https://www.google.com/maps/place/1+Central+St,+Manchester+M2+5WR,+UK/data=!4m2!3m1!1s0x487bb1c216961535:0xc1551b68a0371bae?sa=X&ved=1t:242&ictx=111"
+              >
                 <div>
                   <svg viewBox="0 0 81 80">
                     <use
@@ -271,18 +282,18 @@
                     ></use>
                   </svg>
                 </div>
-                <p class="footer__text">Magic forest</p>
+                <p class="footer__text action-large">Magic forest</p>
                 <h3 class="footer__title">Meet Us</h3>
               </a>
             </li>
             <li class="footer__contacts-item">
-              <a class="contact" href="#">
+              <a class="contact" href="mailto:gifts@magic.com">
                 <div>
                   <svg viewBox="0 0 81 80">
                     <use href="./assets/snake.svg#snake"></use>
                   </svg>
                 </div>
-                <p class="footer__text">gifts@magic.com</p>
+                <p class="footer__text action-large">gifts@magic.com</p>
                 <h3 class="footer__title">Write Us</h3>
               </a>
             </li>
@@ -310,7 +321,7 @@
                   </svg>
                 </a>
               </li>
-              <li class="footer__icon-item">
+              <li>
                 <a href="https://x.com" class="footer__icon-item">
                   <svg viewBox="0 0 24 24">
                     <use href="./assets/x.svg#x"></use>
@@ -319,7 +330,7 @@
               </li>
             </ul>
             <p class="footer__text">© Copyright 2025, All Rights Reserved</p>
-            <a href="#" class="footer__caption caption"
+            <a href="https://rs.school/" class="footer__caption caption"
               >Made in Rolling Scopes School</a
             >
           </div>
