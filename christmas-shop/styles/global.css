@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   font-family: "Montserrat", sans-serif;
@@ -62,7 +66,6 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: Montserrat;
   font-weight: 600;
   text-transform: uppercase;
 }
@@ -70,26 +73,25 @@ h4 {
 h1 {
   font-size: 32px;
   line-height: 150%;
-  /* letter-spacing: 18%; */
   letter-spacing: 5.76px;
 }
 
 h2 {
   font-size: 24px;
   line-height: 152%;
-  letter-spacing: 16%;
+  letter-spacing: 3.84px;
 }
 
 h3 {
   font-size: 16px;
   line-height: 152%;
-  letter-spacing: 8%;
+  letter-spacing: 1.28px;
 }
 
 h4 {
   font-size: 12px;
   line-height: 130%;
-  letter-spacing: 5%;
+  letter-spacing: 0.6px;
 }
 
 p {
@@ -102,7 +104,7 @@ p {
   font-weight: 600;
   font-size: 24px;
   line-height: 152%;
-  letter-spacing: 16%;
+  letter-spacing: 3.84px;
   text-transform: uppercase;
 }
 
@@ -110,7 +112,7 @@ p {
   font-weight: 600;
   font-size: 12px;
   line-height: 130%;
-  letter-spacing: 5%;
+  letter-spacing: 0.6px;
   text-transform: uppercase;
 }
 
@@ -118,12 +120,24 @@ p {
   font-family: "Allura", cursive;
   font-size: 24px;
   line-height: 100%;
-  /* letter-spacing: 5%; */
   letter-spacing: 1.2px;
 }
 
 .slider-text {
   font-weight: 600;
   font-size: 80px;
+  letter-spacing: 0.3px;
   text-transform: uppercase;
+}
+
+.pink {
+  color: var(--tag-pink);
+}
+
+.green {
+  color: var(--tag-green);
+}
+
+.purple {
+  color: var(--tag-purple);
 }
