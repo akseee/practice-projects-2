@@ -1,5 +1,6 @@
 .gifts__content {
   border-radius: 20px;
+  background: url("../assets/bg-garland.png") top/ contain no-repeat;
   background-color: var(--primary);
 }
 
@@ -36,6 +37,8 @@
 }
 
 .gift__controls-item:hover {
+  border-radius: 12px;
+  background-color: var(--static-white-two);
   cursor: pointer;
 }
 
