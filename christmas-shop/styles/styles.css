@@ -74,15 +74,18 @@ svg {
   cursor: default;
 }
 
+/*  hero  */
+
 .hero {
-  color: white;
+  color: var(--static-white);
   text-align: center;
 }
 
 .hero__content {
   border-start-start-radius: 20px;
   border-start-end-radius: 20px;
-  background-color: var(--primary);
+  background: url("../assets/bg-ball.png") center / cover no-repeat,
+    url("../assets/bg-snow.png") center / cover no-repeat, var(--primary);
 }
 
 .hero__content .content {
@@ -97,6 +100,7 @@ svg {
 /*  about  */
 
 .about__content {
+  background: url("../assets/bg-snow.png") center / cover no-repeat;
   background-color: var(--primary);
 }
 
@@ -133,11 +137,12 @@ svg {
 /*  slider  */
 
 .slider {
-  color: white;
+  color: var(--static-white);
 }
 
 .slider__content {
   overflow: hidden;
+  background: url("../assets/bg-snow.png") center / cover no-repeat;
   background-color: var(--primary);
 }
 
@@ -205,6 +210,7 @@ svg {
 /*   special  */
 
 .special__content {
+  background: url("../assets/bg-snow.png") center / cover no-repeat;
   background-color: var(--primary);
 }
 
@@ -219,7 +225,7 @@ svg {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  color: white;
+  color: var(--static-white);
   text-align: center;
 }
 
@@ -267,8 +273,9 @@ svg {
 .timer__content {
   border-end-start-radius: 20px;
   border-end-end-radius: 20px;
-  color: white;
+  color: var(--static-white);
   text-align: center;
+  background: url("../assets/bg-forest.png") center / cover no-repeat;
   background-color: var(--primary);
 }
 
