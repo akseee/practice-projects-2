@@ -68,9 +68,9 @@ svg {
   background-color: var(--primary-alpha);
 }
 
-.header__nav-link.inactive:hover {
-  color: black;
-  background-color: transparent;
+.header__nav-link.active {
+  color: var(--primary);
+  background-color: var(--primary-alpha);
   cursor: default;
 }
 
