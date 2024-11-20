@@ -45,6 +45,7 @@
 .gift__controls-item.active {
   border-radius: 12px;
   background-color: var(--static-white-two);
+  cursor: default;
 }
 
 .gift__list {
