@@ -15,28 +15,59 @@
     <div class="overlay visually-hidden" id="overlay"></div>
     <header class="header">
       <div class="header__content container">
-        <a class="header__logo" href="#">
-          <svg viewBox="0 0 24 24">
-            <use href="./assets/snowflake.svg#snowflake"></use>
-          </svg>
-          <span class="header__logo-text">The gifts</span>
-        </a>
-        <nav class="header__nav">
-          <ul class="header__nav-list">
-            <li class="header__nav-item">
-              <a class="header__nav-link" href="./pages/toys.html">Gifts</a>
-            </li>
-            <li class="header__nav-item">
-              <a class="header__nav-link" href="#about">About</a>
-            </li>
-            <li class="header__nav-item">
-              <a class="header__nav-link" href="#special">Best</a>
-            </li>
-            <li class="header__nav-item">
-              <a class="header__nav-link" href="#footer">Contacts</a>
-            </li>
-          </ul>
-        </nav>
+        <div class="content">
+          <a class="header__logo" href="#">
+            <svg viewBox="0 0 24 24">
+              <use href="./assets/snowflake.svg#snowflake"></use>
+            </svg>
+            <span class="header__logo-text">The gifts</span>
+          </a>
+          <nav class="header__nav">
+            <ul class="header__nav-list">
+              <li class="header__nav-item">
+                <a class="header__nav-link" href="./pages/gifts.html">Gifts</a>
+              </li>
+              <li class="header__nav-item">
+                <a class="header__nav-link" href="#about">About</a>
+              </li>
+              <li class="header__nav-item">
+                <a class="header__nav-link" href="#special">Best</a>
+              </li>
+              <li class="header__nav-item">
+                <a class="header__nav-link" href="#footer">Contacts</a>
+              </li>
+            </ul>
+          </nav>
+          <div class="header__nav-burger-button"></div>
+          <div class="header__nav-burger__container visually-hidden">
+            <nav class="header__nav-burger__menu">
+              <ul class="header__nav-burger__menu-list">
+                <li class="header__nav-burger__menu-item">
+                  <a
+                    class="header__nav-burger__menu-link"
+                    href="./pages/gifts.html"
+                    >Gifts</a
+                  >
+                </li>
+                <li class="header__nav-burger__menu-item">
+                  <a class="header__nav-burger__menu-link" href="#about"
+                    >About</a
+                  >
+                </li>
+                <li class="header__nav-burger__menu-item">
+                  <a class="header__nav-burger__menu-link" href="#special"
+                    >Best</a
+                  >
+                </li>
+                <li class="header__nav-burger__menu-item">
+                  <a class="header__nav-burger__menu-link" href="#footer"
+                    >Contacts</a
+                  >
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
       </div>
     </header>
     <main class="main">
@@ -48,7 +79,7 @@
               Gift yourself the magic of new possibilities
             </h1>
             <a
-              href="./pages/toys.html"
+              href="./pages/gifts.html"
               class="hero__button button action-small"
             >
               Explore Magical Gifts
@@ -72,11 +103,9 @@
                 </p>
               </article>
             </div>
-            <img
-              class="about__image"
-              src="./assets/santa.png"
-              alt="Santa and snowman"
-            />
+            <div class="about__image">
+              <img src="./assets/santa.png" alt="Santa and snowman" />
+            </div>
           </div>
         </div>
       </div>
@@ -91,38 +120,33 @@
             <ul class="slider__list">
               <li class="slider__item">
                 <h3 class="slider-text">Live</h3>
-              </li>
-              <li class="slider__item">
                 <img
                   class="slider__image"
                   src="./assets/snowman.png"
                   alt="snowman"
                 />
               </li>
+
               <li class="slider__item">
                 <h3 class="slider-text">Create</h3>
-              </li>
-              <li class="slider__item">
                 <img
                   class="slider__image"
                   src="./assets/christmas-trees.png"
                   alt="trees"
                 />
               </li>
+
               <li class="slider__item">
                 <h3 class="slider-text">Love</h3>
-              </li>
-              <li class="slider__item">
                 <img
                   class="slider__image"
                   src="./assets/christmas-tree-ball.png"
                   alt="tree-ball"
                 />
               </li>
+
               <li class="slider__item">
                 <h3 class="slider-text">Dream</h3>
-              </li>
-              <li class="slider__item">
                 <img
                   class="slider__image"
                   src="./assets/fairytale-house.png"
@@ -174,7 +198,7 @@
                   <img src="./assets/gift-for-health.png" alt="gift for work" />
                 </div>
                 <div class="special__item-header">
-                  <h4 class="special__subtitle green purple">For health</h4>
+                  <h4 class="special__subtitle purple">For health</h4>
                   <h3 class="special__description">Hydration Bot</h3>
                 </div>
               </li>
@@ -214,7 +238,7 @@
               Ready to start your journey to a better version of yourself?
             </h2>
             <a
-              href="./pages/toys.html"
+              href="./pages/gifts.html"
               class="timer__button button action-small"
             >
               Explore Magical Gifts
