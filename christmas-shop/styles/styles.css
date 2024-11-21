@@ -275,7 +275,8 @@ svg {
   border-end-end-radius: 20px;
   color: var(--static-white);
   text-align: center;
-  background: url("../assets/bg-forest.png") center / cover no-repeat;
+  background: url("../assets/bg-forest.png") center / cover no-repeat,
+    url("../assets/bg-snow.png") center / cover no-repeat;
   background-color: var(--primary);
 }
 
