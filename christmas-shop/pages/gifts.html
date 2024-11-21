@@ -18,28 +18,61 @@
 
     <header class="header">
       <div class="header__content container">
-        <a class="header__logo" href="../index.html">
-          <svg viewBox="0 0 24 24">
-            <use href="../assets/snowflake.svg#snowflake"></use>
-          </svg>
-          <span class="header__logo-text">The gifts</span>
-        </a>
-        <nav class="header__nav">
-          <ul class="header__nav-list">
-            <li class="header__nav-item">
-              <a class="header__nav-link active" href="#">Gifts</a>
-            </li>
-            <li class="header__nav-item">
-              <a class="header__nav-link" href="../index.html#about">About</a>
-            </li>
-            <li class="header__nav-item">
-              <a class="header__nav-link" href="../index.html#special">Best</a>
-            </li>
-            <li class="header__nav-item">
-              <a class="header__nav-link" href="#footer">Contacts</a>
-            </li>
-          </ul>
-        </nav>
+        <div class="content">
+          <a class="header__logo" href="../index.html">
+            <svg viewBox="0 0 24 24">
+              <use href="../assets/snowflake.svg#snowflake"></use>
+            </svg>
+            <span class="header__logo-text">The gifts</span>
+          </a>
+          <nav class="header__nav">
+            <ul class="header__nav-list">
+              <li class="header__nav-item">
+                <a class="header__nav-link active" href="#">Gifts</a>
+              </li>
+              <li class="header__nav-item">
+                <a class="header__nav-link" href="../index.html#about">About</a>
+              </li>
+              <li class="header__nav-item">
+                <a class="header__nav-link" href="../index.html#special"
+                  >Best</a
+                >
+              </li>
+              <li class="header__nav-item">
+                <a class="header__nav-link" href="#footer">Contacts</a>
+              </li>
+            </ul>
+          </nav>
+          <div class="header__nav-burger-button"></div>
+          <div class="header__nav-burger__container visually-hidden">
+            <nav class="header__nav-burger__menu">
+              <ul class="header__nav-burger__menu-list">
+                <li class="header__nav-burger__menu-item">
+                  <a
+                    class="header__nav-burger__menu-link"
+                    href="./pages/gifts.html"
+                    >Gifts</a
+                  >
+                </li>
+                <li class="header__nav-burger__menu-item">
+                  <a class="header__nav-burger__menu-link" href="#about"
+                    >About</a
+                  >
+                </li>
+                <li class="header__nav-burger__menu-item">
+                  <a class="header__nav-burger__menu-link" href="#special"
+                    >Best</a
+                  >
+                </li>
+                <li class="header__nav-burger__menu-item">
+                  <a class="header__nav-burger__menu-link" href="#footer"
+                    >Contacts</a
+                  >
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -62,7 +95,7 @@
                   <img src="../assets/gift-for-work.png" alt="gift for work" />
                 </div>
                 <div class="gift__item-header">
-                  <h4 class="gift__subtitle green purple">For work</h4>
+                  <h4 class="gift__subtitle purple">For work</h4>
                   <h3 class="gift__description">console.log guru</h3>
                 </div>
               </li>
@@ -74,7 +107,7 @@
                   />
                 </div>
                 <div class="gift__item-header">
-                  <h4 class="gift__subtitle green purple">For health</h4>
+                  <h4 class="gift__subtitle green">For health</h4>
                   <h3 class="gift__description">Step Master</h3>
                 </div>
               </li>
@@ -83,7 +116,7 @@
                   <img src="../assets/gift-for-work.png" alt="gift for work" />
                 </div>
                 <div class="gift__item-header">
-                  <h4 class="gift__subtitle green purple">For work</h4>
+                  <h4 class="gift__subtitle purple">For work</h4>
                   <h3 class="gift__description">Bug magnet</h3>
                 </div>
               </li>
@@ -92,7 +125,7 @@
                   <img src="../assets/gift-for-work.png" alt="gift for work" />
                 </div>
                 <div class="gift__item-header">
-                  <h4 class="gift__subtitle green purple">For work</h4>
+                  <h4 class="gift__subtitle purple">For work</h4>
                   <h3 class="gift__description">shortcut cheater</h3>
                 </div>
               </li>
@@ -104,7 +137,7 @@
                   />
                 </div>
                 <div class="gift__item-header">
-                  <h4 class="gift__subtitle green purple">For health</h4>
+                  <h4 class="gift__subtitle green">For health</h4>
                   <h3 class="gift__description">Posture Levitation</h3>
                 </div>
               </li>
@@ -116,7 +149,7 @@
                   />
                 </div>
                 <div class="gift__item-header">
-                  <h4 class="gift__subtitle green purple">For harmony</h4>
+                  <h4 class="gift__subtitle pink">For harmony</h4>
                   <h3 class="gift__description">Bug Acceptance Guru</h3>
                 </div>
               </li>
@@ -128,7 +161,7 @@
                   />
                 </div>
                 <div class="gift__item-header">
-                  <h4 class="gift__subtitle green purple">For health</h4>
+                  <h4 class="gift__subtitle green">For health</h4>
                   <h3 class="gift__description">Snack resister</h3>
                 </div>
               </li>
@@ -140,7 +173,7 @@
                   />
                 </div>
                 <div class="gift__item-header">
-                  <h4 class="gift__subtitle green purple">For harmony</h4>
+                  <h4 class="gift__subtitle pink">For harmony</h4>
                   <h3 class="gift__description">Error laugher</h3>
                 </div>
               </li>
@@ -152,7 +185,7 @@
                   />
                 </div>
                 <div class="gift__item-header">
-                  <h4 class="gift__subtitle green purple">For health</h4>
+                  <h4 class="gift__subtitle green">For health</h4>
                   <h3 class="gift__description">Hydration bot</h3>
                 </div>
               </li>
@@ -161,7 +194,7 @@
                   <img src="../assets/gift-for-work.png" alt="gift for work" />
                 </div>
                 <div class="gift__item-header">
-                  <h4 class="gift__subtitle green purple">For work</h4>
+                  <h4 class="gift__subtitle purple">For work</h4>
                   <h3 class="gift__description">merge master</h3>
                 </div>
               </li>
@@ -173,7 +206,7 @@
                   />
                 </div>
                 <div class="gift__item-header">
-                  <h4 class="gift__subtitle green purple">For harmony</h4>
+                  <h4 class="gift__subtitle pink">For harmony</h4>
                   <h3 class="gift__description">Joy charger</h3>
                 </div>
               </li>
@@ -185,7 +218,7 @@
                   />
                 </div>
                 <div class="gift__item-header">
-                  <h4 class="gift__subtitle green purple">For harmony</h4>
+                  <h4 class="gift__subtitle pink">For harmony</h4>
                   <h3 class="gift__description">
                     Spontaneous Coding Philosopher
                   </h3>

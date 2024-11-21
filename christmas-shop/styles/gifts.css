@@ -20,7 +20,7 @@
 }
 
 .gifts__title {
-  max-width: 426px;
+  max-width: 420px;
   color: var(--static-white);
   text-align: center;
 }
@@ -49,8 +49,10 @@
 }
 
 .gift__list {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
   gap: 12px;
 }
 
@@ -84,4 +86,18 @@
 
 .gift__description {
   transition: color 0.3s ease-in-out;
+}
+
+@media (max-width: 425px) {
+  .gift__controls {
+    gap: 0;
+  }
+
+  .gift__controls-item {
+    padding: 12px 8px;
+  }
+
+  .gifts__title {
+    width: 95%;
+  }
 }
