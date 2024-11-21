@@ -470,7 +470,7 @@ svg {
 
 /* mobile 380px */
 
-@media (max-width: 425px) {
+@media (max-width: 650px) {
   .about__content .content {
     grid-template-columns: 1fr;
   }
