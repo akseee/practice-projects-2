@@ -31,17 +31,24 @@ svg {
 
 /*  header */
 
-.header__content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 82px;
+.header {
   font-weight: 600;
   font-size: 12px;
   font-style: normal;
   line-height: 130%;
   letter-spacing: 0.6px;
   text-transform: uppercase;
+}
+
+.header__content {
+  padding: 12px 82px;
+}
+
+.header__content .content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .header__logo {
@@ -72,6 +79,24 @@ svg {
   color: var(--primary);
   background-color: var(--primary-alpha);
   cursor: default;
+}
+
+/*  header - burger  */
+
+.header__nav-burger-button {
+  display: none;
+}
+
+.header__nav-burger__container {
+  display: none;
+}
+.header__nav-burger__menu {
+}
+.header__nav-burger__menu-list {
+}
+.header__nav-burger__menu-item {
+}
+.header__nav-burger__menu-link {
 }
 
 /*  hero  */
@@ -105,8 +130,8 @@ svg {
 }
 
 .about__content .content {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   width: 100%;
   margin: 0 74px;
   border-radius: 20px;
@@ -127,11 +152,17 @@ svg {
   padding: 60px 0;
 }
 
-.about__content .content img {
-  flex-shrink: 0;
-  width: 638px;
-  height: 528px;
+.about__image {
+  display: flex;
+  display: flex;
+  justify-content: center;
   border-radius: 20px;
+  overflow: hidden;
+}
+
+.about__image img {
+  width: auto;
+  height: 100%;
 }
 
 /*  slider  */
@@ -157,17 +188,20 @@ svg {
 .slider__header {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 12px;
   text-align: center;
 }
 
 .slider__list {
   display: flex;
-  align-items: center;
   gap: 20px;
 }
 
 .slider__item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
   border-radius: 20px;
 }
 
@@ -218,7 +252,8 @@ svg {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 17px;
+  width: 100%;
 }
 
 .special__header {
@@ -231,13 +266,17 @@ svg {
 
 .special__list {
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
   gap: 12px;
 }
+
 .special__list li {
   width: 310px;
+  height: 342px;
   border-radius: 20px;
-  background-color: #fff;
+  background-color: var(--static-white);
 }
 
 .special__list-item:hover {
@@ -261,9 +300,6 @@ svg {
   padding: 20px;
 }
 
-.special__subtitle {
-}
-
 .special__description {
   transition: color 0.3s ease-in-out;
 }
@@ -284,7 +320,7 @@ svg {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 18px;
+  gap: 20px;
   padding: 120px 0;
 }
 
@@ -379,4 +415,108 @@ svg {
 
 .footer__caption:hover {
   color: var(--primary);
+}
+
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+
+@media (max-width: 1024px) {
+  /* .container {
+    max-width: 100%;
+  } */
+
+  /*  header */
+
+  .header__content {
+    padding: 12px 8px;
+  }
+
+  .header__nav {
+    display: none;
+  }
+
+  /*  header - burger  */
+
+  .header__nav-burger-button {
+    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .header__nav-burger-button::before {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 2px;
+    border-radius: 1px;
+    background-color: var(--dark);
+  }
+
+  .header__nav-burger-button::after {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 2px;
+    border-radius: 1px;
+    background-color: var(--dark);
+  }
+
+  .header__nav-burger__container {
+  }
+
+  .header__nav-burger__menu {
+  }
+  .header__nav-burger__menu-list {
+  }
+  .header__nav-burger__menu-item {
+  }
+  .header__nav-burger__menu-link {
+  }
+
+  /*  hero  */
+
+  /*  about  */
+
+  .about__content .content {
+    margin: 0;
+  }
+
+  /*  slider  */
+
+  /*  special  */
+  .slider__content .content {
+    padding: 0;
+  }
+  /*  timer  */
+
+  /*  footer  */
+
+  .footer__content .content {
+    padding: 0;
+  }
+
+  .footer__contacts-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 380px) {
+  body {
+    background-color: blue;
+  }
 }
