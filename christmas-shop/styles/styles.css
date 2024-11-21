@@ -85,18 +85,16 @@ svg {
 
 .header__nav-burger-button {
   display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  width: 40px;
+  height: 40px;
 }
 
 .header__nav-burger__container {
   display: none;
-}
-.header__nav-burger__menu {
-}
-.header__nav-burger__menu-list {
-}
-.header__nav-burger__menu-item {
-}
-.header__nav-burger__menu-link {
 }
 
 /*  hero  */
@@ -392,6 +390,7 @@ svg {
   align-items: center;
   gap: 10px;
 }
+
 .footer__icons-list {
   display: flex;
   align-items: center;
@@ -402,9 +401,11 @@ svg {
   display: block;
   padding: 8px;
 }
+
 .footer__icon-item svg {
   transition: color 0.3s ease-in-out;
 }
+
 .footer__icon-item:hover svg {
   color: var(--primary);
 }
@@ -417,9 +418,9 @@ svg {
   color: var(--primary);
 }
 
-@media (max-width: 1024px) {
-  /*  header */
+/* table 768px */
 
+@media (max-width: 1024px) {
   .header__content {
     padding: 12px 8px;
   }
@@ -428,17 +429,8 @@ svg {
     display: none;
   }
 
-  /*  header - burger  */
-
   .header__nav-burger-button {
-    display: block;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    width: 40px;
-    height: 40px;
   }
 
   .header__nav-burger-button::before {
@@ -459,35 +451,13 @@ svg {
     background-color: var(--dark);
   }
 
-  .header__nav-burger__container {
-  }
-
-  .header__nav-burger__menu {
-  }
-  .header__nav-burger__menu-list {
-  }
-  .header__nav-burger__menu-item {
-  }
-  .header__nav-burger__menu-link {
-  }
-
-  /*  hero  */
-
-  /*  about  */
-
   .about__content .content {
     margin: 0;
   }
 
-  /*  slider  */
-
-  /*  special  */
   .slider__content .content {
     padding: 0;
   }
-  /*  timer  */
-
-  /*  footer  */
 
   .footer__content .content {
     padding: 0;
@@ -498,8 +468,14 @@ svg {
   }
 }
 
-@media (max-width: 380px) {
-  body {
-    background-color: blue;
+/* mobile 380px */
+
+@media (max-width: 425px) {
+  .about__content .content {
+    grid-template-columns: 1fr;
+  }
+
+  .about__article__content {
+    padding: 0 20px;
   }
 }
