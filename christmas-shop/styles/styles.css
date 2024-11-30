@@ -54,6 +54,10 @@ svg {
   padding: 8px 20px;
 }
 
+.header__logo svg {
+  color: var(--primary);
+}
+
 .header__nav-list {
   display: flex;
   flex-direction: row;
@@ -137,7 +141,7 @@ svg {
 
 .about__image {
   display: flex;
-  display: flex;
+
   justify-content: center;
   border-radius: 20px;
   overflow: hidden;
@@ -369,7 +373,7 @@ svg {
   background-color: var(--content-bc);
 }
 
-.gift__header {
+.gift__content {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -378,6 +382,120 @@ svg {
 
 .gift__title {
   transition: color 0.3s ease-in-out;
+}
+
+/* popup */
+
+.popup {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup_is-opened {
+  visibility: visible;
+  display: flex;
+  opacity: 1;
+  transition: visibility 0s, opacity 0.6s;
+  pointer-events: all;
+}
+
+.popup__container {
+  position: relative;
+  max-width: 400px;
+  height: max-content;
+  border-radius: 20px;
+  background-color: var(--static-white);
+}
+
+.popup__close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+}
+
+.popup__close-btn::before,
+.popup__close-btn::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  display: block;
+  width: 20px;
+  height: 2px;
+  border-radius: 1px;
+  background-color: var(--dark);
+  transition: transform 0.3s ease;
+  transform-origin: center;
+}
+
+.popup__close-btn::before {
+  transform: rotate(45deg);
+}
+
+.popup__close-btn::after {
+  transform: rotate(-45deg);
+}
+
+.popup__image {
+  display: flex;
+  align-items: center;
+  max-height: 230px;
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: var(--content-bc);
+}
+
+.popup__content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.popup__header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.popup__rating {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.popup__list-item {
+  display: flex;
+  gap: 12px;
+}
+
+.popup__list-item .type {
+  width: 100%;
+}
+
+.popup__snowflake-list {
+  display: flex;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.popup__snowflake-list-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 16px;
+  height: 16px;
 }
 
 /*  */
@@ -513,7 +631,7 @@ svg {
     cursor: pointer;
   }
 
-  .gift-item:hover .gift__header .gift__title {
+  .gift-item:hover .gift__content .gift__title {
     color: var(--primary);
   }
 

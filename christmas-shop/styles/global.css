@@ -151,10 +151,8 @@ p {
   z-index: 1;
   height: 100%;
   opacity: 0;
-  transition: all 0.3s ease-in-out;
-}
-
-.overlay.active {
   opacity: 1;
-  background-color: #29292999;
+  background-color: var(--overlay);
+  transition: all 0.3s ease-in-out;
+  /* cursor: pointer; */
 }
