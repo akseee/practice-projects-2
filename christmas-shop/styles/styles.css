@@ -24,11 +24,6 @@ svg {
   transition: all 0.3s ease-in-out;
 }
 
-.button:hover {
-  color: var(--dark);
-  background-color: var(--static-white);
-}
-
 /*  header */
 
 .header {
@@ -68,11 +63,6 @@ svg {
   border-radius: 20px;
   padding: 12px 20px;
   transition: all 0.3s ease-in-out;
-}
-
-.header__nav-link:hover {
-  color: var(--primary);
-  background-color: var(--primary-alpha);
 }
 
 .header__nav-link.active {
@@ -133,7 +123,7 @@ svg {
   width: 100%;
   margin: 0 74px;
   border-radius: 20px;
-  background-color: var(--content-bc);
+  background-color: var(--static-white);
 }
 
 .about__article__content {
@@ -228,11 +218,6 @@ svg {
   max-height: 24px;
 }
 
-.control-active:hover {
-  color: var(--primary);
-  background-color: var(--static-white);
-}
-
 .control-inactive {
   border-color: var(--static-white-four);
   color: var(--static-white-four);
@@ -275,14 +260,6 @@ svg {
   height: 342px;
   border-radius: 20px;
   background-color: var(--static-white);
-}
-
-.special__list-item:hover {
-  cursor: pointer;
-}
-
-.special__list-item:hover .special__item-header .special__description {
-  color: var(--primary);
 }
 
 .special__image {
@@ -367,10 +344,6 @@ svg {
   transition: color 0.3s ease-in-out;
 }
 
-.footer__contacts-item:hover {
-  color: var(--primary);
-}
-
 .contact {
   display: flex;
   flex-direction: column;
@@ -406,16 +379,18 @@ svg {
   transition: color 0.3s ease-in-out;
 }
 
-.footer__icon-item:hover svg {
-  color: var(--primary);
-}
-
 .footer__caption {
   transition: color 0.3s ease-in-out;
 }
 
-.footer__caption:hover {
-  color: var(--primary);
+@media (max-width: 1400px) {
+  .footer__content .content {
+    padding: 0;
+  }
+
+  .footer__contacts-list {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* table 768px */
@@ -458,14 +433,6 @@ svg {
   .slider__content .content {
     padding: 0;
   }
-
-  .footer__content .content {
-    padding: 0;
-  }
-
-  .footer__contacts-list {
-    grid-template-columns: 1fr;
-  }
 }
 
 /* mobile 380px */
@@ -477,5 +444,39 @@ svg {
 
   .about__article__content {
     padding: 0 20px;
+  }
+}
+
+/* hover */
+
+@media (hover: hover) {
+  .control-active:hover {
+    color: var(--primary);
+    background-color: var(--static-white);
+  }
+
+  .special__list-item:hover {
+    cursor: pointer;
+  }
+
+  .special__list-item:hover .special__item-header .special__description {
+    color: var(--primary);
+  }
+
+  .footer__contacts-item:hover {
+    color: var(--primary);
+  }
+
+  .footer__icon-item:hover svg {
+    color: var(--primary);
+  }
+
+  .footer__caption:hover {
+    color: var(--primary);
+  }
+
+  .button:hover {
+    color: red;
+    background-color: var(--static-white);
   }
 }
