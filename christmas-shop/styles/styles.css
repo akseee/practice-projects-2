@@ -250,30 +250,6 @@ svg {
   gap: 12px;
 }
 
-.special__list li {
-  width: 310px;
-  height: 342px;
-  border-radius: 20px;
-  background-color: var(--static-white);
-}
-
-.special__image {
-  border-start-start-radius: 20px;
-  border-start-end-radius: 20px;
-  background-color: var(--content-bc);
-}
-
-.special__item-header {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 20px;
-}
-
-.special__description {
-  transition: color 0.3s ease-in-out;
-}
-
 /*  timer  */
 
 .timer__content {
@@ -377,6 +353,34 @@ svg {
 .footer__caption {
   transition: color 0.3s ease-in-out;
 }
+
+/*  gift card  */
+
+.gift-item {
+  width: 310px;
+  height: 342px;
+  border-radius: 20px;
+  background-color: var(--static-white);
+}
+
+.gift__image {
+  border-start-start-radius: 20px;
+  border-start-end-radius: 20px;
+  background-color: var(--content-bc);
+}
+
+.gift__header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+}
+
+.gift__title {
+  transition: color 0.3s ease-in-out;
+}
+
+/*  */
 
 @media (max-width: 1400px) {
   .footer__content .content {
@@ -505,11 +509,11 @@ svg {
     background-color: var(--static-white);
   }
 
-  .special__list-item:hover {
+  .gift-item:hover {
     cursor: pointer;
   }
 
-  .special__list-item:hover .special__item-header .special__description {
+  .gift-item:hover .gift__header .gift__title {
     color: var(--primary);
   }
 

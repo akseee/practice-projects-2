@@ -178,51 +178,7 @@
               <p class="special__caption caption">Best Gifts</p>
               <h2 class="special__title">especially for you</h2>
             </div>
-            <ul class="special__list">
-              <li class="special__list-item">
-                <div class="special__image">
-                  <img src="./assets/gift-for-work.png" alt="gift for work" />
-                </div>
-                <div class="special__item-header">
-                  <h4 class="special__subtitle green">For work</h4>
-                  <h3 class="special__description">Console.log Guru</h3>
-                </div>
-              </li>
-              <li class="special__list-item">
-                <div class="special__image">
-                  <img src="./assets/gift-for-health.png" alt="gift for work" />
-                </div>
-                <div class="special__item-header">
-                  <h4 class="special__subtitle purple">For health</h4>
-                  <h3 class="special__description">Hydration Bot</h3>
-                </div>
-              </li>
-              <li class="special__list-item">
-                <div class="special__image">
-                  <img src="./assets/gift-for-work.png" alt="gift for work" />
-                </div>
-                <div class="special__item-header">
-                  <h4 class="special__subtitle green">For work</h4>
-                  <h3 class="special__description">Merge Master</h3>
-                </div>
-              </li>
-              <li>
-                <a href="#" class="special__list-item">
-                  <div class="special__image">
-                    <img
-                      src="./assets/gift-for-harmony.png"
-                      alt="gift for work"
-                    />
-                  </div>
-                  <div class="special__item-header">
-                    <h4 class="special__subtitle pink">For harmony</h4>
-                    <h3 class="special__description">
-                      Spontaneous Coding Philosopher
-                    </h3>
-                  </div>
-                </a>
-              </li>
-            </ul>
+            <ul class="special__list"></ul>
           </div>
         </div>
       </section>
@@ -352,8 +308,26 @@
         </div>
       </div>
     </footer>
+
+    <template id="gift">
+      <li class="gift-item">
+        <div class="gift__image">
+          <img src="" alt="" />
+        </div>
+        <div class="gift__header">
+          <h4 class="gift__subtitle"></h4>
+          <h3 class="gift__title"></h3>
+        </div>
+      </li>
+    </template>
+
+    <div class="popup">
+      <div class="popup__container"></div>
+    </div>
+
     <script src="scripts/script.js"></script>
     <script src="scripts/burger.js"></script>
     <script src="scripts/timer.js"></script>
+    <script src="scripts/cards.js"></script>
   </body>
 </html>
