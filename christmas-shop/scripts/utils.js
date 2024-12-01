@@ -29,7 +29,7 @@ function checkCategory(category, img, title) {
     title.classList.add("green")
   } else {
     title.classList.add("purple")
-    img.src = `${checkPath()}/assets/gift-for-work.png`
+    img.src = `${checkPath()}assets/gift-for-work.png`
   }
 }
 

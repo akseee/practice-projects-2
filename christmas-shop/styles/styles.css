@@ -24,6 +24,10 @@ svg {
   transition: all 0.3s ease-in-out;
 }
 
+.scroll {
+  display: none;
+}
+
 /*  header */
 
 .header {
@@ -515,6 +519,26 @@ svg {
 /* table 768px */
 
 @media (max-width: 768px) {
+  .scroll {
+    position: fixed;
+    right: 8px;
+    bottom: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 56px;
+    height: 56px;
+    border: 1px solid var(--primary);
+    border-radius: 50%;
+    background-color: var(--static-white);
+    transition: 0.5s ease-in-out;
+    transform: translateY(200%);
+  }
+
+  .scroll.active {
+    transform: translateY(0);
+  }
+
   .header__content {
     padding: 12px 8px;
   }

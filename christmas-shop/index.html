@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>christmas-shop</title>
+    <title>Christmas shop!</title>
     <link rel="icon" href="./assets/snowflake.ico" sizes="any" />
     <link rel="icon" href="./assets/snowflake.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="fonts/fonts.css" />
@@ -12,7 +12,13 @@
     <link rel="stylesheet" href="styles/styles.css" />
   </head>
   <body class="page">
+    <div class="scroll">
+      <svg viewBox="0 0 24 24">
+        <use href="./assets/arrow-up.svg#arrow-up"></use>
+      </svg>
+    </div>
     <div class="overlay visually-hidden" id="overlay"></div>
+
     <header class="header">
       <div class="header__content container">
         <div class="content">
@@ -326,7 +332,7 @@
         <button class="popup__close-btn"></button>
 
         <div class="popup__image">
-          <img src="./assets/gift-for-health.png" alt="" />
+          <img src="" alt="" />
         </div>
 
         <div class="popup__content">
@@ -396,5 +402,6 @@
     <script src="scripts/popup.js"></script>
     <script src="scripts/burger.js"></script>
     <script src="scripts/timer.js"></script>
+    <script src="scripts/scroll.js"></script>
   </body>
 </html>

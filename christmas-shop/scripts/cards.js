@@ -1,7 +1,7 @@
 function giftTemplate(cards, container) {
   const cardTemplate = document.querySelector("#gift").content
   const list = document.querySelector(container)
-
+  list.innerHTML = ""
   cards.forEach((data) => {
     const cardElement = cardTemplate.querySelector(".gift-item").cloneNode(true)
 
