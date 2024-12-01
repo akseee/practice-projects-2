@@ -1,5 +1,5 @@
-function fetchData() {
-  return fetch("../scripts/gifts.json")
+function fetchData(path) {
+  return fetch(`${checkPath()}scripts/gifts.json`)
     .then((res) => {
       if (!res.ok) {
         throw new Error(`Couldn't fetch data: ${res.status}`)
@@ -11,17 +11,25 @@ function fetchData() {
       return null
     })
 }
+function checkPath() {
+  const currentPage = window.location.pathname
+  if (currentPage.includes("index.html")) {
+    return ""
+  } else if (currentPage.includes("gifts.html")) {
+    return "../"
+  }
+}
 
 function checkCategory(category, img, title) {
   if (category === "For Harmony") {
-    img.src = "../assets/gift-for-harmony.png"
+    img.src = `${checkPath()}assets/gift-for-harmony.png`
     title.classList.add("pink")
   } else if (category === "For Health") {
-    img.src = "../assets/gift-for-health.png"
+    img.src = `${checkPath()}assets/gift-for-health.png`
     title.classList.add("green")
   } else {
     title.classList.add("purple")
-    img.src = "../assets/gift-for-work.png"
+    img.src = `${checkPath()}/assets/gift-for-work.png`
   }
 }
 
