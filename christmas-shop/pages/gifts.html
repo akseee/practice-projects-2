@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>christmas-shop</title>
+    <title>Christmas shop! Products</title>
     <link rel="icon" href="../assets/snowflake.ico" sizes="any" />
     <link rel="icon" href="../assets/snowflake.svg" type="image/svg+xml" />
 
@@ -14,6 +14,12 @@
     <link rel="stylesheet" href="../styles/gifts.css" />
   </head>
   <body class="page">
+    <div class="scroll">
+      <svg viewBox="0 0 24 24">
+        <use href="../assets/arrow-up.svg#arrow-up"></use>
+      </svg>
+    </div>
+
     <div class="overlay visually-hidden" id="overlay"></div>
 
     <header class="header">
@@ -86,10 +92,27 @@
               Achieve health, harmony, and inner strength
             </h1>
             <ul class="gift__controls">
-              <li class="active gift__controls-item action-small">all</li>
-              <li class="gift__controls-item action-small">for work</li>
-              <li class="gift__controls-item action-small">for health</li>
-              <li class="gift__controls-item action-small">for harmony</li>
+              <li class="gift__controls-item action-small" data-category="all">
+                all
+              </li>
+              <li
+                class="gift__controls-item action-small"
+                data-category="For Work"
+              >
+                for work
+              </li>
+              <li
+                class="gift__controls-item action-small"
+                data-category="For Health"
+              >
+                for health
+              </li>
+              <li
+                class="gift__controls-item action-small"
+                data-category="For Harmony"
+              >
+                for harmony
+              </li>
             </ul>
             <ul class="gift__list"></ul>
           </div>
@@ -201,7 +224,7 @@
         <button class="popup__close-btn"></button>
 
         <div class="popup__image">
-          <img src="./assets/gift-for-health.png" alt="" />
+          <img src="" alt="" />
         </div>
 
         <div class="popup__content">
@@ -270,5 +293,6 @@
     <script src="../scripts/cards.js"></script>
     <script src="../scripts/popup.js"></script>
     <script src="../scripts/gifts.js"></script>
+    <script src="../scripts/scroll.js"></script>
   </body>
 </html>
