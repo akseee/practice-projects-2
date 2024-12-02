@@ -145,7 +145,6 @@ svg {
 
 .about__image {
   display: flex;
-
   justify-content: center;
   border-radius: 20px;
   overflow: hidden;
@@ -187,6 +186,8 @@ svg {
 .slider__list {
   display: flex;
   gap: 20px;
+  transition: 0.6s ease-in-out;
+  transform: translateX(0px);
 }
 
 .slider__item {
@@ -502,6 +503,11 @@ svg {
   align-items: center;
   width: 16px;
   height: 16px;
+  color: var(--primary-alpha);
+}
+
+.popup__snowflake-list-item.active {
+  color: var(--primary);
 }
 
 /*  */
@@ -653,7 +659,7 @@ svg {
     background-color: var(--primary-alpha);
   }
 
-  .control-active:hover {
+  .slider__button:not([disabled]):hover {
     color: var(--primary);
     background-color: var(--static-white);
   }
