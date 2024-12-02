@@ -14,7 +14,7 @@ function fetchData(path) {
 function checkPath() {
   const currentPage = window.location.pathname
   if (currentPage.includes("index.html")) {
-    return ""
+    return "./"
   } else if (currentPage.includes("gifts.html")) {
     return "../"
   }
