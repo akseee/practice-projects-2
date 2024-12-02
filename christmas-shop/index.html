@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="styles/variables.css" />
     <link rel="stylesheet" href="styles/global.css" />
     <link rel="stylesheet" href="styles/styles.css" />
+    <link rel="stylesheet" href="styles/animation.css" />
   </head>
   <body class="page">
     <div class="scroll">
@@ -159,15 +160,12 @@
               </li>
             </ul>
             <div class="slider__controls">
-              <button disabled class="slider__button arrow-left" type="button">
+              <button class="slider__button arrow-left" type="button">
                 <svg viewBox="0 0 24 24">
                   <use href="./assets/arrow-left.svg#arrow-left"></use>
                 </svg>
               </button>
-              <button
-                class="slider__button arrow-right control-active"
-                type="button"
-              >
+              <button class="slider__button arrow-right" type="button">
                 <svg viewBox="0 0 24 24">
                   <use href="./assets/arrow-right.svg#arrow-right"></use>
                 </svg>
@@ -188,6 +186,7 @@
           </div>
         </div>
       </section>
+
       <section id="timer" class="timer section">
         <div class="timer__content container">
           <div class="content">
@@ -233,7 +232,7 @@
         <div class="content">
           <ul class="footer__contacts-list">
             <li class="footer__contacts-item">
-              <a class="contact" href="tel:+375-29-111-22-33">
+              <a target="_blank" class="contact" href="tel:+375-29-111-22-33">
                 <div>
                   <svg viewBox="0 0 81 80">
                     <use href="./assets/santa-claus.svg#santa-claus"></use>
@@ -245,6 +244,7 @@
             </li>
             <li class="footer__contacts-item">
               <a
+                target="_blank"
                 class="contact"
                 href="https://www.google.com/maps/place/1+Central+St,+Manchester+M2+5WR,+UK/data=!4m2!3m1!1s0x487bb1c216961535:0xc1551b68a0371bae?sa=X&ved=1t:242&ictx=111"
               >
@@ -260,7 +260,7 @@
               </a>
             </li>
             <li class="footer__contacts-item">
-              <a class="contact" href="mailto:gifts@magic.com">
+              <a target="_blank" class="contact" href="mailto:gifts@magic.com">
                 <div>
                   <svg viewBox="0 0 81 80">
                     <use href="./assets/snake.svg#snake"></use>
@@ -274,28 +274,44 @@
           <div class="footer__socials">
             <ul class="footer__icons-list">
               <li>
-                <a class="footer__icon-item" href="https://telegram.org/">
+                <a
+                  target="_blank"
+                  class="footer__icon-item"
+                  href="https://telegram.org/"
+                >
                   <svg viewBox="0 0 24 24">
                     <use href="./assets/telegram.svg#tg"></use>
                   </svg>
                 </a>
               </li>
               <li>
-                <a href="https://www.facebook.com/" class="footer__icon-item">
+                <a
+                  target="_blank"
+                  href="https://www.facebook.com/"
+                  class="footer__icon-item"
+                >
                   <svg viewBox="0 0 24 24">
                     <use href="./assets/facebook.svg#fb"></use>
                   </svg>
                 </a>
               </li>
               <li>
-                <a href="https://www.instagram.com/" class="footer__icon-item">
+                <a
+                  target="_blank"
+                  href="https://www.instagram.com/"
+                  class="footer__icon-item"
+                >
                   <svg viewBox="0 0 24 24">
                     <use href="./assets/instagram.svg#ins"></use>
                   </svg>
                 </a>
               </li>
               <li>
-                <a href="https://x.com" class="footer__icon-item">
+                <a
+                  target="_blank"
+                  href="https://x.com"
+                  class="footer__icon-item"
+                >
                   <svg viewBox="0 0 24 24">
                     <use href="./assets/X.svg#x"></use>
                   </svg>
@@ -349,44 +365,44 @@
                 <p class="type">Live</p>
                 <p class="price"></p>
                 <ul class="popup__snowflake-list">
-                  <li class="popup__snowflake-list-item">x</li>
-                  <li class="popup__snowflake-list-item">x</li>
-                  <li class="popup__snowflake-list-item">x</li>
-                  <li class="popup__snowflake-list-item">x</li>
-                  <li class="popup__snowflake-list-item">x</li>
+                  <li class="popup__snowflake-list-item"></li>
+                  <li class="popup__snowflake-list-item"></li>
+                  <li class="popup__snowflake-list-item"></li>
+                  <li class="popup__snowflake-list-item"></li>
+                  <li class="popup__snowflake-list-item"></li>
                 </ul>
               </li>
               <li class="popup__list-item type-create">
                 <p class="type">Create</p>
                 <p class="price"></p>
                 <ul class="popup__snowflake-list">
-                  <li class="popup__snowflake-list-item">x</li>
-                  <li class="popup__snowflake-list-item">x</li>
-                  <li class="popup__snowflake-list-item">x</li>
-                  <li class="popup__snowflake-list-item">x</li>
-                  <li class="popup__snowflake-list-item">x</li>
+                  <li class="popup__snowflake-list-item"></li>
+                  <li class="popup__snowflake-list-item"></li>
+                  <li class="popup__snowflake-list-item"></li>
+                  <li class="popup__snowflake-list-item"></li>
+                  <li class="popup__snowflake-list-item"></li>
                 </ul>
               </li>
               <li class="popup__list-item type-love">
                 <p class="type">Love</p>
                 <p class="price"></p>
                 <ul class="popup__snowflake-list">
-                  <li class="popup__snowflake-list-item">x</li>
-                  <li class="popup__snowflake-list-item">x</li>
-                  <li class="popup__snowflake-list-item">x</li>
-                  <li class="popup__snowflake-list-item">x</li>
-                  <li class="popup__snowflake-list-item">x</li>
+                  <li class="popup__snowflake-list-item"></li>
+                  <li class="popup__snowflake-list-item"></li>
+                  <li class="popup__snowflake-list-item"></li>
+                  <li class="popup__snowflake-list-item"></li>
+                  <li class="popup__snowflake-list-item"></li>
                 </ul>
               </li>
               <li class="popup__list-item type-dream">
                 <p class="type">Dream</p>
                 <p class="price"></p>
                 <ul class="popup__snowflake-list">
-                  <li class="popup__snowflake-list-item">x</li>
-                  <li class="popup__snowflake-list-item">x</li>
-                  <li class="popup__snowflake-list-item">x</li>
-                  <li class="popup__snowflake-list-item">x</li>
-                  <li class="popup__snowflake-list-item">x</li>
+                  <li class="popup__snowflake-list-item"></li>
+                  <li class="popup__snowflake-list-item"></li>
+                  <li class="popup__snowflake-list-item"></li>
+                  <li class="popup__snowflake-list-item"></li>
+                  <li class="popup__snowflake-list-item"></li>
                 </ul>
               </li>
             </ul>
@@ -403,5 +419,6 @@
     <script src="scripts/burger.js"></script>
     <script src="scripts/timer.js"></script>
     <script src="scripts/scroll.js"></script>
+    <script src="scripts/slider.js"></script>
   </body>
 </html>
