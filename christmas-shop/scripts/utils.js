@@ -21,6 +21,9 @@ function checkPath() {
 }
 
 function checkCategory(category, img, title) {
+  title.classList.remove("pink")
+  title.classList.remove("purple")
+  title.classList.remove("green")
   if (category === "For Harmony") {
     img.src = `${checkPath()}assets/gift-for-harmony.png`
     title.classList.add("pink")
