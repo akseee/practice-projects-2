@@ -651,6 +651,12 @@ svg {
   }
 }
 
+@media (max-width: 425px) {
+  .popup {
+    right: 8px;
+    left: 8px;
+  }
+}
 /* hover */
 
 @media (hover: hover) {
