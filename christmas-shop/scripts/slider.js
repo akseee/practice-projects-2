@@ -19,7 +19,7 @@ function getSlideWidth() {
 }
 
 function getClicks() {
-  return window.innerWidth >= 768 ? 3 : 6
+  return window.innerWidth > 768 ? 3 : 6
 }
 
 function updateControls() {
