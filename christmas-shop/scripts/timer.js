@@ -28,9 +28,9 @@ function updateTimer() {
   const seconds = Math.floor((target % (1000 * 60)) / 1000)
 
   daysElement.textContent = days.toString()
-  hoursElement.textContent = hours.toString().padStart(2, "0")
-  minutesElement.textContent = minutes.toString().padStart(2, "0")
-  secondsElement.textContent = seconds.toString().padStart(2, "0")
+  hoursElement.textContent = hours.toString()
+  minutesElement.textContent = minutes.toString()
+  secondsElement.textContent = seconds.toString()
 }
 
 const timerInterval = setInterval(updateTimer, 1000)
