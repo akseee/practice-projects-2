@@ -1,6 +1,7 @@
+// @ts-nocheck
+import Page from './scripts/Page'
 import './style.css'
-import { setup } from './scripts/app.js'
 
-setup()
+const page = new Page()
 
-console.log('initial commit')
+document.body.appendChild(page.getNode())
