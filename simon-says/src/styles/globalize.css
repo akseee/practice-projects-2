@@ -1,11 +1,26 @@
+:root {
+	--default: #000000;
+	--main-color: var(--easy);
+	--easy: #85ff85;
+	--medium: #8585ff;
+	--hard: #ff8585;
+	--accent: #970065;
+}
+
 *,
 *::after,
 *::before {
 	box-sizing: border-box;
 }
 
+html,
 body {
+	height: 100%;
 	margin: 0;
+}
+
+body {
+	font-family: monospace;
 }
 
 h1,
