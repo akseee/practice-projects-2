@@ -15,12 +15,6 @@ export default class Keyboard extends Component {
 			text: '2',
 		})
 
-		const line1 = new Component(
-			{ tag: 'div', className: 'keyboard-line' },
-			keyOne,
-			keyOne1
-		)
-
 		const keyTwo = new Component({
 			tag: 'button',
 			className: 'button key',
@@ -31,12 +25,6 @@ export default class Keyboard extends Component {
 			className: 'button key',
 			text: '2',
 		})
-
-		const line2 = new Component(
-			{ tag: 'div', className: 'keyboard-line' },
-			keyTwo,
-			keyTwo1
-		)
 
 		const keyThree = new Component({
 			tag: 'button',
@@ -49,32 +37,29 @@ export default class Keyboard extends Component {
 			text: '2',
 		})
 
-		const line3 = new Component(
-			{ tag: 'div', className: 'keyboard-line' },
-			keyThree,
-			keyThree1
-		)
-
-		const keyFour = new Component({
-			tag: 'button',
-			className: 'button key',
-			text: '1',
-		})
-		const keyFour1 = new Component({
-			tag: 'button',
-			className: 'button key',
-			text: '2',
-		})
-
-		const line4 = new Component(
-			{ tag: 'div', className: 'keyboard-line' },
-			keyFour,
-			keyFour1
-		)
-
-		this.append(line1)
-		this.append(line2)
-		this.append(line3)
-		this.append(line4)
+		this.append(keyOne)
+		this.append(keyOne1)
+		this.append(keyTwo)
+		this.append(keyTwo1)
+		this.append(keyThree)
+		this.append(keyThree1)
 	}
+
+	// setKeyboard(difficulty) {
+	// 	const keys = this.getKeys()
+	// 	keys.forEach((key) => {
+	// 		if (this.isKeyDisabled(key, difficulty)) {
+	// 			key.classList.add('disabled')
+	// 		} else {
+	// 			key.classList.remove('disabled')
+	// 		}
+	// 	})
+	// }
+
+	// isKeyDisabled(key, difficulty) {
+	// 	if (difficulty === 'easy' && key.match(/[0-9]/)) return true
+	// 	if (difficulty === 'medium' && key.match(/[a-z]/)) return true
+	// 	if (difficulty === 'hard') return false
+	// 	return false
+	// }
 }

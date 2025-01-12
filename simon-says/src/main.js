@@ -1,7 +1,11 @@
 // @ts-nocheck
-import Page from './scripts/Page'
+import AppModel from './scripts/AppModel'
+import AppPresenter from './scripts/AppPresenter'
+import AppView from './scripts/AppView'
 import './style.css'
 
-const page = new Page()
+const appModel = new AppModel()
+const appView = new AppView()
+const appPresenter = new AppPresenter(appView)
 
-document.body.appendChild(page.getNode())
+document.body.appendChild(appView.getNode())

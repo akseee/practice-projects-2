@@ -1,39 +1,77 @@
-import AppState from './AppData'
+import { levels } from './utils/constants'
 
 export default class AppModel {
 	constructor() {
-		this.data = new AppState()
+		this.difficulty = 'easy'
+
+		this.levels = levels
+
+		this.generatedConsequence = []
+		this.playerConsequence = []
+
+		this.maxRounds = 5
+		this.currentRound = 2
+
+		this.consequenceLength = 2
+		this.validKeys = this.getValidKeys()
 	}
 
-	generateSequence() {
-		const validKeys = this.data.getValidKeys()
-		const sequenceLength = this.data.getSequenceLength()
-
-		const generated = Array.from({ length: sequenceLength }, () => {
-			const randomIndex = Math.floor(Math.random() * validKeys.length)
-			return validKeys[randomIndex]
-		})
-
-		this.data.setModelConsequence(generated)
+	setDifficulty(difficulty) {
+		this.difficulty = difficulty
+		this.validKeys = this.getValidKeys()
 	}
 
-	checkSequence() {
-		const player = this.data.getPlayerConsequence()
-		const model = this.data.getModelConsequence()
-
-		return player.every((key, index) => key === model[index])
+	getDifficulty() {
+		return this.difficulty
 	}
 
-	isRoundComplete() {
-		return this.checkSequence()
+	setCurrentRound(round) {
+		this.currentRound = round
 	}
 
-	nextRound() {
-		if (this.data.getCurrentRound() < this.data.getMaxRounds()) {
-			this.data.setCurrentRound(this.data.getCurrentRound() + 1)
-			console.log('Next round started')
-		} else {
-			console.log('Game Over')
-		}
+	getCurrentRound() {
+		return this.currentRound
+	}
+
+	getMaxRounds() {
+		return this.maxRounds
+	}
+
+	setGeneratedConsequence(sequence) {
+		this.generatedConsequence = sequence
+	}
+
+	getGeneratedConsequence() {
+		return this.generatedConsequence
+	}
+
+	setPlayerConsequence(sequence) {
+		this.playerConsequence = sequence
+	}
+
+	getPlayerConsequence() {
+		return this.playerConsequence
+	}
+
+	setSequenceLength(length) {
+		this.sequenceLength = length
+	}
+
+	getSequenceLength() {
+		return 2 + (this.currentRound - 1) * 2
+	}
+
+	getValidKeys() {
+		return levels[this.difficulty]
+	}
+
+	resetRound() {
+		this.generatedConsequence = []
+		this.playerConsequence = []
+	}
+
+	resetGame() {
+		this.resetRound()
+		this.currentRound = 1
 	}
 }

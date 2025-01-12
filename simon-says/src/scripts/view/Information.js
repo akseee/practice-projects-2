@@ -28,13 +28,13 @@ export default class Information extends Component {
 			text: 'Waiting for the game to start',
 		})
 
-		const currentRound = '1'
-		const maxRounds = '6'
+		this.currentRound = '1'
+		this.maxRounds = '6'
 
 		const roundsText = new Component({
 			tag: 'h2',
 			className: 'rounds',
-			text: `Round ${currentRound}/${maxRounds}`,
+			text: `Round ${this.currentRound}/${this.maxRounds}`,
 		})
 
 		const status = new Component(

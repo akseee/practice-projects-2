@@ -34,15 +34,9 @@ export default class Header extends Component {
 			hard: hardButton,
 		}
 
-		easyButton.addListener('click', () =>
-			this.#handleDifficultyChange('easy', onDifficultyChange)
-		)
-		mediumButton.addListener('click', () =>
-			this.#handleDifficultyChange('medium', onDifficultyChange)
-		)
-		hardButton.addListener('click', () =>
-			this.#handleDifficultyChange('hard', onDifficultyChange)
-		)
+		easyButton.addListener('click', () => onDifficultyChange)
+		mediumButton.addListener('click', () => onDifficultyChange)
+		hardButton.addListener('click', () => onDifficultyChange)
 
 		const difficultyNode = new Component(
 			{ tag: 'div', className: 'difficulty' },

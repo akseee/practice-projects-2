@@ -34,6 +34,10 @@ export default class Component {
 		return this.#children
 	}
 
+	querySelector(selector) {
+		return this.#node.querySelector(selector)
+	}
+
 	setTextContent(content) {
 		this.#node.textContent = content
 	}
