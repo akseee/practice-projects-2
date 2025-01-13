@@ -1,0 +1,185 @@
+/* information div */
+
+.information {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	width: 100%;
+}
+
+.controls {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+	border: 1px solid transparent;
+}
+
+.controls .button {
+	width: 100%;
+	border-radius: 0.8rem;
+	opacity: 0.5;
+}
+
+.controls .button:hover {
+	opacity: 1;
+}
+
+.start {
+	background-color: var(--main-color);
+}
+
+.option {
+	background-color: #adadff;
+}
+
+.option[disabled] {
+	opacity: 0.2;
+	pointer-events: none;
+}
+
+.status {
+	display: grid;
+	grid-template-columns: 1fr fit-content(100%);
+	padding: 0.5rem 0.7rem;
+}
+
+.info {
+	font-weight: bold;
+	font-style: italic;
+}
+
+/* display div */
+
+.display {
+	width: 100%;
+	padding: 0.5rem;
+}
+
+.display-wrapper {
+	display: flex;
+	justify-content: center;
+	border-radius: 1rem;
+	padding-bottom: 1rem;
+	box-shadow: 0 0 25px #7d7d7d;
+}
+
+.output {
+	display: flex;
+	gap: 1rem;
+	padding: 0.5rem;
+	font-weight: bold;
+	font-size: 1rem;
+}
+
+.output-key {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-bottom: 2px solid var(--main-color);
+	padding: 1rem 1rem 0.4rem;
+}
+
+.output-key.wrong {
+	border-color: red;
+	color: red;
+}
+
+/* keyboard div */
+
+.keyboard {
+	display: grid;
+	grid-template-columns: repeat(9, 1fr);
+	gap: 1rem;
+	width: 100%;
+	height: 100%;
+	padding: 1rem;
+}
+
+.button.key {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 40px;
+	height: 40px;
+	padding: 0;
+	font-size: 200%;
+}
+
+.button.key:hover {
+	color: var(--main-color);
+}
+
+.button.key:active,
+.button.key.active {
+	box-shadow: 0 0 10px 10px var(--main-color);
+	color: black;
+	background-color: var(--main-color);
+}
+
+.button.key.wrong {
+	box-shadow: 0 0 10px 10px var(--hard);
+	color: black;
+	background-color: var(--hard);
+}
+
+.key[disabled] {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+.key[disabled]:hover,
+.key[disabled]:active,
+.key[disabled].active {
+	box-shadow: none;
+	color: black;
+	background-color: transparent;
+}
+
+@media ((768px <= width )) {
+	/* x */
+}
+
+@media (width < 768px) {
+	.status {
+		display: flex;
+		flex-direction: column-reverse;
+		align-items: start;
+		gap: 0.5rem;
+	}
+
+	.rounds {
+		font-size: 1rem;
+	}
+
+	.display {
+		padding: 0.5rem;
+	}
+
+	.display-wrapper {
+		padding-bottom: 0;
+	}
+
+	.output {
+		gap: 0;
+	}
+
+	.output-key {
+		padding: 0.5rem;
+	}
+
+	.button.key {
+		width: 30px;
+		height: 30px;
+		font-size: 100%;
+	}
+
+	.button.key.active {
+		box-shadow: 0 0 3px 3px var(--main-color);
+		color: black;
+		background-color: var(--main-color);
+	}
+
+	.button.key:active {
+		box-shadow: 0 0 3px 3px var(--main-color);
+	}
+}
