@@ -2,10 +2,16 @@
 import AppModel from './scripts/AppModel'
 import AppPresenter from './scripts/AppPresenter'
 import AppView from './scripts/AppView'
+import { levels } from './scripts/utils/constants'
 import './style.css'
 
-const appModel = new AppModel()
-const appView = new AppView()
-const appPresenter = new AppPresenter(appView)
+const page = new AppView()
+const model = new AppModel()
+model.levels = levels
 
-document.body.appendChild(appView.getNode())
+const app = new AppPresenter({
+	model,
+	page,
+})
+
+app.renderView()

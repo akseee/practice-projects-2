@@ -4,7 +4,7 @@ export default class AppModel {
 	constructor() {
 		this.difficulty = 'easy'
 
-		this.levels = levels
+		this._levels = levels
 
 		this.generatedConsequence = []
 		this.playerConsequence = []
@@ -14,6 +14,14 @@ export default class AppModel {
 
 		this.consequenceLength = 2
 		this.validKeys = this.getValidKeys()
+	}
+
+	set levels(levels) {
+		this._levels = levels
+	}
+
+	get levels() {
+		return this._levels
 	}
 
 	setDifficulty(difficulty) {
