@@ -118,6 +118,7 @@ export default class AppPresenter {
 		this.keyboard.setupKeyboard(this.model.keys)
 
 		this.view.setActiveDifficultyButton(difficulty)
+		this.keyboard.disableKeyboard()
 	}
 
 	bindButtonListeners() {
