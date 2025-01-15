@@ -246,6 +246,7 @@ class AppPresenter {
     this.model.generateSequence();
     this.keyboard.setupKeyboard(this.model.keys);
     this.view.setActiveDifficultyButton(difficulty);
+    this.keyboard.disableKeyboard();
   }
   bindButtonListeners() {
     this.view.start.addListener("click", () => {
@@ -669,4 +670,4 @@ const app = new AppPresenter({
 });
 app.setup();
 app.render();
-//# sourceMappingURL=index-JIjzmK_3.js.map
+//# sourceMappingURL=index-ChqqzQl2.js.map
