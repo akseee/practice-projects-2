@@ -46,6 +46,10 @@ export default class Component {
 		this.#node.setAttribute(attribute, value)
 	}
 
+	getAttribute(attribute) {
+		return this.#node.getAttribute(attribute)
+	}
+
 	removeAttribute(attribute) {
 		this.#node.removeAttribute(attribute)
 	}
@@ -70,12 +74,8 @@ export default class Component {
 		this.#node.removeEventListener(event, listener, options)
 	}
 
-	setDisabled() {
-		this.#node.disabled = true
-	}
-
-	removeDisabled() {
-		this.#node.disabled = false
+	setDisabled(disabled) {
+		this.#node.disabled = disabled
 	}
 
 	setLink(link) {

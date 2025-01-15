@@ -1,10 +1,12 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vite'
 
 export default defineConfig({
+	base: './',
 	build: {
 		minify: false,
 		emptyOutDir: true,
 		sourcemap: true,
+		outDir: 'dist',
 		polyfillModulePreload: false,
 		rollupOptions: {
 			output: {
@@ -19,4 +21,4 @@ export default defineConfig({
 	esbuild: {
 		legalComments: 'none',
 	},
-});
+})

@@ -50,15 +50,16 @@
 
 /* display div */
 
-.display {
+.keyboardWrapper {
 	width: 100%;
-	padding: 0.5rem;
 }
 
-.display-wrapper {
+.display {
 	display: flex;
 	justify-content: center;
+	width: 100%;
 	border-radius: 1rem;
+	padding: 0.5rem;
 	padding-bottom: 1rem;
 	box-shadow: 0 0 25px #7d7d7d;
 }
@@ -66,41 +67,36 @@
 .output {
 	display: flex;
 	gap: 1rem;
+	width: 100%;
 	padding: 0.5rem;
+	padding: 1rem 1rem 0.4rem;
 	font-weight: bold;
 	font-size: 1rem;
+	letter-spacing: 1rem;
+	text-align: center;
 }
 
-.output-key {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border-bottom: 2px solid var(--main-color);
-	padding: 1rem 1rem 0.4rem;
-}
-
-.output-key.wrong {
-	border-color: red;
-	color: red;
+.output:focus {
+	outline: none;
 }
 
 /* keyboard div */
 
 .keyboard {
 	display: grid;
-	grid-template-columns: repeat(9, 1fr);
+	grid-template-columns: repeat(10, 1fr);
 	gap: 1rem;
 	width: 100%;
 	height: 100%;
-	padding: 1rem;
+	padding: 1.5rem;
 }
 
 .button.key {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 40px;
-	height: 40px;
+	width: 100%;
+	min-height: 40px;
 	padding: 0;
 	font-size: 200%;
 }
@@ -109,7 +105,6 @@
 	color: var(--main-color);
 }
 
-.button.key:active,
 .button.key.active {
 	box-shadow: 0 0 10px 10px var(--main-color);
 	color: black;
@@ -128,7 +123,6 @@
 }
 
 .key[disabled]:hover,
-.key[disabled]:active,
 .key[disabled].active {
 	box-shadow: none;
 	color: black;
@@ -168,9 +162,8 @@
 	}
 
 	.button.key {
-		width: 30px;
-		height: 30px;
 		font-size: 100%;
+		text-transform: uppercase;
 	}
 
 	.button.key.active {

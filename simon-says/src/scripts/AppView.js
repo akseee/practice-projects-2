@@ -1,62 +1,38 @@
 import Component from './base/Component'
-import { keys } from './utils/constants'
+import DifficultyButton from './view/DifficultyButton'
 
-import BoardKey from './view/BoardKey'
 import Link from './view/Link'
-import OutputKey from './view/OutputKey'
 
 export default class AppView extends Component {
 	constructor() {
 		super({ tag: 'div', className: 'page' })
-		this._keysList = keys
-		this._outputList = ['a', 'b', 'c']
 
 		this.header = new Component({
 			tag: 'header',
 			className: 'header',
 		})
 
-		this.body = new Component({ tag: 'main', className: 'main' })
-
-		this.footer = new Component({
-			tag: 'footer',
-			className: 'footer',
-		})
-
-		this.renderHeader()
-		this.renderBody()
-		this.renderFooter()
-		this.appendChildren([this.header, this.body, this.footer])
-	}
-
-	renderHeader() {
 		this.title = new Component({
 			tag: 'h1',
 			className: 'title',
-			text: 'Проверяющие, работа не готова:( Извините',
+			text: 'Simon Saysssss',
 		})
 
-		this.easyButton = new Component({
-			tag: 'button',
-			className: 'button easy ',
-			text: 'easy',
-		})
-		this.mediumButton = new Component({
-			tag: 'button',
-			className: 'button medium',
-			text: 'medium',
-		})
-		this.hardButton = new Component({
-			tag: 'button',
-			className: 'button hard',
-			text: 'hard',
-		})
+		this.easyButton = new DifficultyButton('easy')
 
-		this.easyButton.addListener('click', () => this.onDifficultyChange('easy'))
-		this.mediumButton.addListener('click', () =>
-			this.onDifficultyChange('medium')
+		this.mediumButton = new DifficultyButton('medium')
+
+		this.hardButton = new DifficultyButton('hard')
+
+		this.easyButton.addListener('click', () =>
+			this.presenter.onDifficultyChange('easy')
 		)
-		this.hardButton.addListener('click', () => this.onDifficultyChange('hard'))
+		this.mediumButton.addListener('click', () =>
+			this.presenter.onDifficultyChange('medium')
+		)
+		this.hardButton.addListener('click', () =>
+			this.presenter.onDifficultyChange('hard')
+		)
 
 		this.difficulty = new Component(
 			{ tag: 'div', className: 'difficulty' },
@@ -66,68 +42,50 @@ export default class AppView extends Component {
 		)
 
 		this.header.appendChildren([this.title, this.difficulty])
-	}
 
-	renderBody() {
-		this.information = new Component({ tag: 'div', className: 'information' })
-		const startBtn = new Component({
+		this.body = new Component({ tag: 'main', className: 'main' })
+
+		this.optionalBtn = new Component({
+			tag: 'button',
+			className: 'button option ',
+			text: 'click above to start game :)',
+		})
+		this.optionalBtn.setDisabled(true)
+		this.startBtn = new Component({
 			tag: 'button',
 			className: 'button start ',
 			text: 'start new game',
 		})
 
-		const optionalBtn = new Component({
-			tag: 'button',
-			className: 'button option ',
-			text: '...repeat sequence',
-		})
+		this.controls = new Component({ tag: 'div', className: 'controls' })
+		this.controls.appendChildren([this.startBtn, this.optionalBtn])
 
-		const controls = new Component({ tag: 'div', className: 'controls' })
-		controls.appendChildren([startBtn, optionalBtn])
-
-		const infoText = new Component({
+		this.infoText = new Component({
 			tag: 'p',
 			className: 'info',
-			text: 'Слишком намудрила себе. Буду благодарна если будет возможность перепроверить потом',
+			text: '...waiting for the game to start',
 		})
 
-		const roundsText = new Component({
+		this.roundsText = new Component({
 			tag: 'h2',
 			className: 'rounds',
 			text: `Round 1/6`,
 		})
 
-		const status = new Component({ tag: 'div', className: 'status' })
-		status.appendChildren([infoText, roundsText])
+		this.status = new Component({ tag: 'div', className: 'status' })
+		this.status.appendChildren([this.infoText, this.roundsText])
 
-		this.information.appendChildren([controls, status])
+		this.information = new Component({ tag: 'div', className: 'information' })
+		this.information.appendChildren([this.controls, this.status])
 
-		this.output = new Component({ tag: 'div', className: 'output' })
-		this.output.appendChildren(
-			this._outputList.map((output) => {
-				return new OutputKey({ text: output })
-			})
-		)
-		this.display = new Component(
-			{ tag: 'div', className: 'display' },
-			new Component(
-				{
-					tag: 'div',
-					className: 'display-wrapper',
-				},
-				this.output
-			)
-		)
-		this.keyboard = new Component({ tag: 'div', className: 'keyboard' })
-		this.keyboard.appendChildren(
-			this._keysList.map((text) => {
-				return new BoardKey({ text: text })
-			})
-		)
-		this.body.appendChildren([this.information, this.display, this.keyboard])
-	}
+		this.keyboard = null
+		this.body.append(this.information)
 
-	renderFooter() {
+		this.footer = new Component({
+			tag: 'footer',
+			className: 'footer',
+		})
+
 		this.footer.append(
 			new Link({
 				className: '',
@@ -136,9 +94,29 @@ export default class AppView extends Component {
 				onClick: () => {},
 			})
 		)
+		this.render()
 	}
 
-	onDifficultyChange(difficulty) {
-		console.log(difficulty)
+	setPresenter(presenter) {
+		this.presenter = presenter
+	}
+
+	render() {
+		this.appendChildren([this.header, this.body, this.footer])
+	}
+
+	renderKeyboard(keyboard) {
+		this.keyboard = keyboard
+		this.body.append(this.keyboard)
+	}
+
+	setActiveDifficultyButton(difficulty) {
+		;[this.easyButton, this.mediumButton, this.hardButton].forEach((button) => {
+			if (button.getAttribute('data-difficulty') === difficulty) {
+				button.setActive(true)
+			} else {
+				button.setActive(false)
+			}
+		})
 	}
 }

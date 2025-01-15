@@ -2,84 +2,60 @@ import { levels } from './utils/constants'
 
 export default class AppModel {
 	constructor() {
-		this.difficulty = 'easy'
+		this._difficulty = 'easy'
+		this.levels = levels
 
-		this._levels = levels
-
-		this.generatedConsequence = []
-		this.playerConsequence = []
+		this.generatedSequence = []
 
 		this.maxRounds = 5
-		this.currentRound = 2
+		this.currentRound = 1
 
-		this.consequenceLength = 2
-		this.validKeys = this.getValidKeys()
+		this.anotherLife = true
+		this.isPlaying = false
+
+		this.info = {
+			next: 'continue',
+			start: 'start new game',
+			repeat: '...repeat sequence just one more time',
+			over: 'better luck next time!',
+		}
 	}
 
-	set levels(levels) {
-		this._levels = levels
+	get sequence() {
+		return this.generatedSequence
 	}
 
-	get levels() {
-		return this._levels
+	get keys() {
+		return this.levels[this._difficulty]
 	}
 
-	setDifficulty(difficulty) {
-		this.difficulty = difficulty
-		this.validKeys = this.getValidKeys()
+	set difficulty(difficulty) {
+		this._difficulty = difficulty
 	}
 
-	getDifficulty() {
-		return this.difficulty
+	generateSequence() {
+		const sequenceLength = this.getSequenceLength()
+
+		const generated = Array.from({ length: sequenceLength }, () => {
+			const randomIndex = Math.floor(Math.random() * this.keys.length)
+
+			return this.keys[randomIndex]
+		})
+
+		this.generatedSequence = generated
+		console.log(generated)
+		return generated
 	}
 
-	setCurrentRound(round) {
-		this.currentRound = round
+	setIsPlaying(playing) {
+		this.isPlaying = playing
 	}
 
-	getCurrentRound() {
-		return this.currentRound
-	}
-
-	getMaxRounds() {
-		return this.maxRounds
-	}
-
-	setGeneratedConsequence(sequence) {
-		this.generatedConsequence = sequence
-	}
-
-	getGeneratedConsequence() {
-		return this.generatedConsequence
-	}
-
-	setPlayerConsequence(sequence) {
-		this.playerConsequence = sequence
-	}
-
-	getPlayerConsequence() {
-		return this.playerConsequence
-	}
-
-	setSequenceLength(length) {
-		this.sequenceLength = length
+	getCurrentKeys() {
+		return this.levels[this.difficulty]
 	}
 
 	getSequenceLength() {
 		return 2 + (this.currentRound - 1) * 2
-	}
-
-	getValidKeys() {
-		return levels[this.difficulty]
-	}
-
-	resetRound() {
-		this.generatedConsequence = []
-		this.playerConsequence = []
-	}
-
-	resetGame() {
-		this.resetRound()
-		this.currentRound = 1
 	}
 }
