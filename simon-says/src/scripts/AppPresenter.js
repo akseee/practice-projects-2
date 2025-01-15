@@ -5,97 +5,138 @@ export default class AppPresenter {
 		this.keyboard = keyboard
 	}
 
+	setup() {
+		this.keyboard.setPresenter(this)
+		this.keyboard.setupKeyboard(this.model.keys)
+		this.keyboard.disableKeyboard()
+		this.view.renderKeyboard(this.keyboard)
+
+		this.view.setInitialButtonState()
+		this.bindButtonListeners()
+	}
+
 	render() {
 		document.body.appendChild(this.view.getNode())
 	}
 
-	init() {
+	startRound() {
+		this.model.resetClicks()
 		this.model.generateSequence()
-
-		this.view.setPresenter(this)
-
-		this.keyboard.setPresenter(this)
-		this.keyboard.setupKeyboard(this.model.keys)
-		this.view.renderKeyboard(this.keyboard)
-
-		this.view.setInitialButtonState()
+		this.keyboard.clearOutput()
+		this.view.changeRoundsText(this.model.currentRound)
+		this.showSequence(true)
 	}
 
-	onDifficultyChange(difficulty) {
-		this.model.difficulty = difficulty
+	completeRound() {
+		if (this.model.currentRound < 5) {
+			this.view.setNextRoundButtons()
+			this.model.currentRound += 1
+			this.keyboard.disableKeyboard()
+		} else {
+			this.view.changeInfoText(this.model.info.win)
+			this.gameOver()
+		}
+	}
+
+	gameOver() {
+		this.keyboard.disableKeyboard()
+		this.view.setRoundButtons()
+	}
+
+	resetGame() {
+		this.model.currentRound = 1
+		this.model.resetAttempt()
+		this.model.resetClicks()
+
+		this.view.changeInfoText(this.model.info.idle)
+		this.view.changeRoundsText(1)
+		this.view.setDifficultyButtonsDisabled(false)
+	}
+
+	// keyboard handlers
+
+	showSequence(repeat) {
+		this.keyboard.showSequence(this.model.sequence, repeat)
+	}
+
+	handleInput(key) {
+		const expected = this.model.sequence[this.model.clicks]
+		if (expected === key) {
+			this.keyboard.printKey(key)
+			this.keyboard.highlightKey(key, true)
+			this.model.clicks += 1
+
+			if (this.model.sequence.length === this.model.clicks) {
+				this.completeRound()
+			}
+		} else {
+			this.keyboard.highlightKey(key, false)
+			this.handleWrongInput()
+		}
+	}
+
+	handleWrongInput() {
+		this.keyboard.disableKeyboard()
+		if (this.model.attempt) {
+			this.view.changeInfoText(this.model.info.incorrect)
+			this.keyboard.disableKeyboard()
+			this.keyboard.clearOutput()
+			this.model.useAttempt()
+		} else {
+			this.view.changeInfoText(this.model.info.lost)
+			this.view.setAfterRepeatButtons()
+		}
+	}
+
+	// buttons listeners
+
+	handleStartButton() {
+		console.log('Game is started! Good luck')
+
+		this.view.setDifficultyButtonsDisabled(true)
+		this.view.changeInfoText(this.model.info.start)
+		this.startRound()
+	}
+
+	handleRepeatButton() {
+		this.showSequence(false)
+		this.view.changeInfoText(this.model.info.life)
+	}
+
+	handleNextButton() {
+		this.startRound()
+	}
+
+	handleRestartButton() {
+		this.setup()
+		this.resetGame()
+	}
+
+	handleDifficultyChange(difficulty) {
+		this.model.setDifficulty(difficulty)
 		this.model.generateSequence()
 		this.keyboard.setupKeyboard(this.model.keys)
 
 		this.view.setActiveDifficultyButton(difficulty)
 	}
 
-	handleStartButton() {
-		console.log('gameStarted')
-		this.view.setDifficultyButtonsDisabled(true)
-		this.view.changeInfoText(this.model.info.start)
+	bindButtonListeners() {
+		this.view.start.addListener('click', () => {
+			this.handleStartButton()
+		})
 
-		this.startRound()
-	}
+		this.view.repeat.addListener('click', () => this.handleRepeatButton())
+		this.view.restart.addListener('click', () => this.handleRestartButton())
+		this.view.next.addListener('click', () => this.handleNextButton())
 
-	startRound() {
-		this.view.changeRoundsText(this.model.currentRound)
-		this.showSequence(true)
-		this.model.isPlaying = true
-	}
-
-	handleNextButton() {
-		console.log('next')
-	}
-
-	nextRound() {}
-
-	gameOver() {}
-
-	showSequence(repeat) {
-		this.keyboard.showSequence(this.model.sequence, repeat)
-	}
-
-	handleRestartButton() {
-		this.view.setInitialButtonState()
-		this.resetGame()
-	}
-
-	resetGame() {
-		this.model.currentRound = 1
-		this.model.attempt = true
-		this.model.isPlaying = false
-		this.model.generateSequence()
-		this.view.changeInfoText(this.model.info.idle)
-		this.view.changeRoundsText(1)
-	}
-
-	handleRepeatButton() {
-		this.view.changeInfoText(this.model.info.life)
-		this.showSequence(false)
-		this.view.changeInfoText(this.model.info.life)
-	}
-
-	handleInput(key) {
-		if (1) {
-			this.keyboard.highlightKey(key)
-		} else {
-			this.handleWrongInput()
-			this.keyboard.highlightKey(key, false)
-		}
-	}
-
-	handleWrongInput() {
-		if (1) {
-			this.model.attempt = false
-			this.view.changeInfoText(this.model.info.life)
-			this.view.changeInfoText(this.model.info.wrong)
-
-			console.log('one more life')
-		} else {
-			this.view.changeInfoText(this.model.info.lost)
-			this.view.changeInfoText(this.model.info.wrong)
-
-			console.log('no more life')
-		}
+		this.view.easyButton.addListener('click', () =>
+			this.handleDifficultyChange('easy')
+		)
+		this.view.mediumButton.addListener('click', () =>
+			this.handleDifficultyChange('medium')
+		)
+		this.view.hardButton.addListener('click', () =>
+			this.handleDifficultyChange('hard')
+		)
 	}
 }

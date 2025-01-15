@@ -19,6 +19,7 @@ export default class VirtualKeyboard extends Component {
 
 		this.keyboard = new Component({ tag: 'div', className: 'keyboard' })
 
+		this.handlePhysicalPress = this.handlePhysicalPress.bind(this)
 		this.render()
 	}
 
@@ -73,19 +74,39 @@ export default class VirtualKeyboard extends Component {
 	}
 
 	enableKeyboard() {
-		this.getAllKeys().map((key) => key.setDisabled(false))
-		this.getAllKeys().map((key) =>
-			key.addListener('click', () => {
+		this.getAllKeys().forEach((key) => {
+			key.setDisabled(false)
+
+			key.setClickListener(() => {
 				this.presenter.handleInput(key.getValue())
 			})
-		)
+		})
+
+		document.addEventListener('keydown', this.handlePhysicalPress)
 	}
 
 	disableKeyboard() {
 		this.getAllKeys().map((key) => key.setDisabled(true))
+		document.removeEventListener('keydown', this.handlePhysicalPress)
+	}
 
-		// this.getAllKeys().map((key) =>
+	handlePhysicalPress(event) {
+		const keyValue = event.key.toLowerCase()
+		const availableKeys = this.getAllKeys().map((key) =>
+			key.getValue().toLowerCase()
+		)
 
-		// )
+		if (availableKeys.includes(keyValue)) {
+			this.presenter.handleInput(keyValue)
+		}
+	}
+
+	printKey(key) {
+		const currentText = this.output.getAttribute('value') || ''
+		this.output.setAttribute('value', currentText + key)
+	}
+
+	clearOutput() {
+		this.output.setAttribute('value', '')
 	}
 }

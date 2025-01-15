@@ -6,12 +6,12 @@ export default class AppModel {
 		this.levels = levels
 
 		this.generatedSequence = []
+		this.clicks = 0
 
 		this.maxRounds = 5
 		this.currentRound = 1
 
 		this.attempt = true
-		this.isPlaying = false
 
 		this.button = {
 			next: 'continue',
@@ -23,14 +23,22 @@ export default class AppModel {
 		this.info = {
 			idle: '...waiting for the game to start',
 			start: 'Focus and repeat the sequence. You have one life extra',
-			life: 'Dont cheat (open console :))',
-			lost: 'Hint: open console to see the sequence:) Another try?',
+			life: 'Dont cheat! Joke. Open console.',
+			correct: 'Well done! Next to continue',
+			incorrect:
+				'Oopsie, wrong one. You have one more attempt. Click the button above',
+			lost: 'You lost:( Hint: open console to see the sequence. Another try?',
 			win: 'Congrats! You nailed it! One more try?',
 		}
 	}
 
 	get sequence() {
 		return this.generatedSequence
+	}
+
+	set sequence(sequence) {
+		// @ts-ignore
+		this.generateSequence = sequence
 	}
 
 	get keys() {
@@ -55,6 +63,10 @@ export default class AppModel {
 		return generated
 	}
 
+	clearSequence() {
+		this.sequence = []
+	}
+
 	setIsPlaying(playing) {
 		this.isPlaying = playing
 	}
@@ -65,5 +77,21 @@ export default class AppModel {
 
 	getSequenceLength() {
 		return 2 + (this.currentRound - 1) * 2
+	}
+
+	resetClicks() {
+		this.clicks = 0
+	}
+
+	setDifficulty(difficulty) {
+		this.difficulty = difficulty
+	}
+
+	useAttempt() {
+		this.attempt = false
+	}
+
+	resetAttempt() {
+		this.attempt = true
 	}
 }

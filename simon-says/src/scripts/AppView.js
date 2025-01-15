@@ -24,16 +24,6 @@ export default class AppView extends Component {
 
 		this.hardButton = new DifficultyButton('hard')
 
-		this.easyButton.addListener('click', () =>
-			this.presenter.onDifficultyChange('easy')
-		)
-		this.mediumButton.addListener('click', () =>
-			this.presenter.onDifficultyChange('medium')
-		)
-		this.hardButton.addListener('click', () =>
-			this.presenter.onDifficultyChange('hard')
-		)
-
 		this.difficulty = new Component(
 			{ tag: 'div', className: 'difficulty' },
 			this.easyButton,
@@ -68,15 +58,6 @@ export default class AppView extends Component {
 			className: 'button next',
 			text: 'next',
 		})
-
-		this.start.addListener('click', () => {
-			this.presenter.handleStartButton()
-		})
-		this.repeat.addListener('click', () => this.presenter.handleRepeatButton())
-		this.restart.addListener('click', () =>
-			this.presenter.handleRestartButton()
-		)
-		this.next.addListener('click', () => this.presenter.handleNextButton())
 
 		this.controls = new Component({ tag: 'div', className: 'controls' })
 		this.controls.appendChildren([
@@ -124,10 +105,6 @@ export default class AppView extends Component {
 		this.setInitialButtonState()
 	}
 
-	setPresenter(presenter) {
-		this.presenter = presenter
-	}
-
 	render() {
 		this.appendChildren([this.header, this.body, this.footer])
 	}
@@ -170,6 +147,15 @@ export default class AppView extends Component {
 		this.restart.setDisabled(false)
 
 		this.next.setDisabled(true)
+	}
+
+	setNextRoundButtons() {
+		this.start.setVisible(false)
+		this.next.setVisible(true)
+		this.next.setDisabled(false)
+
+		this.repeat.setDisabled(true)
+		this.restart.setDisabled(true)
 	}
 
 	setActiveDifficultyButton(difficulty) {

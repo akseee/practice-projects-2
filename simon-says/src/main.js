@@ -20,5 +20,5 @@ const app = new AppPresenter({
 	keyboard,
 })
 
-app.init()
+app.setup()
 app.render()
