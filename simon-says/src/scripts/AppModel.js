@@ -10,14 +10,22 @@ export default class AppModel {
 		this.maxRounds = 5
 		this.currentRound = 1
 
-		this.anotherLife = true
-		this.isPlaying = false
+		this.attempt = true
+		// this.isPlaying = false
+
+		this.button = {
+			next: 'continue',
+			start: 'new game',
+			repeat: 'repeat',
+			over: 'better luck next time!',
+		}
 
 		this.info = {
-			next: 'continue',
-			start: 'start new game',
-			repeat: '...repeat sequence just one more time',
-			over: 'better luck next time!',
+			start: 'Focus and repeat the sequence. You have one life extra',
+			life: 'It is okay, but dont make the mistake again',
+			lost: 'Open console to see the senquence:) Another try?',
+			win: 'Big brain... what can i say',
+			wrong: 'Oooooopsie',
 		}
 	}
 

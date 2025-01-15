@@ -25,4 +25,36 @@ export default class AppPresenter {
 
 		this.view.setActiveDifficultyButton(difficulty)
 	}
+
+	startGame() {
+		console.log('gameStarted')
+		this.view.setDifficultyButtonsDisabled(true)
+		this.view.changeInfoText(this.model.info.start)
+		this.view.changeRoundsText(this.model.currentRound)
+		this.view.setToggleButton(true)
+	}
+
+	gameOver() {}
+
+	handleRepeatButton() {
+		this.view.setDisableRepeat(true)
+		this.view.changeInfoText(this.model.info.life)
+	}
+
+	handleWrongInput() {
+		this.view.changeInfoText(this.model.info.wrong)
+
+		if (this.model.attempt) {
+			this.model.attempt = false
+			this.view.changeInfoText(this.model.info.life)
+			console.log('one more life')
+		} else {
+			this.view.changeInfoText(this.model.info.lost)
+			console.log('no more life')
+		}
+	}
+
+	startRound() {
+		this.model.setIsPlaying(true)
+	}
 }

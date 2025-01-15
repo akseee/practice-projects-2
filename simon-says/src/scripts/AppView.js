@@ -45,20 +45,42 @@ export default class AppView extends Component {
 
 		this.body = new Component({ tag: 'main', className: 'main' })
 
-		this.optionalBtn = new Component({
-			tag: 'button',
-			className: 'button option ',
-			text: 'click above to start game :)',
-		})
-		this.optionalBtn.setDisabled(true)
-		this.startBtn = new Component({
+		this.start = new Component({
 			tag: 'button',
 			className: 'button start ',
-			text: 'start new game',
+			text: 'START',
+		})
+
+		this.start.addListener('click', () => {
+			this.presenter.startGame()
+		})
+
+		this.repeat = new Component({
+			tag: 'button',
+			className: 'button repeat ',
+			text: 'repeat',
+		})
+		this.repeat.addListener('click', () => this.presenter.handleRepeatButton())
+
+		this.restart = new Component({
+			tag: 'button',
+			className: 'button restart ',
+			text: 'new game',
+		})
+
+		this.next = new Component({
+			tag: 'button',
+			className: 'button next',
+			text: 'next',
 		})
 
 		this.controls = new Component({ tag: 'div', className: 'controls' })
-		this.controls.appendChildren([this.startBtn, this.optionalBtn])
+		this.controls.appendChildren([
+			this.start,
+			this.next,
+			this.repeat,
+			this.restart,
+		])
 
 		this.infoText = new Component({
 			tag: 'p',
@@ -69,7 +91,7 @@ export default class AppView extends Component {
 		this.roundsText = new Component({
 			tag: 'h2',
 			className: 'rounds',
-			text: `Round 1/6`,
+			text: `Round 1/5`,
 		})
 
 		this.status = new Component({ tag: 'div', className: 'status' })
@@ -95,6 +117,7 @@ export default class AppView extends Component {
 			})
 		)
 		this.render()
+		this.setInitialButtonState()
 	}
 
 	setPresenter(presenter) {
@@ -110,6 +133,41 @@ export default class AppView extends Component {
 		this.body.append(this.keyboard)
 	}
 
+	setInitialButtonState() {
+		this.next.setVisible(false)
+		this.restart.setDisabled(true)
+		this.repeat.setDisabled(true)
+	}
+
+	setToggleButton(playing) {
+		if (playing) {
+			this.setActivateNext(playing)
+			this.start.setVisible(false)
+		} else {
+			this.setInitialButtonState()
+		}
+	}
+
+	setDisableRepeat(disabled) {
+		this.repeat.setDisabled(disabled)
+	}
+
+	setActiveOptions() {
+		this.next.setDisabled(false)
+		this.repeat.setDisabled(false)
+		this.restart.setDisabled(false)
+	}
+
+	setActivateNext(valid) {
+		this.next.setVisible(true)
+		this.setActiveOptions()
+		if (!valid) {
+			this.next.setDisabled(false)
+		} else {
+			this.next.setDisabled(true)
+		}
+	}
+
 	setActiveDifficultyButton(difficulty) {
 		;[this.easyButton, this.mediumButton, this.hardButton].forEach((button) => {
 			if (button.getAttribute('data-difficulty') === difficulty) {
@@ -119,4 +177,28 @@ export default class AppView extends Component {
 			}
 		})
 	}
+
+	setDifficultyButtonsDisabled(disabled) {
+		;[this.easyButton, this.mediumButton, this.hardButton].forEach((button) => {
+			button.setDisabled(disabled)
+		})
+	}
+
+	changeInfoText(text) {
+		this.infoText.setTextContent(text)
+	}
+
+	changeRoundsText(round) {
+		this.roundsText.setTextContent(`Round ${round}/5`)
+	}
+
+	changeStartText(text) {
+		this.start.setTextContent(text)
+	}
+
+	displaySequence() {}
+
+	disabledKeyboard() {}
+
+	updateStateText() {}
 }

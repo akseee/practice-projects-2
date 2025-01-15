@@ -58,6 +58,14 @@ export default class Component {
 		this.#node.classList.toggle(className)
 	}
 
+	setVisible(visible) {
+		if (visible) {
+			this.#node.classList.remove('visually-hidden')
+		} else {
+			this.#node.classList.add('visually-hidden')
+		}
+	}
+
 	addClass(className) {
 		this.#node.classList.add(className)
 	}
