@@ -42,11 +42,31 @@ export default class VirtualKeyboard extends Component {
 	}
 
 	highlightKey(keyValue, isValid) {
-		console.log('highlightKey')
 		const key = this.getKey(keyValue)
 		if (key) {
+			key.disabled = false
 			key.classList.add(isValid ? 'active' : 'wrong')
 			setTimeout(() => key.classList.remove('active', 'wrong'), 500)
 		}
+	}
+
+	showSequence(sequence) {
+		sequence.forEach((key, index) => {
+			setTimeout(() => {
+				this.disableKeyboard()
+				this.highlightKey(key, true)
+			}, 750 * index)
+		})
+		setTimeout(() => {
+			this.enableKeyboard()
+		}, 750 * sequence.length)
+	}
+
+	enableKeyboard() {
+		this.getAllKeys().map((key) => key.setDisabled(false))
+	}
+
+	disableKeyboard() {
+		this.getAllKeys().map((key) => key.setDisabled(true))
 	}
 }

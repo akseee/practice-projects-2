@@ -148,8 +148,8 @@ export default class AppView extends Component {
 		}
 	}
 
-	setDisableRepeat(disabled) {
-		this.repeat.setDisabled(disabled)
+	setDisableRepeat() {
+		this.repeat.setDisabled(true)
 	}
 
 	setActiveOptions() {
@@ -195,10 +195,4 @@ export default class AppView extends Component {
 	changeStartText(text) {
 		this.start.setTextContent(text)
 	}
-
-	displaySequence() {}
-
-	disabledKeyboard() {}
-
-	updateStateText() {}
 }

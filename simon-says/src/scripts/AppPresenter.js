@@ -28,17 +28,24 @@ export default class AppPresenter {
 
 	startGame() {
 		console.log('gameStarted')
+		this.showSequence()
 		this.view.setDifficultyButtonsDisabled(true)
 		this.view.changeInfoText(this.model.info.start)
 		this.view.changeRoundsText(this.model.currentRound)
 		this.view.setToggleButton(true)
+		this.showSequence()
 	}
 
 	gameOver() {}
 
+	async showSequence() {
+		this.keyboard.showSequence(this.model.sequence)
+	}
+
 	handleRepeatButton() {
 		this.view.setDisableRepeat(true)
 		this.view.changeInfoText(this.model.info.life)
+		this.keyboard.showSequence(this.model.sequence)
 	}
 
 	handleWrongInput() {

@@ -2,7 +2,7 @@ import { levels } from './utils/constants'
 
 export default class AppModel {
 	constructor() {
-		this._difficulty = 'easy'
+		this._difficulty = 'hard'
 		this.levels = levels
 
 		this.generatedSequence = []
@@ -23,7 +23,7 @@ export default class AppModel {
 		this.info = {
 			start: 'Focus and repeat the sequence. You have one life extra',
 			life: 'It is okay, but dont make the mistake again',
-			lost: 'Open console to see the senquence:) Another try?',
+			lost: 'Open console to see the sequence:) Another try?',
 			win: 'Big brain... what can i say',
 			wrong: 'Oooooopsie',
 		}
