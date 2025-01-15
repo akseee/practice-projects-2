@@ -51,16 +51,11 @@ export default class AppView extends Component {
 			text: 'START',
 		})
 
-		this.start.addListener('click', () => {
-			this.presenter.startGame()
-		})
-
 		this.repeat = new Component({
 			tag: 'button',
 			className: 'button repeat ',
 			text: 'repeat',
 		})
-		this.repeat.addListener('click', () => this.presenter.handleRepeatButton())
 
 		this.restart = new Component({
 			tag: 'button',
@@ -73,6 +68,15 @@ export default class AppView extends Component {
 			className: 'button next',
 			text: 'next',
 		})
+
+		this.start.addListener('click', () => {
+			this.presenter.handleStartButton()
+		})
+		this.repeat.addListener('click', () => this.presenter.handleRepeatButton())
+		this.restart.addListener('click', () =>
+			this.presenter.handleRestartButton()
+		)
+		this.next.addListener('click', () => this.presenter.handleNextButton())
 
 		this.controls = new Component({ tag: 'div', className: 'controls' })
 		this.controls.appendChildren([
@@ -91,7 +95,7 @@ export default class AppView extends Component {
 		this.roundsText = new Component({
 			tag: 'h2',
 			className: 'rounds',
-			text: `Round 1/5`,
+			text: `:)`,
 		})
 
 		this.status = new Component({ tag: 'div', className: 'status' })
@@ -133,39 +137,39 @@ export default class AppView extends Component {
 		this.body.append(this.keyboard)
 	}
 
-	setInitialButtonState() {
-		this.next.setVisible(false)
+	setDisabledButtons() {
+		this.next.setDisabled(true)
+		this.start.setDisabled(true)
 		this.restart.setDisabled(true)
 		this.repeat.setDisabled(true)
 	}
 
-	setToggleButton(playing) {
-		if (playing) {
-			this.setActivateNext(playing)
-			this.start.setVisible(false)
-		} else {
-			this.setInitialButtonState()
-		}
-	}
+	setInitialButtonState() {
+		this.next.setVisible(false)
+		this.start.setVisible(true)
 
-	setDisableRepeat() {
+		this.next.setDisabled(true)
+		this.start.setDisabled(false)
+		this.restart.setDisabled(true)
 		this.repeat.setDisabled(true)
 	}
 
-	setActiveOptions() {
-		this.next.setDisabled(false)
-		this.repeat.setDisabled(false)
+	setAfterRepeatButtons() {
+		this.start.setVisible(false)
+		this.next.setDisabled(true)
+
+		this.repeat.setDisabled(true)
 		this.restart.setDisabled(false)
 	}
 
-	setActivateNext(valid) {
+	setRoundButtons() {
+		this.start.setVisible(false)
 		this.next.setVisible(true)
-		this.setActiveOptions()
-		if (!valid) {
-			this.next.setDisabled(false)
-		} else {
-			this.next.setDisabled(true)
-		}
+
+		this.repeat.setDisabled(false)
+		this.restart.setDisabled(false)
+
+		this.next.setDisabled(true)
 	}
 
 	setActiveDifficultyButton(difficulty) {

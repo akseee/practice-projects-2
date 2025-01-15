@@ -14,8 +14,11 @@ export default class AppPresenter {
 
 		this.view.setPresenter(this)
 
+		this.keyboard.setPresenter(this)
 		this.keyboard.setupKeyboard(this.model.keys)
 		this.view.renderKeyboard(this.keyboard)
+
+		this.view.setInitialButtonState()
 	}
 
 	onDifficultyChange(difficulty) {
@@ -26,42 +29,73 @@ export default class AppPresenter {
 		this.view.setActiveDifficultyButton(difficulty)
 	}
 
-	startGame() {
+	handleStartButton() {
 		console.log('gameStarted')
-		this.showSequence()
 		this.view.setDifficultyButtonsDisabled(true)
 		this.view.changeInfoText(this.model.info.start)
-		this.view.changeRoundsText(this.model.currentRound)
-		this.view.setToggleButton(true)
-		this.showSequence()
-	}
 
-	gameOver() {}
-
-	async showSequence() {
-		this.keyboard.showSequence(this.model.sequence)
-	}
-
-	handleRepeatButton() {
-		this.view.setDisableRepeat(true)
-		this.view.changeInfoText(this.model.info.life)
-		this.keyboard.showSequence(this.model.sequence)
-	}
-
-	handleWrongInput() {
-		this.view.changeInfoText(this.model.info.wrong)
-
-		if (this.model.attempt) {
-			this.model.attempt = false
-			this.view.changeInfoText(this.model.info.life)
-			console.log('one more life')
-		} else {
-			this.view.changeInfoText(this.model.info.lost)
-			console.log('no more life')
-		}
+		this.startRound()
 	}
 
 	startRound() {
-		this.model.setIsPlaying(true)
+		this.view.changeRoundsText(this.model.currentRound)
+		this.showSequence(true)
+		this.model.isPlaying = true
+	}
+
+	handleNextButton() {
+		console.log('next')
+	}
+
+	nextRound() {}
+
+	gameOver() {}
+
+	showSequence(repeat) {
+		this.keyboard.showSequence(this.model.sequence, repeat)
+	}
+
+	handleRestartButton() {
+		this.view.setInitialButtonState()
+		this.resetGame()
+	}
+
+	resetGame() {
+		this.model.currentRound = 1
+		this.model.attempt = true
+		this.model.isPlaying = false
+		this.model.generateSequence()
+		this.view.changeInfoText(this.model.info.idle)
+		this.view.changeRoundsText(1)
+	}
+
+	handleRepeatButton() {
+		this.view.changeInfoText(this.model.info.life)
+		this.showSequence(false)
+		this.view.changeInfoText(this.model.info.life)
+	}
+
+	handleInput(key) {
+		if (1) {
+			this.keyboard.highlightKey(key)
+		} else {
+			this.handleWrongInput()
+			this.keyboard.highlightKey(key, false)
+		}
+	}
+
+	handleWrongInput() {
+		if (1) {
+			this.model.attempt = false
+			this.view.changeInfoText(this.model.info.life)
+			this.view.changeInfoText(this.model.info.wrong)
+
+			console.log('one more life')
+		} else {
+			this.view.changeInfoText(this.model.info.lost)
+			this.view.changeInfoText(this.model.info.wrong)
+
+			console.log('no more life')
+		}
 	}
 }

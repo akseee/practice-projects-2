@@ -2,7 +2,7 @@ import { levels } from './utils/constants'
 
 export default class AppModel {
 	constructor() {
-		this._difficulty = 'hard'
+		this._difficulty = 'easy'
 		this.levels = levels
 
 		this.generatedSequence = []
@@ -11,7 +11,7 @@ export default class AppModel {
 		this.currentRound = 1
 
 		this.attempt = true
-		// this.isPlaying = false
+		this.isPlaying = false
 
 		this.button = {
 			next: 'continue',
@@ -21,11 +21,11 @@ export default class AppModel {
 		}
 
 		this.info = {
+			idle: '...waiting for the game to start',
 			start: 'Focus and repeat the sequence. You have one life extra',
-			life: 'It is okay, but dont make the mistake again',
-			lost: 'Open console to see the sequence:) Another try?',
-			win: 'Big brain... what can i say',
-			wrong: 'Oooooopsie',
+			life: 'Dont cheat (open console :))',
+			lost: 'Hint: open console to see the sequence:) Another try?',
+			win: 'Congrats! You nailed it! One more try?',
 		}
 	}
 
@@ -51,7 +51,7 @@ export default class AppModel {
 		})
 
 		this.generatedSequence = generated
-		console.log(generated)
+		console.log('the sequence is [' + generated + ']')
 		return generated
 	}
 

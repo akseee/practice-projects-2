@@ -10,8 +10,13 @@ export default class BoardKey extends Component {
 		this.setAttribute('data-key', text.toLowerCase())
 		this.setDisabled(disabled)
 	}
+
 	setDisabled(disabled) {
 		// @ts-ignore
 		this.getNode().disabled = disabled
+	}
+
+	getValue() {
+		return this.getAttribute('data-key')
 	}
 }

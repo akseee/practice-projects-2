@@ -22,6 +22,10 @@ export default class VirtualKeyboard extends Component {
 		this.render()
 	}
 
+	setPresenter(presenter) {
+		this.presenter = presenter
+	}
+
 	render() {
 		this.appendChildren([this.display, this.keyboard])
 	}
@@ -41,7 +45,7 @@ export default class VirtualKeyboard extends Component {
 		return this.keyboard.getChildren()
 	}
 
-	highlightKey(keyValue, isValid) {
+	highlightKey(keyValue, isValid = true) {
 		const key = this.getKey(keyValue)
 		if (key) {
 			key.disabled = false
@@ -50,23 +54,38 @@ export default class VirtualKeyboard extends Component {
 		}
 	}
 
-	showSequence(sequence) {
+	showSequence(sequence, repeat) {
 		sequence.forEach((key, index) => {
 			setTimeout(() => {
 				this.disableKeyboard()
 				this.highlightKey(key, true)
+				this.presenter.view.setDisabledButtons()
 			}, 750 * index)
 		})
 		setTimeout(() => {
 			this.enableKeyboard()
+			if (repeat) {
+				this.presenter.view.setRoundButtons()
+			} else {
+				this.presenter.view.setAfterRepeatButtons()
+			}
 		}, 750 * sequence.length)
 	}
 
 	enableKeyboard() {
 		this.getAllKeys().map((key) => key.setDisabled(false))
+		this.getAllKeys().map((key) =>
+			key.addListener('click', () => {
+				this.presenter.handleInput(key.getValue())
+			})
+		)
 	}
 
 	disableKeyboard() {
 		this.getAllKeys().map((key) => key.setDisabled(true))
+
+		// this.getAllKeys().map((key) =>
+
+		// )
 	}
 }
