@@ -70,7 +70,9 @@ export default class AppPresenter {
 
 	nextRound() {
 		this.view.setNextRoundButtons()
+		this.model.resetAttempt()
 		this.model.currentRound += 1
+		this.view.changeInfoText()
 		this.keyboard.disableKeyboard()
 	}
 

@@ -181,7 +181,7 @@ export default class AppView extends Component {
 		})
 	}
 
-	changeInfoText(text) {
+	changeInfoText(text = '') {
 		this.infoText.setTextContent(text)
 	}
 

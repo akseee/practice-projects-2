@@ -18,7 +18,6 @@ export default class AppModel {
 		}
 
 		this.info = {
-			idle: '',
 			correct: 'Well done! Next to continue',
 			life: 'one attempt left',
 			incorrect:
@@ -46,7 +45,7 @@ export default class AppModel {
 	}
 
 	generateSequence() {
-		const sequenceLength = this.getSequenceLength()
+		const sequenceLength = 2 + (this.currentRound - 1) * 2
 
 		const generated = Array.from({ length: sequenceLength }, () => {
 			const randomIndex = Math.floor(Math.random() * this.keys.length)
@@ -65,14 +64,6 @@ export default class AppModel {
 
 	resetSequence() {
 		this.sequence = []
-	}
-
-	getCurrentKeys() {
-		return this.levels[this.difficulty]
-	}
-
-	getSequenceLength() {
-		return 2 + (this.currentRound - 1) * 2
 	}
 
 	resetClicks() {
