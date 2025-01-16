@@ -129,24 +129,28 @@ export default class AppView extends Component {
 		this.next.setDisabled(true)
 
 		this.restart.setDisabled(true)
+		this.restart.setVisible(false)
+
 		this.repeat.setDisabled(true)
+		this.repeat.setVisible(false)
 	}
 
 	setAfterRepeatButtons() {
 		this.start.setVisible(false)
-
 		this.start.setDisabled(true)
 
 		this.next.setDisabled(true)
 		this.next.setVisible(false)
 
+		this.repeat.setVisible(true)
 		this.repeat.setDisabled(true)
+
+		this.restart.setVisible(true)
 		this.restart.setDisabled(false)
 	}
 
 	setRoundButtons() {
 		this.start.setVisible(false)
-
 		this.start.setDisabled(true)
 
 		this.next.setVisible(false)
@@ -155,6 +159,7 @@ export default class AppView extends Component {
 		this.repeat.setDisabled(false)
 		this.repeat.setVisible(true)
 
+		this.restart.setVisible(true)
 		this.restart.setDisabled(false)
 	}
 
@@ -165,12 +170,19 @@ export default class AppView extends Component {
 		this.repeat.setVisible(false)
 		this.repeat.setDisabled(true)
 
+		this.restart.setVisible(true)
 		this.restart.setDisabled(false)
 	}
 
-	// setGameOverButtons() {
+	setGameOverButtons() {
+		this.next.setVisible(false)
 
-	// }
+		this.repeat.setVisible(true)
+		this.repeat.setDisabled(true)
+
+		this.restart.setVisible(true)
+		this.restart.setDisabled(false)
+	}
 
 	setActiveDifficultyButton(difficulty) {
 		;[this.easyButton, this.mediumButton, this.hardButton].forEach((button) => {
