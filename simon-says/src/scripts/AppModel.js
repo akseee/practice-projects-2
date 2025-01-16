@@ -18,11 +18,10 @@ export default class AppModel {
 		}
 
 		this.info = {
-			correct: 'Well done! Next to continue',
+			correct: 'Well done! ',
 			life: 'one attempt left',
-			incorrect:
-				'Oopsie, wrong one. You have one more attempt. Click the button above',
-			lost: 'You lost:( Hint: open console to see the sequence. Another try?',
+			incorrect: 'Oopsie, wrong one',
+			lost: 'You lost:( Hint: open console to see the sequence. ',
 			win: 'Congrats! You nailed it! One more try?',
 		}
 	}

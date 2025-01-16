@@ -17,7 +17,7 @@ export default class AppPresenter {
 	}
 
 	handleRepeatButton() {
-		console.log('game repeat')
+		console.log('repeat sequence')
 		this.repeatRound()
 	}
 
@@ -39,6 +39,7 @@ export default class AppPresenter {
 
 		this.view.setDifficultyButtonsDisabled(true)
 
+		this.view.changeInfoText()
 		this.view.changeRoundsText(this.model.currentRound)
 
 		this.showSequence(true)
@@ -72,13 +73,13 @@ export default class AppPresenter {
 		this.view.setNextRoundButtons()
 		this.model.resetAttempt()
 		this.model.currentRound += 1
-		this.view.changeInfoText()
+		// this.view.changeInfoText()
 		this.keyboard.disableKeyboard()
 	}
 
 	gameOver() {
-		this.view.changeInfoText(this.model.info.win)
 		this.view.setGameOverButtons()
+		console.log('game is over')
 	}
 
 	completeRound() {
@@ -86,13 +87,14 @@ export default class AppPresenter {
 
 		if (this.model.currentRound < 5) {
 			this.nextRound()
+			this.view.changeInfoText(this.model.info.correct)
 		} else {
 			this.gameOver()
+			this.view.changeInfoText(this.model.info.win)
 		}
 	}
 
 	// keyboard handlers
-
 	handleInput(key) {
 		const expected = this.model.sequence[this.model.clicks]
 		this.keyboard.printKey(key)
@@ -100,10 +102,12 @@ export default class AppPresenter {
 		if (expected === key) {
 			this.keyboard.highlightKey(key, true)
 			this.model.clicks += 1
+
 			if (this.model.sequence.length === this.model.clicks) {
 				this.completeRound()
 			}
 		} else {
+			this.view.changeInfoText(this.model.incorrect)
 			this.keyboard.highlightKey(key, false)
 			this.handleWrongInput()
 		}
@@ -116,8 +120,8 @@ export default class AppPresenter {
 			this.view.changeInfoText(this.model.info.incorrect)
 			this.model.useAttempt()
 		} else {
+			this.gameOver()
 			this.view.changeInfoText(this.model.info.lost)
-			this.view.setAfterRepeatButtons()
 		}
 	}
 
