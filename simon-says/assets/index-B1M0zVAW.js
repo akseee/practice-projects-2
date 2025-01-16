@@ -77,6 +77,7 @@ const levels = {
 };
 class AppModel {
   constructor() {
+    this.isPlaying = false;
     this._difficulty = "easy";
     this.levels = levels;
     this.generatedSequence = [];
@@ -104,13 +105,16 @@ class AppModel {
     return this.generatedSequence;
   }
   set sequence(sequence) {
-    this.generateSequence = sequence;
+    this.generatedSequence = sequence;
   }
   get keys() {
     return this.levels[this._difficulty];
   }
   set difficulty(difficulty) {
     this._difficulty = difficulty;
+  }
+  setIsPlaying(isPlaying) {
+    this.isPlaying = isPlaying;
   }
   generateSequence() {
     const sequenceLength = this.getSequenceLength();
@@ -124,9 +128,6 @@ class AppModel {
   }
   clearSequence() {
     this.sequence = [];
-  }
-  setIsPlaying(playing) {
-    this.isPlaying = playing;
   }
   getCurrentKeys() {
     return this.levels[this.difficulty];
@@ -154,6 +155,7 @@ class AppPresenter {
     this.keyboard = keyboard2;
   }
   setup() {
+    this.model.setIsPlaying(false);
     this.keyboard.setPresenter(this);
     this.keyboard.setupKeyboard(this.model.keys);
     this.keyboard.disableKeyboard();
@@ -165,9 +167,9 @@ class AppPresenter {
     document.body.appendChild(this.view.getNode());
   }
   startRound() {
-    this.model.resetClicks();
-    this.model.generateSequence();
+    this.model.setIsPlaying(true);
     this.keyboard.clearOutput();
+    this.model.generateSequence();
     this.view.changeRoundsText(this.model.currentRound);
     this.showSequence(true);
   }
@@ -178,17 +180,16 @@ class AppPresenter {
       this.keyboard.disableKeyboard();
     } else {
       this.view.changeInfoText(this.model.info.win);
-      this.gameOver();
+      this.resetGame();
     }
   }
-  gameOver() {
-    this.keyboard.disableKeyboard();
-    this.view.setRoundButtons();
-  }
   resetGame() {
+    this.model.resetClicks();
     this.model.currentRound = 1;
     this.model.resetAttempt();
-    this.model.resetClicks();
+    this.model.clearSequence();
+    this.keyboard.disableKeyboard();
+    this.keyboard.clearOutput();
     this.view.changeInfoText(this.model.info.idle);
     this.view.changeRoundsText(1);
     this.view.setDifficultyButtonsDisabled(false);
@@ -216,7 +217,6 @@ class AppPresenter {
     if (this.model.attempt) {
       this.view.changeInfoText(this.model.info.incorrect);
       this.keyboard.disableKeyboard();
-      this.keyboard.clearOutput();
       this.model.useAttempt();
     } else {
       this.view.changeInfoText(this.model.info.lost);
@@ -233,6 +233,8 @@ class AppPresenter {
   handleRepeatButton() {
     this.showSequence(false);
     this.view.changeInfoText(this.model.info.life);
+    this.model.resetClicks();
+    this.keyboard.clearOutput();
   }
   handleNextButton() {
     this.startRound();
@@ -243,7 +245,6 @@ class AppPresenter {
   }
   handleDifficultyChange(difficulty) {
     this.model.setDifficulty(difficulty);
-    this.model.generateSequence();
     this.keyboard.setupKeyboard(this.model.keys);
     this.view.setActiveDifficultyButton(difficulty);
     this.keyboard.disableKeyboard();
@@ -494,21 +495,23 @@ class AppView extends Component {
     this.repeat.setDisabled(true);
   }
   setInitialButtonState() {
-    this.next.setVisible(false);
-    this.start.setVisible(true);
-    this.next.setDisabled(true);
     this.start.setDisabled(false);
+    this.start.setVisible(true);
+    this.next.setVisible(false);
+    this.next.setDisabled(true);
     this.restart.setDisabled(true);
     this.repeat.setDisabled(true);
   }
   setAfterRepeatButtons() {
     this.start.setVisible(false);
+    this.start.setDisabled(true);
     this.next.setDisabled(true);
+    this.next.setVisible(false);
     this.repeat.setDisabled(true);
     this.restart.setDisabled(false);
   }
   setRoundButtons() {
-    this.start.setVisible(true);
+    this.start.setVisible(false);
     this.start.setDisabled(true);
     this.next.setVisible(false);
     this.next.setDisabled(true);
@@ -517,14 +520,14 @@ class AppView extends Component {
     this.restart.setDisabled(false);
   }
   setNextRoundButtons() {
-    this.start.setVisible(true);
-    this.start.setDisabled(true);
     this.next.setVisible(true);
     this.next.setDisabled(false);
     this.repeat.setVisible(false);
     this.repeat.setDisabled(true);
     this.restart.setDisabled(false);
   }
+  // setGameOverButtons() {
+  // }
   setActiveDifficultyButton(difficulty) {
     [this.easyButton, this.mediumButton, this.hardButton].forEach((button) => {
       if (button.getAttribute("data-difficulty") === difficulty) {
@@ -674,4 +677,4 @@ const app = new AppPresenter({
 });
 app.setup();
 app.render();
-//# sourceMappingURL=index-BuUYFhDT.js.map
+//# sourceMappingURL=index-B1M0zVAW.js.map
