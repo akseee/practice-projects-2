@@ -122,25 +122,26 @@ export default class AppView extends Component {
 	}
 
 	setInitialButtonState() {
-		this.next.setVisible(false)
-		this.start.setVisible(true)
-
-		this.next.setDisabled(true)
 		this.start.setDisabled(false)
+
+		this.next.setVisible(false)
+		this.next.setDisabled(true)
+
 		this.restart.setDisabled(true)
 		this.repeat.setDisabled(true)
 	}
 
 	setAfterRepeatButtons() {
-		this.start.setVisible(false)
+		this.start.setDisabled(true)
+
 		this.next.setDisabled(true)
+		this.next.setVisible(false)
 
 		this.repeat.setDisabled(true)
 		this.restart.setDisabled(false)
 	}
 
 	setRoundButtons() {
-		this.start.setVisible(true)
 		this.start.setDisabled(true)
 
 		this.next.setVisible(false)
@@ -153,7 +154,6 @@ export default class AppView extends Component {
 	}
 
 	setNextRoundButtons() {
-		this.start.setVisible(true)
 		this.start.setDisabled(true)
 
 		this.next.setVisible(true)

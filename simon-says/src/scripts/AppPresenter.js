@@ -13,6 +13,7 @@ export default class AppPresenter {
 
 		this.view.setInitialButtonState()
 		this.bindButtonListeners()
+		console.log(this.model.sequence)
 	}
 
 	render() {
@@ -20,9 +21,10 @@ export default class AppPresenter {
 	}
 
 	startRound() {
-		this.model.resetClicks()
-		this.model.generateSequence()
 		this.keyboard.clearOutput()
+
+		this.model.generateSequence()
+
 		this.view.changeRoundsText(this.model.currentRound)
 		this.showSequence(true)
 	}
@@ -34,19 +36,18 @@ export default class AppPresenter {
 			this.keyboard.disableKeyboard()
 		} else {
 			this.view.changeInfoText(this.model.info.win)
-			this.gameOver()
+			this.resetGame()
 		}
 	}
 
-	gameOver() {
-		this.keyboard.disableKeyboard()
-		this.view.setRoundButtons()
-	}
-
 	resetGame() {
+		this.model.resetClicks()
 		this.model.currentRound = 1
 		this.model.resetAttempt()
-		this.model.resetClicks()
+		this.model.clearSequence()
+
+		this.keyboard.disableKeyboard()
+		this.keyboard.clearOutput()
 
 		this.view.changeInfoText(this.model.info.idle)
 		this.view.changeRoundsText(1)
@@ -77,10 +78,10 @@ export default class AppPresenter {
 
 	handleWrongInput() {
 		this.keyboard.disableKeyboard()
+
 		if (this.model.attempt) {
 			this.view.changeInfoText(this.model.info.incorrect)
 			this.keyboard.disableKeyboard()
-			this.keyboard.clearOutput()
 			this.model.useAttempt()
 		} else {
 			this.view.changeInfoText(this.model.info.lost)
@@ -101,6 +102,8 @@ export default class AppPresenter {
 	handleRepeatButton() {
 		this.showSequence(false)
 		this.view.changeInfoText(this.model.info.life)
+		this.model.resetClicks()
+		this.keyboard.clearOutput()
 	}
 
 	handleNextButton() {
