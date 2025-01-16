@@ -93,9 +93,9 @@ export default class AppPresenter {
 
 	handleInput(key) {
 		const expected = this.model.sequence[this.model.clicks]
+		this.keyboard.printKey(key)
 
 		if (expected === key) {
-			this.keyboard.printKey(key)
 			this.keyboard.highlightKey(key, true)
 			this.model.clicks += 1
 			if (this.model.sequence.length === this.model.clicks) {
@@ -121,10 +121,11 @@ export default class AppPresenter {
 
 	handleDifficultyChange(difficulty) {
 		this.model.setDifficulty(difficulty)
+
 		this.keyboard.setupKeyboard(this.model.keys)
+		this.keyboard.disableKeyboard()
 
 		this.view.setActiveDifficultyButton(difficulty)
-		this.keyboard.disableKeyboard()
 	}
 
 	// add listeners
