@@ -90,11 +90,10 @@ class AppModel {
       over: "better luck next time!"
     };
     this.info = {
-      idle: "",
-      correct: "Well done! Next to continue",
+      correct: "Well done! ",
       life: "one attempt left",
-      incorrect: "Oopsie, wrong one. You have one more attempt. Click the button above",
-      lost: "You lost:( Hint: open console to see the sequence. Another try?",
+      incorrect: "Oopsie, wrong one",
+      lost: "You lost:( Hint: open console to see the sequence. ",
       win: "Congrats! You nailed it! One more try?"
     };
   }
@@ -111,7 +110,7 @@ class AppModel {
     this._difficulty = difficulty;
   }
   generateSequence() {
-    const sequenceLength = this.getSequenceLength();
+    const sequenceLength = 2 + (this.currentRound - 1) * 2;
     const generated = Array.from({ length: sequenceLength }, () => {
       const randomIndex = Math.floor(Math.random() * this.keys.length);
       return this.keys[randomIndex];
@@ -125,12 +124,6 @@ class AppModel {
   }
   resetSequence() {
     this.sequence = [];
-  }
-  getCurrentKeys() {
-    return this.levels[this.difficulty];
-  }
-  getSequenceLength() {
-    return 2 + (this.currentRound - 1) * 2;
   }
   resetClicks() {
     this.clicks = 0;
@@ -161,7 +154,7 @@ class AppPresenter {
     this.startRound();
   }
   handleRepeatButton() {
-    console.log("game repeat");
+    console.log("repeat sequence");
     this.repeatRound();
   }
   handleNextButton() {
@@ -178,6 +171,7 @@ class AppPresenter {
     this.model.resetClicks();
     this.keyboard.clearOutput();
     this.view.setDifficultyButtonsDisabled(true);
+    this.view.changeInfoText();
     this.view.changeRoundsText(this.model.currentRound);
     this.showSequence(true);
   }
@@ -201,32 +195,36 @@ class AppPresenter {
   }
   nextRound() {
     this.view.setNextRoundButtons();
+    this.model.resetAttempt();
     this.model.currentRound += 1;
     this.keyboard.disableKeyboard();
   }
   gameOver() {
-    this.view.changeInfoText(this.model.info.win);
     this.view.setGameOverButtons();
+    console.log("game is over");
   }
   completeRound() {
     this.model.resetSequence();
     if (this.model.currentRound < 5) {
       this.nextRound();
+      this.view.changeInfoText(this.model.info.correct);
     } else {
       this.gameOver();
+      this.view.changeInfoText(this.model.info.win);
     }
   }
   // keyboard handlers
   handleInput(key) {
     const expected = this.model.sequence[this.model.clicks];
+    this.keyboard.printKey(key);
     if (expected === key) {
-      this.keyboard.printKey(key);
       this.keyboard.highlightKey(key, true);
       this.model.clicks += 1;
       if (this.model.sequence.length === this.model.clicks) {
         this.completeRound();
       }
     } else {
+      this.view.changeInfoText(this.model.incorrect);
       this.keyboard.highlightKey(key, false);
       this.handleWrongInput();
     }
@@ -237,15 +235,15 @@ class AppPresenter {
       this.view.changeInfoText(this.model.info.incorrect);
       this.model.useAttempt();
     } else {
+      this.gameOver();
       this.view.changeInfoText(this.model.info.lost);
-      this.view.setAfterRepeatButtons();
     }
   }
   handleDifficultyChange(difficulty) {
     this.model.setDifficulty(difficulty);
     this.keyboard.setupKeyboard(this.model.keys);
-    this.view.setActiveDifficultyButton(difficulty);
     this.keyboard.disableKeyboard();
+    this.view.setActiveDifficultyButton(difficulty);
   }
   // add listeners
   bindButtonListeners() {
@@ -560,7 +558,7 @@ class AppView extends Component {
       button.setDisabled(disabled);
     });
   }
-  changeInfoText(text) {
+  changeInfoText(text = "") {
     this.infoText.setTextContent(text);
   }
   changeRoundsText(round) {
@@ -696,4 +694,4 @@ const app = new AppPresenter({
 });
 app.setup();
 app.render();
-//# sourceMappingURL=index-DHtxDDmn.js.map
+//# sourceMappingURL=index-bLGU-Miv.js.map
