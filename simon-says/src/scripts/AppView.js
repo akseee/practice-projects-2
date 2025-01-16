@@ -1,4 +1,5 @@
 import Component from './base/Component'
+import Button from './view/Button'
 import DifficultyButton from './view/DifficultyButton'
 
 import Link from './view/Link'
@@ -35,29 +36,10 @@ export default class AppView extends Component {
 
 		this.body = new Component({ tag: 'main', className: 'main' })
 
-		this.start = new Component({
-			tag: 'button',
-			className: 'button start ',
-			text: 'START',
-		})
-
-		this.repeat = new Component({
-			tag: 'button',
-			className: 'button repeat ',
-			text: 'repeat',
-		})
-
-		this.restart = new Component({
-			tag: 'button',
-			className: 'button restart ',
-			text: 'new game',
-		})
-
-		this.next = new Component({
-			tag: 'button',
-			className: 'button next',
-			text: 'next',
-		})
+		this.start = new Button({ text: 'START', className: 'start' })
+		this.repeat = new Button({ text: 'repeat', className: 'repeat' })
+		this.restart = new Button({ text: 'new game', className: 'restart' })
+		this.next = new Button({ text: 'next', className: 'next' })
 
 		this.controls = new Component({ tag: 'div', className: 'controls' })
 		this.controls.appendChildren([
@@ -70,7 +52,7 @@ export default class AppView extends Component {
 		this.infoText = new Component({
 			tag: 'p',
 			className: 'info',
-			text: '...waiting for the game to start',
+			text: '',
 		})
 
 		this.roundsText = new Component({
@@ -102,7 +84,6 @@ export default class AppView extends Component {
 			})
 		)
 		this.render()
-		this.setInitialButtonState()
 	}
 
 	render() {
@@ -208,7 +189,8 @@ export default class AppView extends Component {
 		this.roundsText.setTextContent(`Round ${round}/5`)
 	}
 
-	changeStartText(text) {
-		this.start.setTextContent(text)
+	resetRoundText() {
+		this.roundsText.setTextContent(`:)`)
+		this.changeInfoText('')
 	}
 }

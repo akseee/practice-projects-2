@@ -2,16 +2,12 @@ import { levels } from './utils/constants'
 
 export default class AppModel {
 	constructor() {
-		this.isPlaying = false
 		this._difficulty = 'easy'
 		this.levels = levels
 
 		this.generatedSequence = []
 		this.clicks = 0
-
-		this.maxRounds = 5
 		this.currentRound = 1
-
 		this.attempt = true
 
 		this.button = {
@@ -22,10 +18,9 @@ export default class AppModel {
 		}
 
 		this.info = {
-			idle: '...waiting for the game to start',
-			start: 'Focus and repeat the sequence. You have one life extra',
-			life: 'Dont cheat! Joke. Open console.',
+			idle: '',
 			correct: 'Well done! Next to continue',
+			life: 'one attempt left',
 			incorrect:
 				'Oopsie, wrong one. You have one more attempt. Click the button above',
 			lost: 'You lost:( Hint: open console to see the sequence. Another try?',
@@ -50,10 +45,6 @@ export default class AppModel {
 		this._difficulty = difficulty
 	}
 
-	setIsPlaying(isPlaying) {
-		this.isPlaying = isPlaying
-	}
-
 	generateSequence() {
 		const sequenceLength = this.getSequenceLength()
 
@@ -68,7 +59,11 @@ export default class AppModel {
 		return generated
 	}
 
-	clearSequence() {
+	setDifficulty(difficulty) {
+		this.difficulty = difficulty
+	}
+
+	resetSequence() {
 		this.sequence = []
 	}
 
@@ -84,15 +79,15 @@ export default class AppModel {
 		this.clicks = 0
 	}
 
-	setDifficulty(difficulty) {
-		this.difficulty = difficulty
-	}
-
 	useAttempt() {
 		this.attempt = false
 	}
 
 	resetAttempt() {
 		this.attempt = true
+	}
+
+	resetRounds() {
+		this.currentRound = 1
 	}
 }
