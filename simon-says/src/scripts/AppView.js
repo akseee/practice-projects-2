@@ -140,22 +140,29 @@ export default class AppView extends Component {
 	}
 
 	setRoundButtons() {
-		this.start.setVisible(false)
-		this.next.setVisible(true)
+		this.start.setVisible(true)
+		this.start.setDisabled(true)
+
+		this.next.setVisible(false)
+		this.next.setDisabled(true)
 
 		this.repeat.setDisabled(false)
-		this.restart.setDisabled(false)
+		this.repeat.setVisible(true)
 
-		this.next.setDisabled(true)
+		this.restart.setDisabled(false)
 	}
 
 	setNextRoundButtons() {
-		this.start.setVisible(false)
+		this.start.setVisible(true)
+		this.start.setDisabled(true)
+
 		this.next.setVisible(true)
 		this.next.setDisabled(false)
 
+		this.repeat.setVisible(false)
 		this.repeat.setDisabled(true)
-		this.restart.setDisabled(true)
+
+		this.restart.setDisabled(false)
 	}
 
 	setActiveDifficultyButton(difficulty) {
