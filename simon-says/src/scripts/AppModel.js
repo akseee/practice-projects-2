@@ -2,6 +2,7 @@ import { levels } from './utils/constants'
 
 export default class AppModel {
 	constructor() {
+		this.isPlaying = false
 		this._difficulty = 'easy'
 		this.levels = levels
 
@@ -38,7 +39,7 @@ export default class AppModel {
 
 	set sequence(sequence) {
 		// @ts-ignore
-		this.generateSequence = sequence
+		this.generatedSequence = sequence
 	}
 
 	get keys() {
@@ -47,6 +48,10 @@ export default class AppModel {
 
 	set difficulty(difficulty) {
 		this._difficulty = difficulty
+	}
+
+	setIsPlaying(isPlaying) {
+		this.isPlaying = isPlaying
 	}
 
 	generateSequence() {
@@ -65,10 +70,6 @@ export default class AppModel {
 
 	clearSequence() {
 		this.sequence = []
-	}
-
-	setIsPlaying(playing) {
-		this.isPlaying = playing
 	}
 
 	getCurrentKeys() {

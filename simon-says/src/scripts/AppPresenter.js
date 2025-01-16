@@ -6,14 +6,16 @@ export default class AppPresenter {
 	}
 
 	setup() {
+		this.model.setIsPlaying(false)
+
 		this.keyboard.setPresenter(this)
 		this.keyboard.setupKeyboard(this.model.keys)
 		this.keyboard.disableKeyboard()
-		this.view.renderKeyboard(this.keyboard)
 
+		this.view.renderKeyboard(this.keyboard)
 		this.view.setInitialButtonState()
+
 		this.bindButtonListeners()
-		console.log(this.model.sequence)
 	}
 
 	render() {
@@ -21,8 +23,9 @@ export default class AppPresenter {
 	}
 
 	startRound() {
-		this.keyboard.clearOutput()
+		this.model.setIsPlaying(true)
 
+		this.keyboard.clearOutput()
 		this.model.generateSequence()
 
 		this.view.changeRoundsText(this.model.currentRound)
@@ -117,7 +120,6 @@ export default class AppPresenter {
 
 	handleDifficultyChange(difficulty) {
 		this.model.setDifficulty(difficulty)
-		this.model.generateSequence()
 		this.keyboard.setupKeyboard(this.model.keys)
 
 		this.view.setActiveDifficultyButton(difficulty)

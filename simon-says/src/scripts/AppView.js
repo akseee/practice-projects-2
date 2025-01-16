@@ -123,6 +123,7 @@ export default class AppView extends Component {
 
 	setInitialButtonState() {
 		this.start.setDisabled(false)
+		this.start.setVisible(true)
 
 		this.next.setVisible(false)
 		this.next.setDisabled(true)
@@ -132,6 +133,8 @@ export default class AppView extends Component {
 	}
 
 	setAfterRepeatButtons() {
+		this.start.setVisible(false)
+
 		this.start.setDisabled(true)
 
 		this.next.setDisabled(true)
@@ -142,6 +145,8 @@ export default class AppView extends Component {
 	}
 
 	setRoundButtons() {
+		this.start.setVisible(false)
+
 		this.start.setDisabled(true)
 
 		this.next.setVisible(false)
@@ -154,8 +159,6 @@ export default class AppView extends Component {
 	}
 
 	setNextRoundButtons() {
-		this.start.setDisabled(true)
-
 		this.next.setVisible(true)
 		this.next.setDisabled(false)
 
@@ -164,6 +167,10 @@ export default class AppView extends Component {
 
 		this.restart.setDisabled(false)
 	}
+
+	// setGameOverButtons() {
+
+	// }
 
 	setActiveDifficultyButton(difficulty) {
 		;[this.easyButton, this.mediumButton, this.hardButton].forEach((button) => {
