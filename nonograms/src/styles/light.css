@@ -1,0 +1,39 @@
+.page.light {
+	:root {
+		--bg-img: url('../assets/light.png') bottom no-repeat;
+		--first-c: #f5f5f5;
+		--second-c: #080000;
+		--light-red: #ff000080;
+		--cell-bg: #f5f5f5;
+		--cell-br: #cccccc;
+		--info-cell-bg: #919191;
+		--cell-choosen: #080000;
+		--cell-marked: grey;
+		--popup-bg: #000000cc;
+		--button-border: 2px solid var(--second-c);
+		--ff: 'Nuku', sans-serif;
+		--hover: #ff0000;
+		--transform-to-open: translate(500px);
+		--transform-to-close: translate(-500px);
+	}
+}
+
+@media (prefers-color-scheme: light) {
+	:root {
+		--ff: 'Nuku', sans-serif;
+		--hover: #ff0000;
+		--transform-to-open: translate(500px);
+		--transform-to-close: translate(-500px);
+		--cell-bg: #f5f5f5;
+		--cell-br: #cccccc;
+		--info-cell-bg: #919191;
+		--cell-choosen: #080000;
+		--cell-marked: grey;
+		--bg-img: url('../assets/light.png') bottom no-repeat;
+		--first-c: #f5f5f5;
+		--second-c: #240000;
+		--light-red: #ff000080;
+		--popup-bg: #000000cc;
+		--button-border: 2px solid var(--second-c);
+	}
+}
