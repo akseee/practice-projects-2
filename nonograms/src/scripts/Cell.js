@@ -9,21 +9,13 @@ export default class Cell extends Component {
 
 		this.fieldSize = size
 
-		// this.state = {
-		// 	coordinates: [x, y],
-		// 	marked: false,
-		// 	choosen: false,
-		// 	empty: true,
-		// 	value: 0,
-		// }
-
 		this.setAttribute('data-row', this.row)
 		this.setAttribute('data-column', this.column)
 
-		this.crossMark = document.createElement('div')
-		this.crossMark.classList.add('cross')
-
 		this.setEdges()
+
+		this.addListener('click', (e) => this.handleLeftClick(e))
+		this.addListener('contextmenu', (e) => this.handleRightClick(e))
 	}
 
 	setEdges() {
@@ -38,31 +30,30 @@ export default class Cell extends Component {
 
 	handleRightClick(e) {
 		e.preventDefault()
-		console.log(this)
-		console.log('handling right')
 
 		if (this.checkClass('choosen')) {
 			return
 		}
+
 		if (this.getChildren().length !== 0) {
+			console.log('yew')
 			this.destroyChildren()
 		} else {
-			this.append(this.crossMark)
+			const cross = new Component({ tag: 'div', className: 'cross' })
+			this.append(cross)
 		}
+
 		this.toggleClass('marked')
 	}
 
 	handleLeftClick(e) {
 		e.preventDefault()
-		// will be logic that adds box to model
-
-		console.log(this)
-		console.log('handling left')
 
 		if (this.checkClass('marked')) {
 			this.removeClass('marked')
 			this.destroyChildren()
 		}
+
 		this.toggleClass('choosen')
 	}
 }
