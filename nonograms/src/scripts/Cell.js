@@ -1,12 +1,19 @@
 import Component from './common/Component'
 
+let isMouseDown = false
+let current = null
+
+document.addEventListener('mouseup', () => {
+	isMouseDown = false
+	current = null
+})
+
 export default class Cell extends Component {
 	constructor(x, y, size) {
 		super({ tag: 'button', className: 'cell' })
 
 		this.row = x
 		this.column = y
-
 		this.fieldSize = size
 
 		this.setAttribute('data-row', this.row)
@@ -14,8 +21,9 @@ export default class Cell extends Component {
 
 		this.setEdges()
 
-		this.addListener('click', (e) => this.handleLeftClick(e))
-		this.addListener('contextmenu', (e) => this.handleRightClick(e))
+		this.addListener('contextmenu', (e) => e.preventDefault())
+		this.addListener('mousedown', (e) => this.handleMouseDown(e))
+		this.addListener('mouseenter', (e) => this.handleMouseEnter(e))
 	}
 
 	setEdges() {
@@ -28,32 +36,77 @@ export default class Cell extends Component {
 		}
 	}
 
-	handleRightClick(e) {
+	handleMouseDown(e) {
 		e.preventDefault()
+		isMouseDown = true
 
+		if (e.button === 0) {
+			this.handleLeftClick(e)
+		} else if (e.button === 2) {
+			this.handleRightClick(e)
+		}
+	}
+
+	handleMouseEnter(e) {
+		if (isMouseDown && current) {
+			if (current === 'set-marked') {
+				this.addMarked()
+			} else if (current === 'set-choosen') {
+				this.addChoosen()
+			} else if (current === 'remove-marked') {
+				this.removeMarked()
+			} else if (current === 'remove-choosen') {
+				this.removeChoosen()
+			}
+		}
+	}
+
+	handleLeftClick() {
+		if (this.checkClass('choosen')) {
+			this.removeChoosen()
+			current = 'remove-choosen'
+		} else {
+			this.addChoosen()
+			current = 'set-choosen'
+		}
+	}
+
+	handleRightClick() {
+		if (this.checkClass('marked')) {
+			this.removeMarked()
+			current = 'remove-marked'
+		} else {
+			this.addMarked()
+			current = 'set-marked'
+		}
+	}
+
+	addMarked() {
 		if (this.checkClass('choosen')) {
 			return
 		}
-
-		if (this.getChildren().length !== 0) {
-			console.log('yew')
-			this.destroyChildren()
-		} else {
+		if (!this.checkClass('marked')) {
+			this.addClass('marked')
 			const cross = new Component({ tag: 'div', className: 'cross' })
 			this.append(cross)
 		}
-
-		this.toggleClass('marked')
 	}
 
-	handleLeftClick(e) {
-		e.preventDefault()
-
+	removeMarked() {
 		if (this.checkClass('marked')) {
 			this.removeClass('marked')
 			this.destroyChildren()
 		}
+	}
 
-		this.toggleClass('choosen')
+	addChoosen() {
+		if (this.checkClass('marked')) {
+			this.removeMarked()
+		}
+		this.addClass('choosen')
+	}
+
+	removeChoosen() {
+		this.removeClass('choosen')
 	}
 }
