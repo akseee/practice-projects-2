@@ -5,7 +5,7 @@ import './style.css'
 
 const header = new Component({ tag: 'header', className: 'header' })
 const main = new Component({ tag: 'main', className: 'main' })
-const grid = new Grid(5)
+const grid = new Grid(15)
 const popup = new Component({ tag: 'div', className: 'popup' })
 const aside = new Component({ tag: 'aside', className: 'setup-form-wrapper' })
 const form = new Component({ tag: 'div', className: '' }, aside)

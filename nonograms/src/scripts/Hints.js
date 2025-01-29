@@ -1,7 +1,7 @@
 import Component from './common/Component'
 
 export default class Hints extends Component {
-	constructor(type, count) {
+	constructor(type) {
 		super({
 			tag: 'div',
 			className: `${type === 'column' ? 'top-columns' : type === 'row' ? 'left-rows' : 'filler'}`,
@@ -9,7 +9,7 @@ export default class Hints extends Component {
 
 		this.type = type
 	}
-	// [[1, 2, 1], [2, 2], [2], [1, 2], []]
+
 	createHints(data) {
 		if (this.type === 'filler') return
 
@@ -25,17 +25,17 @@ export default class Hints extends Component {
 }
 
 class InfoCell extends Component {
-	constructor(type, count) {
+	constructor(type, i) {
 		super({ tag: 'div', className: 'cell-info' })
 		this.setAttribute('data-type', type)
-		this.setAttribute('data-i', count)
+		this.setAttribute('data-i', i)
 	}
 
 	setHints(hints) {
 		for (let number of hints) {
 			const hint = new Component({ tag: 'span', className: 'hint' })
 			hint.setTextContent(number)
-			// hint.addListener('click', () => this.toggleClass('marked'))
+			hint.addListener('click', () => hint.toggleClass('marked'))
 			this.append(hint)
 		}
 	}

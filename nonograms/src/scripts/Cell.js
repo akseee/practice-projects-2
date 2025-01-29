@@ -38,6 +38,8 @@ export default class Cell extends Component {
 
 	handleRightClick(e) {
 		e.preventDefault()
+		console.log(this)
+		console.log('handling right')
 
 		if (this.checkClass('choosen')) {
 			return
@@ -52,6 +54,11 @@ export default class Cell extends Component {
 
 	handleLeftClick(e) {
 		e.preventDefault()
+		// will be logic that adds box to model
+
+		console.log(this)
+		console.log('handling left')
+
 		if (this.checkClass('marked')) {
 			this.removeClass('marked')
 			this.destroyChildren()

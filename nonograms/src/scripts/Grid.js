@@ -1,6 +1,11 @@
 import Component from './common/Component'
 import Field from './Field'
 import Hints from './Hints'
+import {
+	calculateColumnHints,
+	calculateRowHints,
+	randomMatrix,
+} from './utils/utils'
 
 export default class Grid extends Component {
 	constructor(size) {
@@ -8,15 +13,18 @@ export default class Grid extends Component {
 
 		this.grid = new Component({ tag: 'div', className: 'grid' })
 
+		this.size = size
+
 		this.field = new Field(size)
-		this.filler = new Hints('filler', size)
+		this.filler = new Hints('filler')
 
-		this.columnHints = new Hints('column', size)
+		this.columnHints = new Hints('column')
 
-		this.rowHints = new Hints('row', size)
+		this.rowHints = new Hints('row')
 
-		this.createRowHints()
-		this.createColumnHints()
+		this.mock = randomMatrix(size)
+		this.setRowHints()
+		this.setColumnHints()
 
 		this.grid.appendChildren([
 			this.filler,
@@ -25,16 +33,21 @@ export default class Grid extends Component {
 			this.field,
 		])
 
+		console.log(this.mock)
 		this.append(this.grid)
 	}
 
-	createRowHints() {
+	setRowHints() {
+		// instead of mock it is gonna be the clicked one
+		const data = calculateRowHints(this.mock)
 		// всегда будем передавать какой то массив, даже если пустой!
-		this.rowHints.createHints([[1, 2, 1], [2, 2], [2], [1, 2], []])
+		this.rowHints.createHints(data)
 	}
 
-	createColumnHints() {
+	setColumnHints() {
+		// instead of mock it is gonna be the clicked one
+		const data = calculateColumnHints(this.mock)
 		// всегда будем передавать какой то массив, даже если пустой!
-		this.columnHints.createHints([[1, 2, 1], [2, 2], [2], [1, 2], [2]])
+		this.columnHints.createHints(data)
 	}
 }
