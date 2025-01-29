@@ -37,6 +37,7 @@ body {
 	padding: 0.6rem 2rem;
 	outline: none;
 	font-weight: lighter;
+	text-align: center;
 	background-color: var(--first-c);
 	transition: all 0.4s ease-in-out;
 }
@@ -44,6 +45,24 @@ body {
 .button:hover {
 	background-color: var(--hover);
 	cursor: pointer;
+}
+
+.volume {
+	width: 100%;
+	padding: 1rem 4rem;
+	color: red;
+	/* color: var(--second-c); */
+	background: var(--svg-sound);
+	background-color: var(--first-c);
+}
+
+.volume.active {
+	opacity: 0.2;
+}
+
+.theme {
+	color: var(--first-c);
+	background-color: var(--second-c);
 }
 
 .title {

@@ -36,5 +36,6 @@
 		--cell-marked: #808080;
 		--popup-bg: #000000cc;
 		--button-border: 1px solid #808080;
+		--svg-sound: url('../assets/white-volume.svg') no-repeat center;
 	}
 }

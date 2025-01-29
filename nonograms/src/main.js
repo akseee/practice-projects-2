@@ -1,9 +1,10 @@
 import Page from './scripts/App'
 import Component from './scripts/common/Component'
+import Header from './scripts/components/header/Header'
 import Grid from './scripts/Grid'
 import './style.css'
 
-const header = new Component({ tag: 'header', className: 'header' })
+const header = new Header()
 const main = new Component({ tag: 'main', className: 'main' })
 const grid = new Grid(15)
 const popup = new Component({ tag: 'div', className: 'popup' })

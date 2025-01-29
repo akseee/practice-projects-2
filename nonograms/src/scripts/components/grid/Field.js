@@ -1,5 +1,5 @@
+import Component from '../../common/Component'
 import Cell from './Cell'
-import Component from './common/Component'
 
 export default class Field extends Component {
 	constructor(size) {
@@ -9,7 +9,7 @@ export default class Field extends Component {
 		})
 
 		this._size = size
-
+		this.destroyChildren()
 		this.createField()
 	}
 
