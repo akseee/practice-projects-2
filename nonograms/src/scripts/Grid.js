@@ -33,7 +33,6 @@ export default class Grid extends Component {
 			this.field,
 		])
 
-		console.log(this.mock)
 		this.append(this.grid)
 	}
 

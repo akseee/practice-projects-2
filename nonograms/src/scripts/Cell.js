@@ -41,9 +41,9 @@ export default class Cell extends Component {
 		isMouseDown = true
 
 		if (e.button === 0) {
-			this.handleLeftClick(e)
+			this.handleLeftClick()
 		} else if (e.button === 2) {
-			this.handleRightClick(e)
+			this.handleRightClick()
 		}
 	}
 
