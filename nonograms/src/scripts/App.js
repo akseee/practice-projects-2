@@ -1,12 +1,14 @@
 import Component from './common/Component'
+import Button from './components/ui/Button'
 
 export default class Page extends Component {
-	constructor(header, main, grid, popup, form) {
-		super({ tag: 'div', className: 'page dark' })
-		this.appendChildren([header, main, grid, popup, form])
+	constructor(header, main, popup) {
+		super({ tag: 'div', className: 'page ' })
+		this.appendChildren([header, main, popup])
 	}
 
 	render() {
+		// @ts-ignore
 		document.body.appendChild(this.getNode())
 	}
 }

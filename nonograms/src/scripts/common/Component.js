@@ -86,6 +86,7 @@ export default class Component {
 	}
 
 	setDisabled(disabled) {
+		console.log(disabled)
 		this.#node.disabled = disabled
 	}
 

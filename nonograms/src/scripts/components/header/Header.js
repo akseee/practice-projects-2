@@ -8,20 +8,24 @@ export default class Header extends Component {
 		this.title = new Component({ tag: 'h1', className: 'title' })
 		this.title.setTextContent('nonograms')
 
-		this.controls = new Component({ tag: 'div', className: 'controls' })
-
-		this.leaderboard = new Button('leaderboard', 'leaderboard', () => {})
-		this.setup = new Button('setup', 'setup game', () => {})
+		this.theme = new Button('theme ', 'theme', () => {})
 		this.volume = new Button('volume ', '', () => {
 			this.volume.toggleClass('active')
 		})
-		this.theme = new Button('theme ', 'theme', () => {})
+
+		this.wrapper = new Component({ tag: 'div', className: 'controls-header' })
+		this.wrapper.appendChildren([this.volume, this.theme])
+
+		this.leaderboard = new Button('leaderboard', 'leaderboard', () => {})
+		this.rules = new Button('rules', 'rules', () => {})
+		this.controls = new Component({ tag: 'div', className: 'controls' })
+		this.setup = new Button('setup', 'setup game', () => {})
 
 		this.controls.appendChildren([
-			this.volume,
-			this.theme,
-			this.leaderboard,
+			this.wrapper,
 			this.setup,
+			this.leaderboard,
+			this.rules,
 		])
 
 		this.appendChildren([this.title, this.controls])

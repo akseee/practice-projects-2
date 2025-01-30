@@ -1,7 +1,7 @@
 @import url('./styles/global.css');
+@import url('./styles/main.css');
 @import url('./styles/dark.css');
 @import url('./styles/light.css');
-@import url('./styles/main.css');
 @import url('./styles/font.css');
 @import url('./styles/grid.css');
 @import url('./styles/popup.css');

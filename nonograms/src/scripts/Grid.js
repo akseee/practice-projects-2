@@ -1,6 +1,6 @@
-import Hints from '../Grid/Hints'
 import Component from './common/Component'
 import Field from './components/grid/Field'
+import Hints from './components/grid/Hints'
 
 import {
 	calculateColumnHints,
