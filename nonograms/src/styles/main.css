@@ -117,11 +117,11 @@ body {
 	border-left-color: transparent;
 	color: var(--font-color);
 	background-color: var(--light-red);
+	transition: transform 0.5s ease;
 	cursor: pointer;
 }
 
 .aside-button.open {
-	top: 0;
 	background-color: #ff0000;
 	transform: var(--transform-to-open);
 }
