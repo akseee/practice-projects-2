@@ -1,29 +1,35 @@
+// @ts-nocheck
 import Component from '../../common/Component'
 import Button from '../ui/Button'
 
 export default class Aside extends Component {
-	constructor(button, children) {
-		super({ tag: 'div', className: '' })
-
-		this.aside = new Component({
+	constructor(children) {
+		super({
 			tag: 'aside',
 			className: 'aside ',
 		})
 
-		this.formButton = new Button('aside-button ', button, () =>
-			this.handleOpenAside()
-		)
+		this.button = new Button('aside-button ', 'open', () => this.toggleAside())
 
-		this.aside.append(children)
+		// this.overlay = new Component({ tag: 'div', className: 'overlay' })
+		// this.append(this.overlay)
+		this.append(children)
 
-		this.append(this.aside)
-
-		document.body.append(this.formButton.getNode())
+		document.body.append(this.button.getNode())
 		document.body.append(this.getNode())
 	}
 
-	handleOpenAside() {
-		this.formButton.toggleClass('open')
-		this.aside.toggleClass('open')
+	toggleAside() {
+		if (!this.checkClass('open')) {
+			this.button.setTextContent('close')
+			this.button.addClass('open')
+
+			this.addClass('open')
+		} else {
+			this.button.setTextContent('opem')
+			this.button.removeClass('open')
+
+			this.removeClass('open')
+		}
 	}
 }

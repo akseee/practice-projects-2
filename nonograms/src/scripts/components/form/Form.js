@@ -20,9 +20,9 @@ const difficulties = [
 
 export default class Form extends Component {
 	constructor() {
-		super({ tag: 'div', className: 'setup-form' })
+		super({ tag: 'div', className: 'aside-content' })
 
-		this.title = new Component({ tag: 'h2', className: 'setup-title' })
+		this.title = new Component({ tag: 'h2', className: 'aside-title' })
 		this.title.setTextContent('Settings')
 
 		this.tempalteFieldset = new Component({
@@ -60,13 +60,13 @@ export default class Form extends Component {
 		this.tempalteFieldset.append(this.legend)
 		this.select = new Component({
 			tag: 'select',
-			className: 'option',
-			id: 'templates',
-			name: 'templates',
+			className: 'select',
 		})
+		this.select.setAttribute('id', 'templates')
+		this.select.setAttribute('name', 'templates')
 
 		options.forEach((optionData) => {
-			const option = new Component({ tag: 'option' })
+			const option = new Component({ tag: 'option', className: 'option' })
 			option.setTextContent(optionData.text)
 			option.setAttribute('value', optionData.value)
 			this.select.append(option)
