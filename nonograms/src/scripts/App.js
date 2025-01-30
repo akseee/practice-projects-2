@@ -2,9 +2,9 @@ import Component from './common/Component'
 import Button from './components/ui/Button'
 
 export default class Page extends Component {
-	constructor(header, main, popup) {
+	constructor(header, main) {
 		super({ tag: 'div', className: 'page ' })
-		this.appendChildren([header, main, popup])
+		this.appendChildren([header, main])
 	}
 
 	render() {

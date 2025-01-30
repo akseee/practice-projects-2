@@ -16,6 +16,7 @@
 		--popup-bg: #000000cc;
 		--button-border: 1px solid #808080;
 		--field-border: 2px solid #2e2e2e;
+		--success: #727e5b;
 	}
 }
 
@@ -37,5 +38,6 @@
 		--popup-bg: #000000cc;
 		--button-border: 1px solid #808080;
 		--svg-sound: url('../assets/white-volume.svg') no-repeat center;
+		--success: #727e5b;
 	}
 }
