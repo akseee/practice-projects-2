@@ -11,19 +11,21 @@ import './style.css'
 
 const grid = new Grid(15)
 const main = new Main(grid)
-// const form = new Form()
-// const asideForm = new Aside(form)
+
+const form = new Form()
+const asideForm = new Aside(form)
+
 // const rules = new Rules()
 // const asideRules = new Aside(rules)
 
-const leaderboard = new Leaderboard()
-const asideLeaderboard = new Aside(leaderboard)
+// const leaderboard = new Leaderboard()
+// const asideLeaderboard = new Aside(leaderboard)
 
 const header = new Header()
 
 const page = new Page(header, main)
 
 page.render()
-document.body.append(asideLeaderboard)
-// document.body.append(asideForm)
+// document.body.append(asideLeaderboard)
+document.body.append(asideForm)
 // document.body.append(asideRules)

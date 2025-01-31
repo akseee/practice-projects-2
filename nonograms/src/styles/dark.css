@@ -1,19 +1,9 @@
 .page.dark {
 	:root {
-		--ff: 'Nuku', sans-serif;
 		--bg-img: url('../assets/dark.png') bottom no-repeat;
+		--svg-sound: url('../assets/white-volume.svg') no-repeat center;
 		--first-c: #4d0000;
 		--second-c: #ffffff;
-		--light-red: #ff000080;
-		--grid-wrapper: transparent;
-		--transform-to-open: translate(500px);
-		--transform-to-close: translate(-500px);
-		--cell-bg: #f5f5f5;
-		--cell-br: #cccccc;
-		--info-cell-bg: #919191;
-		--cell-choosen: #080000;
-		--cell-marked: #808080;
-		--popup-bg: #000000cc;
 		--button-border: 1px solid #808080;
 		--field-border: 2px solid #2e2e2e;
 		--success: #727e5b;
@@ -22,22 +12,10 @@
 
 @media (prefers-color-scheme: dark) {
 	:root {
-		--ff: 'Nuku', sans-serif;
 		--bg-img: url('../assets/dark.png') bottom no-repeat;
-		--first-c: #4d0000;
-		--second-c: #ffffff;
-		--light-red: #ff000080;
-		--grid-wrapper: transparent;
-		--transform-to-open: translate(500px);
-		--transform-to-close: translate(-500px);
-		--cell-bg: #f5f5f5;
-		--cell-br: #cccccc;
-		--info-cell-bg: #919191;
-		--cell-choosen: #080000;
-		--cell-marked: #808080;
-		--popup-bg: #000000cc;
-		--button-border: 1px solid #808080;
 		--svg-sound: url('../assets/white-volume.svg') no-repeat center;
+		--first-c: #4d0000;
+		--button-border: 1px solid #808080;
 		--success: #727e5b;
 	}
 }

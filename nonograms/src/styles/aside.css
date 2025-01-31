@@ -1,0 +1,131 @@
+.aside-button {
+	position: fixed;
+	bottom: 0;
+	display: flex;
+	flex-shrink: 0;
+	justify-content: center;
+	align-items: center;
+	width: 100px;
+	height: 50px;
+	border-left-color: transparent;
+	color: var(--font-color);
+	background-color: var(--first-c);
+	transition: all 0.5s ease;
+	cursor: pointer;
+}
+
+.aside-button.open {
+	z-index: 2;
+	transform: var(--transform-to-open);
+}
+
+.aside {
+	position: fixed;
+	left: 0;
+	z-index: 1;
+	width: 500px;
+	height: 100%;
+	background-color: var(--first-c);
+	transition: transform 0.5s ease;
+	transform: var(--transform-to-close);
+}
+
+.aside.open {
+	z-index: 2;
+	display: block;
+	transform: translate(0);
+}
+
+/* .aside input[type='radio']:checked {
+	font-weight: lighter;
+} */
+
+.aside-content {
+	display: flex;
+	flex-direction: column;
+	flex-shrink: 0;
+	gap: 2rem;
+	box-sizing: border-box;
+	width: 500px;
+	height: auto;
+	min-height: 100%;
+	border-right: 2px solid #000000;
+	padding: 3rem 2rem;
+	color: var(--font-color);
+	background-color: var(--bg);
+}
+
+.aside-title {
+	color: var(--font-color);
+}
+
+.overlay {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	background-color: var(--overlay);
+	cursor: pointer;
+}
+
+/* form */
+
+.template-field label {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 1rem;
+}
+
+.select {
+	flex: 1;
+	padding: 0.5rem;
+	color: var(--second-c);
+	font-family: var(--ff);
+	text-align: center;
+	background-color: transparent;
+}
+
+.option {
+	color: #4d0000;
+}
+
+.difficulty-field {
+	display: flex;
+	justify-content: space-around;
+}
+
+.difficulty-field {
+}
+
+.random {
+	border-color: var(--info-cell-bg);
+	color: var(--info-cell-bg);
+}
+
+.random:hover {
+	color: var(--second-c);
+}
+
+.submit {
+	background-color: var(--success);
+}
+
+.submit:hover {
+	color: var(--first-c);
+	background-color: var(--success);
+}
+
+/* rules */
+
+.rules-text {
+	font-size: 1.3rem;
+	line-height: 2;
+}
+
+/* leaderboard */
+
+.leaderboard-list {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+}
