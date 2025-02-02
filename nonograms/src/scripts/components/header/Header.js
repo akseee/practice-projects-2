@@ -19,10 +19,11 @@ export default class Header extends Component {
 		this.wrapper.appendChildren([this.volume, this.theme])
 
 		this.leaderboard = new Button('leaderboard', 'leaderboard', () => {
-			this.handleRulesOpen()
+			this.handleLeaderboardOpen()
 		})
+
 		this.rules = new Button('rules', 'rules', () => {
-			this.handleRulesOpen
+			this.handleRulesOpen()
 		})
 		this.controls = new Component({ tag: 'div', className: 'controls' })
 		this.setup = new Button('setup', 'setup game', () => {
@@ -37,17 +38,40 @@ export default class Header extends Component {
 		])
 
 		this.appendChildren([this.title, this.controls])
+
+		this.handlers = {
+			onRulesOpen: null,
+			onLeaderboardOpen: null,
+			onSetupOpen: null,
+		}
+	}
+
+	setHandlers(handlers) {
+		this.handlers = { ...this.handlers, ...handlers }
 	}
 
 	handleRulesOpen() {
-		console.log('opened rules')
+		if (this.handlers.onRulesOpen) {
+			this.handlers.onRulesOpen()
+		} else {
+			console.log('something is wrong with rules handler')
+		}
 	}
 
 	handleLeaderboardOpen() {
-		console.log('opened leaderboard')
+		if (this.handlers.onLeaderboardOpen) {
+			this.handlers.onLeaderboardOpen()
+		} else {
+			console.log('something is wrong with leaderboard handler')
+		}
 	}
+
 	handleSetupOpen() {
-		console.log('opeend settings')
+		if (this.handlers.onSetupOpen) {
+			this.handlers.onSetupOpen()
+		} else {
+			console.log('something is wrong with setup handler')
+		}
 	}
 
 	handleThemeChange() {
@@ -64,7 +88,7 @@ export default class Header extends Component {
 	}
 
 	handleVolume() {
-		// this.volume.toggleClass('active')
+		this.volume.toggleClass('active')
 		console.log('toggled volume')
 	}
 }

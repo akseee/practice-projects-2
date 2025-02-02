@@ -5,6 +5,7 @@ export default class Button extends Component {
 		super({ tag: 'button', className: `button ${cn}` })
 
 		this.setTextContent(text)
+		this.setAttribute('type', 'button')
 
 		this.addListener('click', listener)
 	}

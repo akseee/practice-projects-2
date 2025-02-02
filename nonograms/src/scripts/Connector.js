@@ -19,7 +19,13 @@ export default class Connector {
 		this.asideLeaderboard = new Aside('leaderboard', this.leaderboard)
 
 		this.rules = new Rules()
-		this.asideForm = new Aside('rules', this.rules)
+		this.asideRules = new Aside('rules', this.rules)
+
+		this.view.header.setHandlers({
+			onRulesOpen: this.handleRulesOpen.bind(this),
+			onLeaderboardOpen: this.handleLeaderboardOpen.bind(this),
+			onSetupOpen: this.handleSetupOpen.bind(this),
+		})
 	}
 
 	setAllTemplates() {
@@ -34,6 +40,18 @@ export default class Connector {
 	handleSubmitForm() {
 		// add to form
 		this.asideForm.closeAside()
+	}
+
+	handleRulesOpen() {
+		this.asideRules.openAside()
+	}
+
+	handleLeaderboardOpen() {
+		this.asideLeaderboard.openAside()
+	}
+
+	handleSetupOpen() {
+		this.asideForm.openAside()
 	}
 
 	render() {
