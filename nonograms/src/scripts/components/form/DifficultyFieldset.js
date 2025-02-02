@@ -38,4 +38,8 @@ export default class DifficultyFieldset extends Component {
 			this.appendChildren([this.input, this.label])
 		})
 	}
+
+	setActive(diff) {
+		this.querySelector(`#${diff}`).checked = true
+	}
 }
