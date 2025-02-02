@@ -98,7 +98,7 @@ body {
 }
 
 .theme {
-	color: var(--success);
+	color: var(--first-c);
 	background-color: var(--second-c);
 }
 

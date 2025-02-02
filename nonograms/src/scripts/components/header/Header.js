@@ -56,10 +56,10 @@ export default class Header extends Component {
 			document.body.classList.add(theme)
 		}
 
-		if (document.body.classList.contains('dark')) {
-			setTheme('light')
-		} else {
+		if (document.body.classList.contains('light')) {
 			setTheme('dark')
+		} else {
+			setTheme('light')
 		}
 	}
 
