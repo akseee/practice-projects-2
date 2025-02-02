@@ -3,7 +3,7 @@ import Button from '../ui/Button'
 import Info from './Info'
 
 export default class Main extends Component {
-	constructor(grid) {
+	constructor() {
 		super({ tag: 'main', className: 'main' })
 
 		this.start = new Button('start', 'start game', () => {})
@@ -22,7 +22,7 @@ export default class Main extends Component {
 		this.info = new Info()
 
 		this.initialButtonState()
-		this.appendChildren([this.wrapper, this.info, grid])
+		this.appendChildren([this.wrapper, this.info])
 	}
 
 	initialButtonState() {
