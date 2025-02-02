@@ -8,18 +8,26 @@ export default class Header extends Component {
 		this.title = new Component({ tag: 'h1', className: 'title' })
 		this.title.setTextContent('nonograms')
 
-		this.theme = new Button('theme ', 'theme', () => {})
+		this.theme = new Button('theme ', 'theme', () => {
+			this.handleThemeChange()
+		})
 		this.volume = new Button('volume ', '', () => {
-			this.volume.toggleClass('active')
+			this.handleVolume()
 		})
 
 		this.wrapper = new Component({ tag: 'div', className: 'controls-header' })
 		this.wrapper.appendChildren([this.volume, this.theme])
 
-		this.leaderboard = new Button('leaderboard', 'leaderboard', () => {})
-		this.rules = new Button('rules', 'rules', () => {})
+		this.leaderboard = new Button('leaderboard', 'leaderboard', () => {
+			this.handleRulesOpen()
+		})
+		this.rules = new Button('rules', 'rules', () => {
+			this.handleRulesOpen
+		})
 		this.controls = new Component({ tag: 'div', className: 'controls' })
-		this.setup = new Button('setup', 'setup game', () => {})
+		this.setup = new Button('setup', 'setup game', () => {
+			this.handleSetupOpen()
+		})
 
 		this.controls.appendChildren([
 			this.wrapper,
@@ -29,5 +37,34 @@ export default class Header extends Component {
 		])
 
 		this.appendChildren([this.title, this.controls])
+	}
+
+	handleRulesOpen() {
+		console.log('opened rules')
+	}
+
+	handleLeaderboardOpen() {
+		console.log('opened leaderboard')
+	}
+	handleSetupOpen() {
+		console.log('opeend settings')
+	}
+
+	handleThemeChange() {
+		const setTheme = (theme) => {
+			document.body.classList.remove('dark', 'light')
+			document.body.classList.add(theme)
+		}
+
+		if (document.body.classList.contains('dark')) {
+			setTheme('light')
+		} else {
+			setTheme('dark')
+		}
+	}
+
+	handleVolume() {
+		// this.volume.toggleClass('active')
+		console.log('toggled volume')
 	}
 }

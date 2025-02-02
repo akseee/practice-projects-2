@@ -7,7 +7,7 @@
 	width: fit-content;
 	height: 50px;
 	border-left-color: transparent;
-	color: var(--font-color);
+	color: var(--form-color);
 	background-color: var(--first-c);
 	transition: all 0.5s ease;
 	cursor: pointer;
@@ -29,10 +29,6 @@
 .aside-button.rules {
 	bottom: 102px;
 }
-
-/* .aside-button.form {
-	bottom: 154px;
-} */
 
 .aside {
 	position: fixed;

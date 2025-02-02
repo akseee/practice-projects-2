@@ -3,6 +3,7 @@ import AppData from './AppData'
 import Grid from './Grid'
 import Form from './components/form/Form'
 import Aside from './components/aside/Aside'
+import Rules from './components/rules/Rules'
 import Leaderboard from './components/leaderboard/Leaderboard'
 
 export default class Connector {
@@ -17,7 +18,7 @@ export default class Connector {
 		this.leaderboard = new Leaderboard()
 		this.asideLeaderboard = new Aside('leaderboard', this.leaderboard)
 
-		this.rules = new Leaderboard()
+		this.rules = new Rules()
 		this.asideForm = new Aside('rules', this.rules)
 	}
 
