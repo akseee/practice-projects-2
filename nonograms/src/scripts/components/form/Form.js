@@ -85,18 +85,32 @@ export default class Form extends Component {
 		difficulties.forEach((diff) => {
 			const input = new Component({
 				tag: 'input',
+				className: 'difficulty-input',
 			})
+			input.setAttribute('name', 'difficulty')
 			input.setAttribute('type', 'radio')
 			input.setAttribute('value', diff.value)
 			input.setAttribute('id', diff.id)
-			input.setAttribute('name', 'difficulty')
 
-			const label = new Component({ tag: 'label' })
-
+			const label = new Component({
+				tag: 'label',
+				className: 'difficulty-label',
+			})
 			label.setTextContent(diff.text)
 			label.setAttribute('for', diff.id)
+
+			if (diff.value === 'easy') {
+				input.getNode().checked = true
+			}
 
 			this.difficultyFieldset.appendChildren([input, label])
 		})
 	}
+
+	getSelectedDifficulty() {
+		const selected = document.querySelector('input[name="difficulty"]:checked')
+		return selected ? selected.value : null
+	}
 }
+
+const label = document.querySelectorAll('.difficulty-label')

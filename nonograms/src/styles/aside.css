@@ -76,25 +76,49 @@
 	padding: 1rem;
 }
 
+/* .select {
+} */
+
 .select {
 	flex: 1;
-	padding: 0.5rem;
-	color: var(--second-c);
+	padding: 0.5rem 0;
+	outline: none;
 	font-family: var(--ff);
 	text-align: center;
-	background-color: transparent;
+	transition: all 0.3s ease-in-out;
+	cursor: pointer;
+	appearance: none;
 }
 
-.option {
-	color: #4d0000;
+.select option:checked {
+	color: var(--form-color);
+	background: var(--success);
 }
 
 .difficulty-field {
 	display: flex;
 	justify-content: space-around;
+	padding: 1rem;
 }
 
-.difficulty-field {
+.difficulty-input {
+	display: none;
+}
+
+.difficulty-label {
+	display: inline-block;
+	border: 1px solid var(--second-c);
+	padding: 0.5rem 1rem;
+	transition:
+		background 0.3s,
+		color 0.3s;
+	cursor: pointer;
+}
+
+.difficulty-input:checked + .difficulty-label {
+	border-color: transparent;
+	color: var(--first-c);
+	background: var(--success);
 }
 
 .random {

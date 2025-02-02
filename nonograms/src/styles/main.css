@@ -9,7 +9,7 @@
 	--transform-to-open: translate(500px);
 	--transform-to-close: translate(-500px);
 	--light-red: #ff000080;
-	--hover: #ff0000;
+	--hover: #b41919;
 	--overlay: #000000cc;
 }
 
@@ -67,6 +67,7 @@ body {
 }
 
 .button:hover {
+	border-color: transparent;
 	background-color: var(--hover);
 	cursor: pointer;
 }
@@ -97,7 +98,7 @@ body {
 }
 
 .theme {
-	color: var(--first-c);
+	color: var(--success);
 	background-color: var(--second-c);
 }
 

@@ -7,6 +7,7 @@
 		--button-border: 1px solid #808080;
 		--field-border: 2px solid #2e2e2e;
 		--success: #727e5b;
+		--form-color: #f5f5f5;
 	}
 }
 
@@ -15,7 +16,10 @@
 		--bg-img: url('../assets/dark.png') bottom no-repeat;
 		--svg-sound: url('../assets/white-volume.svg') no-repeat center;
 		--first-c: #4d0000;
+		--second-c: #ffffff;
 		--button-border: 1px solid #808080;
+		--field-border: 2px solid #2e2e2e;
 		--success: #727e5b;
+		--form-color: #f5f5f5;
 	}
 }
