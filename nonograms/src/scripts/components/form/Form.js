@@ -1,11 +1,13 @@
 // @ts-nocheck
 import Component from '../../common/Component'
 import Button from '../ui/Button'
+import DifficultyFieldset from '../ui/DifficultyFieldset'
 
 export default class Form extends Component {
 	constructor() {
 		super({ tag: 'div', className: 'aside-content' })
 
+		this.levels = ['easy', 'medium', 'hard']
 		this.title = new Component({ tag: 'h2', className: 'aside-title' })
 		this.title.setTextContent('Settings')
 
@@ -13,25 +15,24 @@ export default class Form extends Component {
 			tag: 'fieldset',
 			className: 'template-field',
 		})
-		this.difficultyFieldset = new Component({
-			tag: 'fieldset',
-			className: 'difficulty-field',
+
+		this.difficultyFieldset = new DifficultyFieldset(this.levels)
+		this.difficultyFieldset.addListener('change', (e) => {
+			this.difficulty = e.target.value
+			this.createTemplateFieldset(this.templatess[this.difficulty])
 		})
 
-		this.randomButton = new Button('random', 'randomize template', () => {})
+		this.randomButton = new Button('random', 'randomize template', () => {
+			this.handleRandomizer()
+		})
 
 		this.submit = new Button('submit', 'submit settings', () =>
 			this.handleFormSubmit()
 		)
 		this.submit.setAttribute('type', 'submit')
 
-		this.templates = {}
+		this.templatess = {}
 		this.difficulty = 'easy'
-
-		this.difficultyFieldset.addListener('change', (e) => {
-			this.difficulty = e.target.value
-			this.createTemplateFieldset(this.templates[this.difficulty])
-		})
 
 		this.appendChildren([
 			this.title,
@@ -45,10 +46,21 @@ export default class Form extends Component {
 	extractFromMatrix(matrix) {
 		for (const difficulty in matrix) {
 			const names = Object.keys(matrix[difficulty])
-			this.templates[difficulty] = names
+			this.templatess[difficulty] = names
 		}
 		this.setInitialFormData()
 	}
+
+	handleFormSubmit() {
+		const formData = {
+			template: this.templateFieldset.querySelector('select').value,
+			difficulty: this.difficultyFieldset.querySelector('input:checked')?.value,
+		}
+		this.difficulty =
+			this.difficultyFieldset.querySelector('input:checked')?.value
+	}
+
+	handleRandomizer() {}
 
 	createTemplateFieldset(options) {
 		this.templateFieldset.destroyChildren()
@@ -78,50 +90,7 @@ export default class Form extends Component {
 		this.templateFieldset.append(templateLabel)
 	}
 
-	createDifficultyFieldset() {
-		const levels = ['easy', 'medium', 'hard']
-		const legend = new Component({ tag: 'legend' })
-		legend.setTextContent('Select a difficulty:')
-
-		this.difficultyFieldset.append(legend)
-
-		levels.forEach((diff) => {
-			const input = new Component({
-				tag: 'input',
-				className: 'difficulty-input',
-			})
-			input.setAttribute('name', 'difficulty')
-			input.setAttribute('type', 'radio')
-			input.setAttribute('value', diff)
-			input.setAttribute('id', diff)
-
-			const label = new Component({
-				tag: 'label',
-				className: 'difficulty-label',
-			})
-			label.setTextContent(diff)
-			label.setAttribute('for', diff)
-
-			if (diff === 'easy') {
-				input.getNode().checked = true
-			}
-
-			this.difficultyFieldset.appendChildren([input, label])
-		})
-	}
-
-	handleFormSubmit() {
-		const formData = {
-			template: this.templateFieldset.querySelector('select').value,
-			difficulty: this.difficultyFieldset.querySelector('input:checked')?.value,
-		}
-		this.difficulty =
-			this.difficultyFieldset.querySelector('input:checked')?.value
-		console.log(formData)
-	}
-
 	setInitialFormData() {
-		this.createTemplateFieldset(this.templates[this.difficulty])
-		this.createDifficultyFieldset()
+		this.createTemplateFieldset(this.templatess[this.difficulty])
 	}
 }

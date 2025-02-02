@@ -1,5 +1,4 @@
 import { matrix } from '../matrix'
-import { randomMatrix } from './utils/utils'
 
 export default class AppData {
 	constructor() {
@@ -30,7 +29,7 @@ export default class AppData {
 	}
 
 	setRandom() {
-		this.currentTemplate = randomMatrix(this.size)
+		// this.currentTemplate = randomizer(this.size)
 	}
 
 	getFromLS() {

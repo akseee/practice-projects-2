@@ -1,14 +1,3 @@
-import { matrix } from '../../matrix'
-
-export function randomMatrix(size) {
-	const difficulty = size === 5 ? 'easy' : size === 10 ? 'medium' : 'hard'
-
-	const keys = Object.keys(matrix[difficulty])
-	const randomKey = keys[Math.floor(Math.random() * keys.length)]
-	const selected = matrix[difficulty][randomKey]
-	return selected
-}
-
 export function calculateRowHints(array) {
 	let result = []
 	for (let i = 0; i < array.length; i++) {

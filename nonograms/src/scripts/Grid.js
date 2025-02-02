@@ -2,11 +2,7 @@ import Component from './common/Component'
 import Field from './components/grid/Field'
 import Hints from './components/grid/Hints'
 
-import {
-	calculateColumnHints,
-	calculateRowHints,
-	randomMatrix,
-} from './utils/utils'
+import { calculateColumnHints, calculateRowHints } from './utils/utils'
 
 export default class Grid extends Component {
 	constructor(size) {
@@ -23,7 +19,13 @@ export default class Grid extends Component {
 
 		this.rowHints = new Hints('row')
 
-		this.mock = randomMatrix(size)
+		this.mock = [
+			[0, 0, 1, 0, 1],
+			[0, 0, 1, 1, 1],
+			[1, 1, 1, 1, 1],
+			[1, 1, 1, 1, 0],
+			[1, 1, 1, 1, 1],
+		]
 		this.setRowHints()
 		this.setColumnHints()
 
