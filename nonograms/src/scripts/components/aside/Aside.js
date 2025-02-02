@@ -3,14 +3,17 @@ import Component from '../../common/Component'
 import Button from '../ui/Button'
 
 export default class Aside extends Component {
-	constructor(children) {
+	constructor(name, children) {
 		super({
 			tag: 'aside',
 			className: 'aside ',
 		})
 		this.append(children)
+		this.name = name
 
-		this.button = new Button('aside-button ', 'open', () => this.toggleAside())
+		this.button = new Button(`aside-button ${this.name}`, `${this.name}`, () =>
+			this.toggleAside()
+		)
 
 		this.overlay = new Component({ tag: 'div', className: 'overlay' })
 		this.overlay.setVisible(false)
@@ -24,7 +27,7 @@ export default class Aside extends Component {
 	}
 
 	closeAside() {
-		this.button.setTextContent('open')
+		this.button.setTextContent(this.name)
 		this.button.removeClass('open')
 		this.overlay.setVisible(false)
 		this.removeClass('open')

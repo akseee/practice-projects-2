@@ -1,4 +1,4 @@
-import Connector from './scripts/Conntector'
+import Connector from './scripts/Connector'
 import './style.css'
 
 // const grid = new Grid(5)
