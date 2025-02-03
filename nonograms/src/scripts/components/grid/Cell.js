@@ -41,7 +41,7 @@ export default class Cell extends Component {
 		isMouseDown = true
 
 		if (e.button === 0) {
-			this.handleLeftClick()
+			this.handleLeftClick(e)
 		} else if (e.button === 2) {
 			this.handleRightClick()
 		}
@@ -52,21 +52,21 @@ export default class Cell extends Component {
 			if (current === 'set-marked') {
 				this.addMarked()
 			} else if (current === 'set-choosen') {
-				this.addChoosen()
+				this.addChoosen(e)
 			} else if (current === 'remove-marked') {
 				this.removeMarked()
 			} else if (current === 'remove-choosen') {
-				this.removeChoosen()
+				this.removeChoosen(e)
 			}
 		}
 	}
 
-	handleLeftClick() {
+	handleLeftClick(e) {
 		if (this.checkClass('choosen')) {
-			this.removeChoosen()
+			this.removeChoosen(e)
 			current = 'remove-choosen'
 		} else {
-			this.addChoosen()
+			this.addChoosen(e)
 			current = 'set-choosen'
 		}
 	}
@@ -99,14 +99,27 @@ export default class Cell extends Component {
 		}
 	}
 
-	addChoosen() {
+	addChoosen(e) {
+		if (this.checkClass('choosen')) {
+			return
+		}
+
 		if (this.checkClass('marked')) {
 			this.removeMarked()
 		}
 		this.addClass('choosen')
+
+		console.log('adding to database')
+		console.log(e.target.getAttribute('data-column'))
 	}
 
-	removeChoosen() {
+	removeChoosen(e) {
+		if (!this.checkClass('choosen')) {
+			return
+		}
 		this.removeClass('choosen')
+
+		console.log(e.target.getAttribute('data-row'))
+		console.log('removing from data')
 	}
 }

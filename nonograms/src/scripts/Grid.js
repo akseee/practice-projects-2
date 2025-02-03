@@ -36,9 +36,9 @@ export default class Grid extends Component {
 		this.columnHints.createHints(column)
 	}
 
-	updateGrid(newSize, newMatrix) {
-		this.size = newSize
-		this.matrix = newMatrix
+	updateGrid(matrix) {
+		this.size = matrix.length
+		this.matrix = matrix
 		this.destroyChildren()
 		this.createGrid()
 		this.setMatrix(this.matrix)
@@ -77,6 +77,7 @@ class Field extends Component {
 			const row = Math.floor(i / this.size)
 			const column = i % this.size
 			const cell = new Cell(row, column, this.size)
+
 			this.append(cell)
 		}
 	}

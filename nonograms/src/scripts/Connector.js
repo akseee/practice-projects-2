@@ -5,6 +5,7 @@ import Form from './Form'
 import Aside from './components/aside/Aside'
 import Rules from './components/rules/Rules'
 import Leaderboard from './components/leaderboard/Leaderboard'
+import Notification from './components/aside/Notification'
 
 export default class Connector {
 	constructor() {
@@ -21,6 +22,10 @@ export default class Connector {
 		this.rules = new Rules()
 		this.asideRules = new Aside('rules', this.rules)
 
+		this.notification = new Notification()
+		this.asideNotification = new Aside('notification', this.notification)
+		this.asideNotification.hideButton()
+
 		this.view.header.setHandlers({
 			onRulesOpen: this.handleRulesOpen.bind(this),
 			onLeaderboardOpen: this.handleLeaderboardOpen.bind(this),
@@ -36,6 +41,15 @@ export default class Connector {
 		})
 	}
 
+	handleCellClick() {
+		if (!this.model.isStarted) {
+			this.model.isStarted = true
+			this.handleGameStart()
+		} else {
+			console.log('click')
+		}
+	}
+
 	handleGameStart() {
 		this.view.main.startTimer()
 		console.log('start')
@@ -47,14 +61,17 @@ export default class Connector {
 	}
 
 	handleSolutionShowing() {
+		this.openNotififcation('soltuion')
 		console.log('solution')
 	}
 
 	handleLoadGame() {
+		this.openNotififcation('loading')
 		console.log('loading')
 	}
 
 	handleGameSave() {
+		this.openNotififcation('saving')
 		console.log('saving')
 	}
 
@@ -71,7 +88,7 @@ export default class Connector {
 
 		const matrix = this.model.getTemplateMatrix()
 
-		this.grid.updateGrid(matrix.length, matrix)
+		this.grid.updateGrid(matrix)
 	}
 
 	handleRulesOpen() {
@@ -84,6 +101,11 @@ export default class Connector {
 
 	handleSetupOpen() {
 		this.asideForm.openAside()
+	}
+
+	openNotififcation(text) {
+		this.notification.setMessage(text)
+		this.asideNotification.openAside()
 	}
 
 	render() {

@@ -6,7 +6,6 @@ export default class Main extends Component {
 	constructor() {
 		super({ tag: 'main', className: 'main' })
 
-		this.start = new Button('start', 'start game', () => this.handleStart())
 		this.restart = new Button('restart', 'restart game', () =>
 			this.handelRestart()
 		)
@@ -20,7 +19,6 @@ export default class Main extends Component {
 
 		this.wrapper = new Component({ tag: 'div', className: 'controls-main' })
 		this.wrapper.appendChildren([
-			this.start,
 			this.restart,
 			this.solution,
 			this.load,
@@ -55,10 +53,10 @@ export default class Main extends Component {
 
 	handleStart() {
 		if (this.handlers.onStart) {
-			this.handlers.onStart()
-			this.setGameStartedButtons()
+			this.handlers.onRestart()
+			this.setInitialButtonState()
 		} else {
-			console.log('something is wrong with starting handler')
+			console.log('something is wrong with restarting handler')
 		}
 	}
 
@@ -100,8 +98,8 @@ export default class Main extends Component {
 	setInitialButtonState() {
 		this.checkLoadings()
 
-		this.start.setVisible(true)
-		this.restart.setVisible(false)
+		this.restart.setVisible(true)
+		this.restart.setDisabled(true)
 
 		this.load.setVisible(true)
 		this.save.setVisible(false)
@@ -110,10 +108,11 @@ export default class Main extends Component {
 	}
 
 	setGameStartedButtons() {
-		this.start.setVisible(false)
 		this.restart.setVisible(true)
+		this.restart.setDisabled(false)
 
 		this.load.setVisible(false)
+
 		this.save.setVisible(true)
 		this.save.setDisabled(false)
 
@@ -121,8 +120,8 @@ export default class Main extends Component {
 	}
 
 	setAfterSolutionButtons() {
-		this.start.setVisible(false)
 		this.restart.setVisible(true)
+		this.restart.setDisabled(false)
 
 		this.load.setVisible(false)
 		this.save.setVisible(true)

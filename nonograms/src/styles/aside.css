@@ -164,3 +164,11 @@
 	flex-direction: column;
 	gap: 2rem;
 }
+
+/* notification */
+
+.notification-text {
+	font-size: 2rem;
+	line-height: 2;
+	text-align: center;
+}

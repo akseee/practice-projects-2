@@ -4,7 +4,6 @@ export default class AppData {
 	constructor() {
 		this.allTemplates = matrix
 
-		this.size = 15
 		this.currentTemplate = null
 
 		this.difficulty = 'easy'

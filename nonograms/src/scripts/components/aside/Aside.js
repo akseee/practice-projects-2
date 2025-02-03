@@ -40,6 +40,10 @@ export default class Aside extends Component {
 		this.addClass('open')
 	}
 
+	hideButton() {
+		this.button.setVisible(false)
+	}
+
 	toggleAside() {
 		if (!this.checkClass('open')) {
 			this.openAside()
