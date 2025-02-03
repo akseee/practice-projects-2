@@ -6,11 +6,17 @@ export default class Main extends Component {
 	constructor() {
 		super({ tag: 'main', className: 'main' })
 
-		this.start = new Button('start', 'start game', () => {})
-		this.restart = new Button('restart', 'restart game', () => {})
-		this.load = new Button('load', 'load previous game', () => {})
-		this.save = new Button('save', 'save game', () => {})
-		this.solution = new Button('solution', 'solution', () => {})
+		this.start = new Button('start', 'start game', () => this.handleStart())
+		this.restart = new Button('restart', 'restart game', () =>
+			this.handelRestart()
+		)
+		this.load = new Button('load', 'load last saved game', () =>
+			this.handleLoad()
+		)
+		this.save = new Button('save', 'save game', () => this.handleSave())
+		this.solution = new Button('solution', 'solution', () =>
+			this.handleSolution()
+		)
 
 		this.wrapper = new Component({ tag: 'div', className: 'controls-main' })
 		this.wrapper.appendChildren([
@@ -23,18 +29,96 @@ export default class Main extends Component {
 
 		this.info = new Info()
 
-		this.initialButtonState()
+		this.setInitialButtonState()
 		this.appendChildren([this.wrapper, this.info])
+
+		this.handlers = {
+			onStart: null,
+			onRestart: null,
+			onSolution: null,
+			onLoad: null,
+			onSave: null,
+		}
 	}
 
-	initialButtonState() {
+	setHandlers(handlers) {
+		this.handlers = { ...this.handlers, ...handlers }
+	}
+
+	handleStart() {
+		if (this.handlers.onStart) {
+			this.handlers.onStart()
+			this.setGameStartedButtons()
+		} else {
+			console.log('something is wrong with starting handler')
+		}
+	}
+
+	handelRestart() {
+		if (this.handlers.onRestart) {
+			this.handlers.onRestart()
+			this.setInitialButtonState()
+		} else {
+			console.log('something is wrong with restarting handler')
+		}
+	}
+
+	handleSolution() {
+		if (this.handlers.onSolution) {
+			this.handlers.onSolution()
+			this.setAfterSolutionButtons()
+		} else {
+			console.log('something is wrong with solution handler')
+		}
+	}
+
+	handleLoad() {
+		if (this.handlers.onLoad) {
+			this.handlers.onLoad()
+			this.setGameStartedButtons()
+		} else {
+			console.log('something is wrong with loading handler')
+		}
+	}
+
+	handleSave() {
+		if (this.handlers.onSave) {
+			this.handlers.onSave()
+		} else {
+			console.log('something is wrong with saving handler')
+		}
+	}
+
+	setInitialButtonState() {
 		this.checkLoadings()
 
 		this.start.setVisible(true)
-		this.load.setVisible(true)
-
 		this.restart.setVisible(false)
+
+		this.load.setVisible(true)
 		this.save.setVisible(false)
+
+		this.solution.setDisabled(true)
+	}
+
+	setGameStartedButtons() {
+		this.start.setVisible(false)
+		this.restart.setVisible(true)
+
+		this.load.setVisible(false)
+		this.save.setVisible(true)
+		this.save.setDisabled(false)
+
+		this.solution.setDisabled(false)
+	}
+
+	setAfterSolutionButtons() {
+		this.start.setVisible(false)
+		this.restart.setVisible(true)
+
+		this.load.setVisible(false)
+		this.save.setVisible(true)
+		this.save.setDisabled(true)
 
 		this.solution.setDisabled(true)
 	}
@@ -45,17 +129,5 @@ export default class Main extends Component {
 		} else {
 			this.load.setDisabled(true)
 		}
-	}
-
-	setGameStartedButtons() {
-		this.checkLoadings()
-
-		this.start.setVisible(false)
-		this.load.setVisible(false)
-
-		this.restart.setVisible(true)
-		this.save.setVisible(true)
-
-		this.solution.setDisabled(false)
 	}
 }

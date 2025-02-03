@@ -26,6 +26,34 @@ export default class Connector {
 			onLeaderboardOpen: this.handleLeaderboardOpen.bind(this),
 			onSetupOpen: this.handleSetupOpen.bind(this),
 		})
+
+		this.view.main.setHandlers({
+			onStart: this.handleGameStart.bind(this),
+			onRestart: this.handleGameRestart.bind(this),
+			onSolution: this.handleSolutionShowing.bind(this),
+			onLoad: this.handleLoadGame.bind(this),
+			onSave: this.handleGameSave.bind(this),
+		})
+	}
+
+	handleGameStart() {
+		console.log('start')
+	}
+
+	handleGameRestart() {
+		console.log('restart')
+	}
+
+	handleSolutionShowing() {
+		console.log('solution')
+	}
+
+	handleLoadGame() {
+		console.log('loading')
+	}
+
+	handleGameSave() {
+		console.log('saving')
 	}
 
 	setAllTemplates() {
