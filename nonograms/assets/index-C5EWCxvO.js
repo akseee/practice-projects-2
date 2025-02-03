@@ -120,8 +120,8 @@ class Header extends Component {
       this.handleSetupOpen();
     });
     this.controls.appendChildren([
-      this.wrapper,
       this.setup,
+      this.wrapper,
       this.leaderboard,
       this.rules
     ]);
@@ -177,44 +177,153 @@ class Info extends Component {
     super({ tag: "div", className: "info" });
     this.text = new Component({ tag: "p", className: "info-text" });
     this.timer = new Component({ tag: "div", className: "info-timer" });
-    this.text.setTextContent("hihi");
-    this.timer.setTextContent("00:21");
+    this.text.setTextContent("работа полностью не готовa:(");
+    this.timer.setTextContent("00:00");
     this.appendChildren([this.text, this.timer]);
+    this.seconds = 0;
+    this.intervalId = null;
+  }
+  getTime() {
+    return this.seconds;
   }
   startTimer() {
+    if (this.intervalId !== null) return;
+    this.intervalId = setInterval(() => {
+      this.seconds++;
+      const minutes = Math.floor(this.seconds / 60);
+      const secs = this.seconds % 60;
+      const timeString = `${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+      this.timer.setTextContent(timeString);
+    }, 1e3);
+  }
+  stopTimer() {
+    if (this.intervalId === null) return;
+    clearInterval(this.intervalId);
+    this.intervalId = null;
+  }
+  resetTimer() {
+    this.stopTimer();
+    this.seconds = 0;
+    this.timer.setTextContent("00:00");
   }
 }
 class Main extends Component {
   constructor() {
     super({ tag: "main", className: "main" });
-    this.start = new Button("start", "start game", () => {
-    });
-    this.restart = new Button("restart", "restart game", () => {
-    });
-    this.load = new Button("load", "load previous game", () => {
-    });
-    this.save = new Button("save", "save game", () => {
-    });
+    this.start = new Button("start", "start game", () => this.handleStart());
+    this.restart = new Button(
+      "restart",
+      "restart game",
+      () => this.handelRestart()
+    );
+    this.load = new Button(
+      "load",
+      "load last saved game",
+      () => this.handleLoad()
+    );
+    this.save = new Button("save", "save game", () => this.handleSave());
+    this.solution = new Button(
+      "solution",
+      "solution",
+      () => this.handleSolution()
+    );
     this.wrapper = new Component({ tag: "div", className: "controls-main" });
     this.wrapper.appendChildren([
       this.start,
       this.restart,
+      this.solution,
       this.load,
       this.save
     ]);
     this.info = new Info();
-    this.initialButtonState();
+    this.setInitialButtonState();
     this.appendChildren([this.wrapper, this.info]);
+    this.handlers = {
+      onStart: null,
+      onRestart: null,
+      onSolution: null,
+      onLoad: null,
+      onSave: null
+    };
   }
-  initialButtonState() {
+  setHandlers(handlers) {
+    this.handlers = { ...this.handlers, ...handlers };
+  }
+  startTimer() {
+    this.info.startTimer();
+  }
+  resetTimer() {
+    this.info.resetTimer();
+  }
+  handleStart() {
+    if (this.handlers.onStart) {
+      this.handlers.onStart();
+      this.setGameStartedButtons();
+    } else {
+      console.log("something is wrong with starting handler");
+    }
+  }
+  handelRestart() {
+    if (this.handlers.onRestart) {
+      this.handlers.onRestart();
+      this.setInitialButtonState();
+    } else {
+      console.log("something is wrong with restarting handler");
+    }
+  }
+  handleSolution() {
+    if (this.handlers.onSolution) {
+      this.handlers.onSolution();
+      this.setAfterSolutionButtons();
+    } else {
+      console.log("something is wrong with solution handler");
+    }
+  }
+  handleLoad() {
+    if (this.handlers.onLoad) {
+      this.handlers.onLoad();
+      this.setGameStartedButtons();
+    } else {
+      console.log("something is wrong with loading handler");
+    }
+  }
+  handleSave() {
+    if (this.handlers.onSave) {
+      this.handlers.onSave();
+    } else {
+      console.log("something is wrong with saving handler");
+    }
+  }
+  setInitialButtonState() {
     this.checkLoadings();
     this.start.setVisible(true);
     this.restart.setVisible(false);
     this.load.setVisible(true);
     this.save.setVisible(false);
+    this.solution.setDisabled(true);
+  }
+  setGameStartedButtons() {
+    this.start.setVisible(false);
+    this.restart.setVisible(true);
+    this.load.setVisible(false);
+    this.save.setVisible(true);
+    this.save.setDisabled(false);
+    this.solution.setDisabled(false);
+  }
+  setAfterSolutionButtons() {
+    this.start.setVisible(false);
+    this.restart.setVisible(true);
+    this.load.setVisible(false);
+    this.save.setVisible(true);
+    this.save.setDisabled(true);
+    this.solution.setDisabled(true);
   }
   checkLoadings() {
-    this.load.setDisabled(true);
+    if (localStorage.getItem("save")) {
+      console.log("exist");
+    } else {
+      this.load.setDisabled(true);
+    }
   }
 }
 class View extends Component {
@@ -463,7 +572,8 @@ class AppData {
   setDifficulty(difficulty) {
     this.difficulty = difficulty;
   }
-  setRandom() {
+  getTemplateMatrix() {
+    return this.allTemplates[this.difficulty][this.currentTemplate];
   }
   getFromLS() {
   }
@@ -565,31 +675,6 @@ class Cell extends Component {
     this.removeClass("choosen");
   }
 }
-class Field extends Component {
-  constructor(size) {
-    super({
-      tag: "div",
-      className: `field ${size === 5 ? "field-5" : size === 10 ? "field-10" : "field-15"}`
-    });
-    this._size = size;
-    this.destroyChildren();
-    this.createField();
-  }
-  set size(newSize) {
-    this._size = newSize;
-  }
-  get size() {
-    return this._size;
-  }
-  createField() {
-    for (let i = 0; i < this.size * this.size; i++) {
-      const row = Math.floor(i / this.size);
-      const column = i % this.size;
-      const cell = new Cell(row, column, this.size);
-      this.append(cell);
-    }
-  }
-}
 class Hints extends Component {
   constructor(type) {
     super({
@@ -665,23 +750,15 @@ function calculateColumnHints(array) {
   return result;
 }
 class Grid extends Component {
-  constructor(size) {
+  constructor(size = 5, matrix2 = null) {
     super({ tag: "div", className: "grid-wrapper" });
     this.grid = new Component({ tag: "div", className: "grid" });
     this.size = size;
-    this.field = new Field(size);
+    this.matrix = matrix2;
+    this.field = new Field(this.size);
     this.filler = new Hints("filler");
     this.columnHints = new Hints("column");
     this.rowHints = new Hints("row");
-    this.mock = [
-      [0, 0, 1, 0, 1],
-      [0, 0, 1, 1, 1],
-      [1, 1, 1, 1, 1],
-      [1, 1, 1, 1, 0],
-      [1, 1, 1, 1, 1]
-    ];
-    this.setRowHints();
-    this.setColumnHints();
     this.grid.appendChildren([
       this.filler,
       this.columnHints,
@@ -690,13 +767,123 @@ class Grid extends Component {
     ]);
     this.append(this.grid);
   }
-  setRowHints() {
-    const data = calculateRowHints(this.mock);
-    this.rowHints.createHints(data);
+  setMatrix(matrix2) {
+    this.matrix = matrix2;
+    const row = calculateRowHints(matrix2);
+    const column = calculateColumnHints(matrix2);
+    this.rowHints.createHints(row);
+    this.columnHints.createHints(column);
   }
-  setColumnHints() {
-    const data = calculateColumnHints(this.mock);
-    this.columnHints.createHints(data);
+  updateGrid(matrix2) {
+    this.size = matrix2.length;
+    this.matrix = matrix2;
+    this.destroyChildren();
+    this.createGrid();
+    this.setMatrix(this.matrix);
+  }
+  createGrid() {
+    this.field = new Field(this.size);
+    this.filler = new Hints("filler");
+    this.columnHints = new Hints("column");
+    this.rowHints = new Hints("row");
+    this.grid.appendChildren([
+      this.filler,
+      this.columnHints,
+      this.rowHints,
+      this.field
+    ]);
+    this.append(this.grid);
+  }
+}
+class Field extends Component {
+  constructor(size) {
+    super({
+      tag: "div",
+      className: `field ${size === 5 ? "field-5" : size === 10 ? "field-10" : "field-15"}`
+    });
+    this.size = size;
+    this.createField();
+  }
+  createField() {
+    for (let i = 0; i < this.size * this.size; i++) {
+      const row = Math.floor(i / this.size);
+      const column = i % this.size;
+      const cell = new Cell(row, column, this.size);
+      this.append(cell);
+    }
+  }
+}
+class Form extends Component {
+  constructor(onSubmit) {
+    var _a;
+    super({ tag: "form", className: "aside-content" });
+    this.levels = ["easy", "medium", "hard"];
+    this.templatess = {};
+    this.difficulty = "easy";
+    this.onSubmit = onSubmit;
+    this.title = new Component({ tag: "h2", className: "aside-title" });
+    this.title.setTextContent("Settings");
+    this.templateFieldset = new TemplateFieldset();
+    this.difficultyFieldset = new DifficultyFieldset(this.levels);
+    this.difficultyFieldset.addListener("change", (e) => {
+      this.difficulty = e.target.value;
+      this.templateFieldset.setTemplates(this.templatess[this.difficulty]);
+    });
+    this.randomButton = new Button("random", "randomize template", (e) => {
+      this.handleRandomizer();
+    });
+    this.submit = new Button("submit", "submit settings", (e) => {
+      e.preventDefault();
+      this.handleFormSubmit();
+    });
+    this.submit.setAttribute("type", "submit");
+    this.appendChildren([
+      this.title,
+      this.templateFieldset,
+      this.difficultyFieldset,
+      this.randomButton,
+      this.submit
+    ]);
+    this.formData = {
+      template: this.templateFieldset.querySelector("select").value,
+      difficulty: (_a = this.difficultyFieldset.querySelector("input:checked")) == null ? void 0 : _a.value
+    };
+  }
+  extractFromMatrix(matrix2) {
+    for (const difficulty in matrix2) {
+      const names = Object.keys(matrix2[difficulty]);
+      this.templatess[difficulty] = names;
+    }
+    this.setInitialFormData();
+  }
+  setInitialFormData() {
+    this.templateFieldset.setTemplates(this.templatess[this.difficulty]);
+  }
+  handleFormSubmit() {
+    var _a;
+    const formData = {
+      template: this.templateFieldset.querySelector("select").value,
+      difficulty: (_a = this.difficultyFieldset.querySelector("input:checked")) == null ? void 0 : _a.value
+    };
+    if (this.onSubmit) {
+      this.onSubmit(formData);
+    }
+  }
+  handleRandomizer() {
+    const randomDifficulty = this.levels[Math.floor(Math.random() * this.levels.length)];
+    const templates = this.templatess[randomDifficulty];
+    const randomTemplate = templates[Math.floor(Math.random() * templates.length)];
+    this.setActiveDifficulty(randomDifficulty);
+    this.templateFieldset.setTemplates(templates);
+    this.templateFieldset.setSelectedTemplate(randomTemplate);
+    this.formData = {
+      template: randomTemplate,
+      difficulty: randomDifficulty
+    };
+    console.log("randomized:", this.formData);
+  }
+  setActiveDifficulty(diff) {
+    this.difficultyFieldset.setActive(diff);
   }
 }
 class DifficultyFieldset extends Component {
@@ -771,78 +958,6 @@ class TemplateFieldset extends Component {
     });
     this.templateLabel.append(this.select);
     this.append(this.templateLabel);
-  }
-}
-class Form extends Component {
-  constructor() {
-    var _a;
-    super({ tag: "div", className: "aside-content" });
-    this.levels = ["easy", "medium", "hard"];
-    this.templatess = {};
-    this.difficulty = "easy";
-    this.title = new Component({ tag: "h2", className: "aside-title" });
-    this.title.setTextContent("Settings");
-    this.templateFieldset = new TemplateFieldset();
-    this.difficultyFieldset = new DifficultyFieldset(this.levels);
-    this.difficultyFieldset.addListener("change", (e) => {
-      this.difficulty = e.target.value;
-      this.templateFieldset.setTemplates(this.templatess[this.difficulty]);
-    });
-    this.randomButton = new Button("random", "randomize template", () => {
-      this.handleRandomizer();
-    });
-    this.submit = new Button(
-      "submit",
-      "submit settings",
-      () => this.handleFormSubmit()
-    );
-    this.submit.setAttribute("type", "submit");
-    this.appendChildren([
-      this.title,
-      this.templateFieldset,
-      this.difficultyFieldset,
-      this.randomButton,
-      this.submit
-    ]);
-    this.formData = {
-      template: this.templateFieldset.querySelector("select").value,
-      difficulty: (_a = this.difficultyFieldset.querySelector("input:checked")) == null ? void 0 : _a.value
-    };
-  }
-  extractFromMatrix(matrix2) {
-    for (const difficulty in matrix2) {
-      const names = Object.keys(matrix2[difficulty]);
-      this.templatess[difficulty] = names;
-    }
-    this.setInitialFormData();
-  }
-  setInitialFormData() {
-    this.templateFieldset.setTemplates(this.templatess[this.difficulty]);
-  }
-  handleFormSubmit() {
-    var _a;
-    const formData = {
-      template: this.templateFieldset.querySelector("select").value,
-      difficulty: (_a = this.difficultyFieldset.querySelector("input:checked")) == null ? void 0 : _a.value
-    };
-    console.log("sent form data:");
-    console.log(formData);
-  }
-  handleRandomizer() {
-    const randomDifficulty = this.levels[Math.floor(Math.random() * this.levels.length)];
-    const templates = this.templatess[randomDifficulty];
-    const randomTemplate = templates[Math.floor(Math.random() * templates.length)];
-    this.setActiveDifficulty(randomDifficulty);
-    this.templateFieldset.setTemplates(templates);
-    this.templateFieldset.setSelectedTemplate(randomTemplate);
-    this.formData = {
-      template: randomTemplate,
-      difficulty: randomDifficulty
-    };
-    console.log("randomized:", this.formData);
-  }
-  setActiveDifficulty(diff) {
-    this.difficultyFieldset.setActive(diff);
   }
 }
 class Aside extends Component {
@@ -955,8 +1070,8 @@ class Connector {
   constructor() {
     this.view = new View();
     this.model = new AppData();
-    this.grid = new Grid(5);
-    this.form = new Form();
+    this.grid = new Grid();
+    this.form = new Form(this.handleSubmitForm.bind(this));
     this.asideForm = new Aside("form", this.form);
     this.leaderboard = new Leaderboard();
     this.asideLeaderboard = new Aside("leaderboard", this.leaderboard);
@@ -967,16 +1082,41 @@ class Connector {
       onLeaderboardOpen: this.handleLeaderboardOpen.bind(this),
       onSetupOpen: this.handleSetupOpen.bind(this)
     });
+    this.view.main.setHandlers({
+      onStart: this.handleGameStart.bind(this),
+      onRestart: this.handleGameRestart.bind(this),
+      onSolution: this.handleSolutionShowing.bind(this),
+      onLoad: this.handleLoadGame.bind(this),
+      onSave: this.handleGameSave.bind(this)
+    });
+  }
+  handleGameStart() {
+    this.view.main.startTimer();
+    console.log("start");
+  }
+  handleGameRestart() {
+    this.view.main.resetTimer();
+    console.log("restart");
+  }
+  handleSolutionShowing() {
+    console.log("solution");
+  }
+  handleLoadGame() {
+    console.log("loading");
+  }
+  handleGameSave() {
+    console.log("saving");
   }
   setAllTemplates() {
     const templates = this.model.getAllTemplates();
     this.form.extractFromMatrix(templates);
   }
-  setGridSize(size) {
-    this.grid = new Grid(size);
-  }
-  handleSubmitForm() {
+  handleSubmitForm(formData) {
     this.asideForm.closeAside();
+    this.model.setTemplate(formData.template);
+    this.model.setDifficulty(formData.difficulty);
+    const matrix2 = this.model.getTemplateMatrix();
+    this.grid.updateGrid(matrix2);
   }
   handleRulesOpen() {
     this.asideRules.openAside();
@@ -998,4 +1138,4 @@ class Connector {
 const connector = new Connector();
 connector.render();
 connector.init();
-//# sourceMappingURL=index-DtChKdQ_.js.map
+//# sourceMappingURL=index-C5EWCxvO.js.map
