@@ -12,7 +12,7 @@ export default class Connector {
 		this.model = new AppData()
 		this.grid = new Grid(5)
 
-		this.form = new Form()
+		this.form = new Form(this.handleSubmitForm.bind(this))
 		this.asideForm = new Aside('form', this.form)
 
 		this.leaderboard = new Leaderboard()
@@ -37,8 +37,10 @@ export default class Connector {
 		this.grid = new Grid(size)
 	}
 
-	handleSubmitForm() {
-		// add to form
+	handleSubmitForm(formData) {
+		const data = formData
+
+		console.log(data, 'submitted data')
 		this.asideForm.closeAside()
 	}
 
