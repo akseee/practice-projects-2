@@ -10,7 +10,7 @@ export default class Connector {
 	constructor() {
 		this.view = new View()
 		this.model = new AppData()
-		this.grid = new Grid(15)
+		this.grid = new Grid()
 
 		this.form = new Form(this.handleSubmitForm.bind(this))
 		this.asideForm = new Aside('form', this.form)
@@ -37,10 +37,12 @@ export default class Connector {
 	}
 
 	handleGameStart() {
+		this.view.main.startTimer()
 		console.log('start')
 	}
 
 	handleGameRestart() {
+		this.view.main.resetTimer()
 		console.log('restart')
 	}
 
@@ -61,19 +63,15 @@ export default class Connector {
 		this.form.extractFromMatrix(templates)
 	}
 
-	setGridSize(size) {
-		this.grid = new Grid(size)
-	}
-
 	handleSubmitForm(formData) {
-		const data = formData
-
-		console.log(data, 'submitted data')
+		this.asideForm.closeAside()
 
 		this.model.setTemplate(formData.template)
 		this.model.setDifficulty(formData.difficulty)
 
-		this.asideForm.closeAside()
+		const matrix = this.model.getTemplateMatrix()
+
+		this.grid.updateGrid(matrix.length, matrix)
 	}
 
 	handleRulesOpen() {

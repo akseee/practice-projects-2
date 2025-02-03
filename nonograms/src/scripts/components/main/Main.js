@@ -45,6 +45,14 @@ export default class Main extends Component {
 		this.handlers = { ...this.handlers, ...handlers }
 	}
 
+	startTimer() {
+		this.info.startTimer()
+	}
+
+	resetTimer() {
+		this.info.resetTimer()
+	}
+
 	handleStart() {
 		if (this.handlers.onStart) {
 			this.handlers.onStart()

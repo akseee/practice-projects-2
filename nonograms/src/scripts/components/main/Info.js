@@ -14,7 +14,6 @@ export default class Info extends Component {
 
 		this.seconds = 0
 		this.intervalId = null
-		this.startTimer()
 	}
 
 	getTime() {

@@ -28,6 +28,10 @@ export default class AppData {
 		this.difficulty = difficulty
 	}
 
+	getTemplateMatrix() {
+		return this.allTemplates[this.difficulty][this.currentTemplate]
+	}
+
 	getFromLS() {
 		//
 	}
