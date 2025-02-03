@@ -10,11 +10,13 @@ export default class Main extends Component {
 		this.restart = new Button('restart', 'restart game', () => {})
 		this.load = new Button('load', 'load previous game', () => {})
 		this.save = new Button('save', 'save game', () => {})
+		this.solution = new Button('solution', 'solution', () => {})
 
 		this.wrapper = new Component({ tag: 'div', className: 'controls-main' })
 		this.wrapper.appendChildren([
 			this.start,
 			this.restart,
+			this.solution,
 			this.load,
 			this.save,
 		])
@@ -29,12 +31,31 @@ export default class Main extends Component {
 		this.checkLoadings()
 
 		this.start.setVisible(true)
-		this.restart.setVisible(false)
 		this.load.setVisible(true)
+
+		this.restart.setVisible(false)
 		this.save.setVisible(false)
+
+		this.solution.setDisabled(true)
 	}
 
 	checkLoadings() {
-		this.load.setDisabled(true)
+		if (localStorage.getItem('save')) {
+			console.log('exist')
+		} else {
+			this.load.setDisabled(true)
+		}
+	}
+
+	setGameStartedButtons() {
+		this.checkLoadings()
+
+		this.start.setVisible(false)
+		this.load.setVisible(false)
+
+		this.restart.setVisible(true)
+		this.save.setVisible(true)
+
+		this.solution.setDisabled(false)
 	}
 }

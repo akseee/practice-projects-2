@@ -31,8 +31,8 @@ export default class Header extends Component {
 		})
 
 		this.controls.appendChildren([
-			this.wrapper,
 			this.setup,
+			this.wrapper,
 			this.leaderboard,
 			this.rules,
 		])

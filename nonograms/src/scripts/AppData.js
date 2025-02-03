@@ -4,7 +4,7 @@ export default class AppData {
 	constructor() {
 		this.allTemplates = matrix
 
-		this.size = 5
+		this.size = 15
 		this.currentTemplate = null
 
 		this.difficulty = 'easy'
@@ -26,10 +26,6 @@ export default class AppData {
 
 	setDifficulty(difficulty) {
 		this.difficulty = difficulty
-	}
-
-	setRandom() {
-		// this.currentTemplate = randomizer(this.size)
 	}
 
 	getFromLS() {

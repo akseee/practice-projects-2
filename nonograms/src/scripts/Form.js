@@ -1,6 +1,6 @@
 // @ts-nocheck
-import Component from '../../common/Component'
-import Button from '../ui/Button'
+import Component from './common/Component'
+import Button from './components/ui/Button'
 
 export default class Form extends Component {
 	constructor(onSubmit) {

@@ -11,6 +11,7 @@
 	--light-red: #ff000080;
 	--hover: #b41919;
 	--overlay: #000000cc;
+	--timer-bg: #d5cccc;
 }
 
 body {
@@ -40,8 +41,8 @@ body {
 .title {
 	color: var(--second-c);
 	font-weight: lighter;
-	font-size: 3rem;
-	letter-spacing: 3rem;
+	font-size: clamp(1rem, -2rem + 6.25vw, 3rem);
+	letter-spacing: clamp(1rem, -2rem + 6.25vw, 3rem);
 	text-align: center;
 }
 
@@ -56,6 +57,7 @@ body {
 	padding: 0.6rem 2rem;
 	outline: none;
 	font-weight: lighter;
+	font-size: clamp(0.7rem, 0.25rem + 0.9375vw, 1rem);
 	text-align: center;
 	background-color: var(--first-c);
 	transition: all 0.4s ease-in-out;
@@ -116,7 +118,7 @@ body {
 
 .controls-main {
 	display: grid;
-	grid-template-columns: 2fr 1fr;
+	grid-template-columns: repeat(3, 1fr);
 	gap: 2rem;
 	width: 100%;
 }
@@ -129,10 +131,34 @@ body {
 	border: var(--second-c);
 	padding: 0.5rem;
 	color: var(--second-c);
-	background-color: var(--info-cell-bg);
+	font-size: clamp(1rem, -0.05rem + 2.1875vw, 1.7rem);
+	background-color: var(--timer-bg);
 }
 
 .info .info-timer {
 	color: #ff0000;
-	font-size: 1.8rem;
+}
+
+@media (max-width: 768px) {
+	.page {
+		padding: 1rem;
+	}
+
+	.header {
+		grid-template-columns: 1fr;
+		gap: 1rem;
+	}
+
+	.button {
+		padding: 0.6rem 1rem;
+	}
+
+	.controls-header {
+		flex-direction: row;
+		justify-content: end;
+	}
+
+	.controls-main {
+		gap: 1rem;
+	}
 }

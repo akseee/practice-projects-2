@@ -1,7 +1,7 @@
 import View from './View'
 import AppData from './AppData'
 import Grid from './Grid'
-import Form from './components/form/Form'
+import Form from './Form'
 import Aside from './components/aside/Aside'
 import Rules from './components/rules/Rules'
 import Leaderboard from './components/leaderboard/Leaderboard'
@@ -10,7 +10,7 @@ export default class Connector {
 	constructor() {
 		this.view = new View()
 		this.model = new AppData()
-		this.grid = new Grid(5)
+		this.grid = new Grid(15)
 
 		this.form = new Form(this.handleSubmitForm.bind(this))
 		this.asideForm = new Aside('form', this.form)
@@ -41,6 +41,10 @@ export default class Connector {
 		const data = formData
 
 		console.log(data, 'submitted data')
+
+		this.model.setTemplate(formData.template)
+		this.model.setDifficulty(formData.difficulty)
+
 		this.asideForm.closeAside()
 	}
 

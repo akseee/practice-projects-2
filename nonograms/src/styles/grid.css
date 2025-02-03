@@ -166,3 +166,19 @@
 	width: 30px;
 	height: 30px;
 }
+
+@media (max-width: 768px) {
+	.grid-wrapper {
+		flex-grow: 0;
+		padding-top: 1rem;
+	}
+
+	.cell-info {
+		font-size: 0.7rem;
+	}
+
+	.field-15 .cell {
+		width: 25px;
+		height: 25px;
+	}
+}
