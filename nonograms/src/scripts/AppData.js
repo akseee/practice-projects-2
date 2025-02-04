@@ -8,8 +8,8 @@ export default class AppData {
 		this.currentMatrix = null
 		this.difficulty = 'easy'
 
-		this.isStarted = false
-		this.settingsReady = false
+		this.isPlaying = false
+		this.isReady = false
 
 		this.playersGrid = []
 	}
@@ -23,11 +23,7 @@ export default class AppData {
 	}
 
 	changePlayersGrid(x, y, value) {
-		// const newValue = currentValue === 0 ? 1 : 0
-		// this.changePlayersGrid(x, y, newValue)
 		this.playersGrid[x][y] = value
-		console.log(this.playersGrid)
-		console.log(this.currentMatrix)
 	}
 
 	getAllTemplates() {
@@ -50,6 +46,15 @@ export default class AppData {
 		// localStorage.setItem('playersGrid', JSON.stringify(this.playersGrid))
 	}
 
+	saveLeaderboardVictory(template, difficulty, time) {
+		const currentLeaderboard = JSON.parse(localStorage.getItem('victory')) || []
+
+		const newVictory = { template, difficulty, time }
+		currentLeaderboard.push(newVictory)
+
+		localStorage.setItem('victory', JSON.stringify(currentLeaderboard))
+	}
+
 	getFromLS() {
 		const savedGrid = localStorage.getItem('playersGrid')
 		if (savedGrid) {
@@ -62,4 +67,12 @@ export default class AppData {
 	checkGrid() {}
 
 	setWinner() {}
+
+	setPlaying(value) {
+		this.isPlaying = value
+	}
+
+	setReady(value) {
+		this.isReady = value
+	}
 }

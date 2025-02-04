@@ -43,6 +43,10 @@ export default class Main extends Component {
 		this.handlers = { ...this.handlers, ...handlers }
 	}
 
+	getTime() {
+		return this.info.getTime()
+	}
+
 	startTimer() {
 		this.info.startTimer()
 	}
@@ -51,10 +55,15 @@ export default class Main extends Component {
 		this.info.resetTimer()
 	}
 
+	stopTimer() {
+		this.info.stopTimer()
+	}
+
 	handleStart() {
 		if (this.handlers.onStart) {
 			this.handlers.onRestart()
 			this.setInitialButtonState()
+			this.startTimer()
 		} else {
 			console.log('something is wrong with restarting handler')
 		}

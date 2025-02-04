@@ -1,23 +1,5 @@
 import Component from '../../common/Component'
 
-const mock = [
-	{
-		template: 'cat',
-		difficulty: 'hard',
-		time: 110,
-	},
-	{
-		template: 'cat',
-		difficulty: 'hard',
-		time: 120,
-	},
-	{
-		template: 'dog',
-		difficulty: 'easy',
-		time: 40,
-	},
-]
-
 export default class Leaderboard extends Component {
 	constructor() {
 		super({ tag: 'div', className: 'aside-content' })
@@ -28,21 +10,26 @@ export default class Leaderboard extends Component {
 		this.list = new Component({ tag: 'ul', className: 'leaderboard-list' })
 
 		this.appendChildren([this.title, this.list])
-		this.createList(mock)
 		this.setLeaderboardList()
 	}
 
 	setLeaderboardList() {
-		if (localStorage.getItem('nono-leaderboard')) {
-			// console.log('not empty')
-			return []
+		const victoryData = localStorage.getItem('victory')
+		if (victoryData) {
+			try {
+				const parsedData = JSON.parse(victoryData)
+				this.createList(parsedData)
+			} catch (e) {
+				console.error('parsing error: ', e)
+			}
 		} else {
-			// console.log('empty')
+			console.log('empty')
 		}
 	}
 
 	createList(data) {
-		// template -- difficulty -- time
+		this.list.destroyChildren()
+
 		data
 			.sort((a, b) => {
 				return a.time - b.time

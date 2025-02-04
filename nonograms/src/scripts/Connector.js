@@ -41,17 +41,43 @@ export default class Connector {
 		})
 	}
 
+	handleGameStart() {
+		this.view.main.startTimer()
+		this.model.setPlaying(true)
+		console.log('start')
+	}
+
+	initiatePlayerVictory() {
+		const time = this.view.main.getTime()
+		const template = this.model.currentTemplate
+		const difficulty = this.model.difficulty
+
+		this.openNotififcation(
+			`Congratulations! You compelted ${template} within ${time} seconds on ${difficulty} difficulty! ${difficulty !== 'hard' ? 'Try another one, maybe make it more difficult now?' : ''}`
+		)
+
+		this.view.main.stopTimer()
+
+		this.model.saveLeaderboardVictory(template, difficulty, time)
+		this.leaderboard.setLeaderboardList()
+
+		this.model.setPlaying(false)
+		this.model.setReady(false)
+
+		console.log(this.model.isPlaying, this.model.isReady)
+	}
+
 	onCellUpdate(row, column, action) {
-		if (!this.model.isStarted && !this.model.settingsReady) {
+		if (!this.model.isPlaying && !this.model.isReady) {
 			console.log('nothing is ready')
 			return
 		}
-		if (this.model.settingsReady && !this.model.isStarted) {
+		if (this.model.isReady && !this.model.isPlaying) {
 			console.log('starting game')
 			this.handleGameStart()
 		}
 
-		if (this.model.settingsReady && this.model.isStarted) {
+		if (this.model.isReady && this.model.isPlaying) {
 			console.log('game is in progress')
 			const value = action === 'add' ? 1 : 0
 			this.model.changePlayersGrid(row, column, value)
@@ -60,9 +86,7 @@ export default class Connector {
 			let original = this.model.currentMatrix
 
 			if (this.compareMatrix(player, original)) {
-				this.openNotififcation(
-					'Congratulations! You won! Try another one, maybe make it more difficult now?'
-				)
+				this.initiatePlayerVictory()
 			}
 		}
 	}
@@ -70,13 +94,6 @@ export default class Connector {
 	compareMatrix(player, original) {
 		console.log(JSON.stringify(player) === JSON.stringify(original))
 		return JSON.stringify(player) === JSON.stringify(original)
-	}
-
-	handleGameStart() {
-		this.view.main.startTimer()
-		this.model.isStarted = true
-
-		console.log('start')
 	}
 
 	handleGameRestart() {
@@ -108,7 +125,8 @@ export default class Connector {
 		this.asideForm.closeAside()
 
 		this.model.recieveForm(formData)
-		this.model.settingsReady = true
+		this.model.setReady(true)
+		this.view.main.resetTimer()
 
 		const matrix = this.model.getTemplateMatrix()
 
