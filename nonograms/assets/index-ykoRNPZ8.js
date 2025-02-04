@@ -247,16 +247,23 @@ class Main extends Component {
   setHandlers(handlers) {
     this.handlers = { ...this.handlers, ...handlers };
   }
+  getTime() {
+    return this.info.getTime();
+  }
   startTimer() {
     this.info.startTimer();
   }
   resetTimer() {
     this.info.resetTimer();
   }
+  stopTimer() {
+    this.info.stopTimer();
+  }
   handleStart() {
     if (this.handlers.onStart) {
       this.handlers.onRestart();
       this.setInitialButtonState();
+      this.startTimer();
     } else {
       console.log("something is wrong with restarting handler");
     }
@@ -557,8 +564,8 @@ class AppData {
     this.currentTemplate = null;
     this.currentMatrix = null;
     this.difficulty = "easy";
-    this.isStarted = false;
-    this.settingsReady = false;
+    this.isPlaying = false;
+    this.isReady = false;
     this.playersGrid = [];
   }
   createPlayersGrid() {
@@ -570,8 +577,6 @@ class AppData {
   }
   changePlayersGrid(x, y, value) {
     this.playersGrid[x][y] = value;
-    console.log(this.playersGrid);
-    console.log(this.currentMatrix);
   }
   getAllTemplates() {
     return this.allTemplates;
@@ -587,6 +592,12 @@ class AppData {
   }
   saveInLS() {
   }
+  saveLeaderboardVictory(template, difficulty, time) {
+    const currentLeaderboard = JSON.parse(localStorage.getItem("victory")) || [];
+    const newVictory = { template, difficulty, time };
+    currentLeaderboard.push(newVictory);
+    localStorage.setItem("victory", JSON.stringify(currentLeaderboard));
+  }
   getFromLS() {
     const savedGrid = localStorage.getItem("playersGrid");
     if (savedGrid) {
@@ -598,6 +609,12 @@ class AppData {
   checkGrid() {
   }
   setWinner() {
+  }
+  setPlaying(value) {
+    this.isPlaying = value;
+  }
+  setReady(value) {
+    this.isReady = value;
   }
 }
 let isMouseDown = false;
@@ -1048,23 +1065,6 @@ class Rules extends Component {
     this.appendChildren([this.title, this.text]);
   }
 }
-const mock = [
-  {
-    template: "cat",
-    difficulty: "hard",
-    time: 110
-  },
-  {
-    template: "cat",
-    difficulty: "hard",
-    time: 120
-  },
-  {
-    template: "dog",
-    difficulty: "easy",
-    time: 40
-  }
-];
 class Leaderboard extends Component {
   constructor() {
     super({ tag: "div", className: "aside-content" });
@@ -1072,15 +1072,23 @@ class Leaderboard extends Component {
     this.title.setTextContent("Leaderboard");
     this.list = new Component({ tag: "ul", className: "leaderboard-list" });
     this.appendChildren([this.title, this.list]);
-    this.createList(mock);
     this.setLeaderboardList();
   }
   setLeaderboardList() {
-    if (localStorage.getItem("nono-leaderboard")) {
-      return [];
+    const victoryData = localStorage.getItem("victory");
+    if (victoryData) {
+      try {
+        const parsedData = JSON.parse(victoryData);
+        this.createList(parsedData);
+      } catch (e) {
+        console.error("parsing error: ", e);
+      }
+    } else {
+      console.log("empty");
     }
   }
   createList(data) {
+    this.list.destroyChildren();
     data.sort((a, b) => {
       return a.time - b.time;
     }).forEach((result, index) => {
@@ -1134,36 +1142,48 @@ class Connector {
       onSave: this.handleGameSave.bind(this)
     });
   }
+  handleGameStart() {
+    this.view.main.startTimer();
+    this.model.setPlaying(true);
+    console.log("start");
+  }
+  initiatePlayerVictory() {
+    const time = this.view.main.getTime();
+    const template = this.model.currentTemplate;
+    const difficulty = this.model.difficulty;
+    this.openNotififcation(
+      `Congratulations! You compelted ${template} within ${time} seconds on ${difficulty} difficulty! ${difficulty !== "hard" ? "Try another one, maybe make it more difficult now?" : ""}`
+    );
+    this.view.main.stopTimer();
+    this.model.saveLeaderboardVictory(template, difficulty, time);
+    this.leaderboard.setLeaderboardList();
+    this.model.setPlaying(false);
+    this.model.setReady(false);
+    console.log(this.model.isPlaying, this.model.isReady);
+  }
   onCellUpdate(row, column, action) {
-    if (!this.model.isStarted && !this.model.settingsReady) {
+    if (!this.model.isPlaying && !this.model.isReady) {
       console.log("nothing is ready");
       return;
     }
-    if (this.model.settingsReady && !this.model.isStarted) {
+    if (this.model.isReady && !this.model.isPlaying) {
       console.log("starting game");
       this.handleGameStart();
     }
-    if (this.model.settingsReady && this.model.isStarted) {
+    if (this.model.isReady && this.model.isPlaying) {
       console.log("game is in progress");
       const value = action === "add" ? 1 : 0;
       this.model.changePlayersGrid(row, column, value);
       let player = this.model.playersGrid;
       let original = this.model.currentMatrix;
       if (this.compareMatrix(player, original)) {
-        this.openNotififcation(
-          "Congratulations! You won! Try another one, maybe make it more difficult now?"
-        );
+        this.initiatePlayerVictory();
       }
     }
   }
   compareMatrix(player, original) {
     console.log(JSON.stringify(player) === JSON.stringify(original));
     return JSON.stringify(player) === JSON.stringify(original);
-  }
-  handleGameStart() {
-    this.view.main.startTimer();
-    this.model.isStarted = true;
-    console.log("start");
   }
   handleGameRestart() {
     this.view.main.resetTimer();
@@ -1188,7 +1208,8 @@ class Connector {
   handleSubmitForm(formData) {
     this.asideForm.closeAside();
     this.model.recieveForm(formData);
-    this.model.settingsReady = true;
+    this.model.setReady(true);
+    this.view.main.resetTimer();
     const matrix2 = this.model.getTemplateMatrix();
     this.grid.updateGrid(matrix2);
   }
@@ -1216,4 +1237,4 @@ class Connector {
 const connector = new Connector();
 connector.render();
 connector.init();
-//# sourceMappingURL=index-BynUhOYf.js.map
+//# sourceMappingURL=index-ykoRNPZ8.js.map
