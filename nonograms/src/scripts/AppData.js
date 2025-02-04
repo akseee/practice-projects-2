@@ -46,6 +46,13 @@ export default class AppData {
 		this.playersGrid[x][y] = value
 	}
 
+	loadPlayerGrid(template, difficulty, matrix) {
+		this.playersGrid = matrix
+		this.currentTemplate = template
+		this.currentMatrix = this.allTemplates[difficulty][template]
+		this.difficulty = difficulty
+	}
+
 	getAllTemplates() {
 		return this.allTemplates
 	}
@@ -62,8 +69,13 @@ export default class AppData {
 		return this.allTemplates[this.difficulty][this.currentTemplate]
 	}
 
-	saveInLS() {
-		// localStorage.setItem('playersGrid', JSON.stringify(this.playersGrid))
+	saveGame(template, difficulty, time, matrix) {
+		const save = { template, difficulty, time, matrix }
+		localStorage.setItem('save', JSON.stringify(save))
+	}
+
+	getSave() {
+		return localStorage.getItem('save')
 	}
 
 	saveLeaderboardVictory(template, difficulty, time) {

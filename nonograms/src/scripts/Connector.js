@@ -128,13 +128,32 @@ export default class Connector {
 
 	handleLoadGame() {
 		this.clickingSound.play()
-		this.openNotififcation('loading')
+		this.openNotififcation('the game is loaded, you can continue')
+
+		const { template, difficulty, time, matrix } = JSON.parse(
+			localStorage.getItem('save')
+		)
+
+		this.model.loadPlayerGrid(template, difficulty, matrix)
+
+		const arr = this.model.getTemplateMatrix()
+		this.grid.updateGrid(arr)
+
+		this.grid.field.loadedField(matrix)
+
+		this.startingGame()
 	}
 
 	handleGameSave() {
 		this.clickingSound.play()
-		this.openNotififcation('saving')
-		console.log('saving')
+		const time = this.view.main.getTime()
+		const template = this.model.currentTemplate
+		const difficulty = this.model.difficulty
+		const currentMatrix = this.model.playersGrid
+
+		this.openNotififcation('Game is saved')
+		this.model.saveGame(template, difficulty, time, currentMatrix)
+		this.endingGame()
 	}
 
 	setAllTemplates() {

@@ -80,7 +80,6 @@ export default class Main extends Component {
 	handleLoad() {
 		if (this.handlers.onLoad) {
 			this.handlers.onLoad()
-			// this.setGameStartedButtons()
 		} else {
 			console.log('something is wrong with loading handler')
 		}
@@ -124,6 +123,7 @@ export default class Main extends Component {
 
 		this.load.setVisible(false)
 		this.save.setVisible(true)
+
 		this.save.setDisabled(true)
 
 		this.solution.setDisabled(true)

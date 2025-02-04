@@ -7,10 +7,10 @@ export default class Info extends Component {
 		this.text = new Component({ tag: 'p', className: 'info-text' })
 		this.timer = new Component({ tag: 'div', className: 'info-timer' })
 
-		this.text.setTextContent('работа полностью не готовa:(')
+		this.text.setTextContent('')
 		this.timer.setTextContent('00:00')
 
-		this.appendChildren([this.text, this.timer])
+		this.appendChildren([this.timer])
 
 		this.seconds = 0
 		this.intervalId = null

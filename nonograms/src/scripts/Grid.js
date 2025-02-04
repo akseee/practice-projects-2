@@ -95,7 +95,22 @@ class Field extends Component {
 		}
 	}
 
+	loadedField(matrix) {
+		console.log(matrix)
+		this.destroyChildren()
+		for (let i = 0; i < this.size * this.size; i++) {
+			const row = Math.floor(i / this.size)
+			const column = i % this.size
+			const cell = new Cell(row, column, this.size, this.cellHandler)
+			if (matrix[row][column] === 1) {
+				cell.click()
+			}
+			this.append(cell)
+		}
+	}
+
 	createField() {
+		this.destroyChildren()
 		for (let i = 0; i < this.size * this.size; i++) {
 			const row = Math.floor(i / this.size)
 			const column = i % this.size
