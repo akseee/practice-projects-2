@@ -104,7 +104,7 @@ class Header extends Component {
     this.theme = new Button("theme ", "theme", () => {
       this.handleThemeChange();
     });
-    this.volume = new Button("volume ", "", () => {
+    this.volume = new Button("volume active", "", () => {
       this.handleVolume();
     });
     this.wrapper = new Component({ tag: "div", className: "controls-header" });
@@ -129,7 +129,8 @@ class Header extends Component {
     this.handlers = {
       onRulesOpen: null,
       onLeaderboardOpen: null,
-      onSetupOpen: null
+      onSetupOpen: null,
+      onVolumeToggle: null
     };
   }
   setHandlers(handlers) {
@@ -169,7 +170,15 @@ class Header extends Component {
   }
   handleVolume() {
     this.volume.toggleClass("active");
-    console.log("toggled volume");
+    if (this.handlers.onVolumeToggle) {
+      if (this.volume.checkClass("active")) {
+        this.handlers.onVolumeToggle(false);
+      } else {
+        this.handlers.onVolumeToggle(true);
+      }
+    } else {
+      console.log("something is wrong with volume handler");
+    }
   }
 }
 class Info extends Component {
@@ -188,6 +197,7 @@ class Info extends Component {
   }
   startTimer() {
     if (this.intervalId !== null) return;
+    this.timer.addClass("active");
     this.intervalId = setInterval(() => {
       this.seconds++;
       const minutes = Math.floor(this.seconds / 60);
@@ -197,11 +207,13 @@ class Info extends Component {
     }, 1e3);
   }
   stopTimer() {
+    this.timer.removeClass("active");
     if (this.intervalId === null) return;
     clearInterval(this.intervalId);
     this.intervalId = null;
   }
   resetTimer() {
+    this.timer.removeClass("active");
     this.stopTimer();
     this.seconds = 0;
     this.timer.setTextContent("00:00");
@@ -1115,6 +1127,9 @@ class Notification extends Component {
     this.text.setTextContent(message);
   }
 }
+const startingSound = "" + new URL("start-DiYUZ00K.mp3", import.meta.url).href;
+const vistorySound = "" + new URL("victory-C4ebeegk.mp3", import.meta.url).href;
+const clickingSound = "" + new URL("click-BFwcdGqz.mp3", import.meta.url).href;
 class Connector {
   constructor() {
     this.view = new View();
@@ -1132,7 +1147,8 @@ class Connector {
     this.view.header.setHandlers({
       onRulesOpen: this.handleRulesOpen.bind(this),
       onLeaderboardOpen: this.handleLeaderboardOpen.bind(this),
-      onSetupOpen: this.handleSetupOpen.bind(this)
+      onSetupOpen: this.handleSetupOpen.bind(this),
+      onVolumeToggle: this.handleVolumeToggle.bind(this)
     });
     this.view.main.setHandlers({
       onStart: this.handleGameStart.bind(this),
@@ -1141,13 +1157,18 @@ class Connector {
       onLoad: this.handleLoadGame.bind(this),
       onSave: this.handleGameSave.bind(this)
     });
+    this.startSound = new Audio(startingSound);
+    this.victorySound = new Audio(vistorySound);
+    this.clickingSound = new Audio(clickingSound);
   }
   handleGameStart() {
+    this.startSound.play();
     this.view.main.startTimer();
     this.model.setPlaying(true);
     console.log("start");
   }
   initiatePlayerVictory() {
+    this.victorySound.play();
     const time = this.view.main.getTime();
     const template = this.model.currentTemplate;
     const difficulty = this.model.difficulty;
@@ -1174,30 +1195,35 @@ class Connector {
       console.log("game is in progress");
       const value = action === "add" ? 1 : 0;
       this.model.changePlayersGrid(row, column, value);
-      let player = this.model.playersGrid;
-      let original = this.model.currentMatrix;
-      if (this.compareMatrix(player, original)) {
+      if (this.compareMatrix()) {
         this.initiatePlayerVictory();
       }
     }
   }
-  compareMatrix(player, original) {
-    console.log(JSON.stringify(player) === JSON.stringify(original));
+  compareMatrix() {
+    let player = this.model.playersGrid;
+    let original = this.model.currentMatrix;
     return JSON.stringify(player) === JSON.stringify(original);
   }
+  showMatrix() {
+  }
   handleGameRestart() {
+    this.clickingSound.play();
     this.view.main.resetTimer();
     console.log("restart");
   }
   handleSolutionShowing() {
+    this.clickingSound.play();
     this.openNotififcation("soltuion");
     console.log("solution");
   }
   handleLoadGame() {
+    this.clickingSound.play();
     this.openNotififcation("loading");
     console.log("loading");
   }
   handleGameSave() {
+    this.clickingSound.play();
     this.openNotififcation("saving");
     console.log("saving");
   }
@@ -1207,6 +1233,7 @@ class Connector {
   }
   handleSubmitForm(formData) {
     this.asideForm.closeAside();
+    this.clickingSound.play();
     this.model.recieveForm(formData);
     this.model.setReady(true);
     this.view.main.resetTimer();
@@ -1214,13 +1241,21 @@ class Connector {
     this.grid.updateGrid(matrix2);
   }
   handleRulesOpen() {
+    this.clickingSound.play();
     this.asideRules.openAside();
   }
   handleLeaderboardOpen() {
+    this.clickingSound.play();
     this.asideLeaderboard.openAside();
   }
   handleSetupOpen() {
+    this.clickingSound.play();
     this.asideForm.openAside();
+  }
+  handleVolumeToggle(activate) {
+    this.startSound.muted = activate;
+    this.victorySound.muted = activate;
+    this.clickingSound.muted = activate;
   }
   openNotififcation(text) {
     this.notification.setMessage(text);
@@ -1237,4 +1272,4 @@ class Connector {
 const connector = new Connector();
 connector.render();
 connector.init();
-//# sourceMappingURL=index-ykoRNPZ8.js.map
+//# sourceMappingURL=index-Ycx-0cNt.js.map
