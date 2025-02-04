@@ -67,6 +67,7 @@ export default class Connector {
 		this.startSound.play()
 		this.view.main.handleStart()
 		this.model.setState('playing')
+		console.log(this.model.currentMatrix)
 	}
 
 	endingGame() {
