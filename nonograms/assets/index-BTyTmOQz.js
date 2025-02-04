@@ -186,9 +186,9 @@ class Info extends Component {
     super({ tag: "div", className: "info" });
     this.text = new Component({ tag: "p", className: "info-text" });
     this.timer = new Component({ tag: "div", className: "info-timer" });
-    this.text.setTextContent("работа полностью не готовa:(");
+    this.text.setTextContent("");
     this.timer.setTextContent("00:00");
-    this.appendChildren([this.text, this.timer]);
+    this.appendChildren([this.timer]);
     this.seconds = 0;
     this.intervalId = null;
   }
@@ -586,6 +586,12 @@ class AppData {
   changePlayersGrid(x, y, value) {
     this.playersGrid[x][y] = value;
   }
+  loadPlayerGrid(template, difficulty, matrix2) {
+    this.playersGrid = matrix2;
+    this.currentTemplate = template;
+    this.currentMatrix = this.allTemplates[difficulty][template];
+    this.difficulty = difficulty;
+  }
   getAllTemplates() {
     return this.allTemplates;
   }
@@ -598,7 +604,12 @@ class AppData {
   getTemplateMatrix() {
     return this.allTemplates[this.difficulty][this.currentTemplate];
   }
-  saveInLS() {
+  saveGame(template, difficulty, time, matrix2) {
+    const save = { template, difficulty, time, matrix: matrix2 };
+    localStorage.setItem("save", JSON.stringify(save));
+  }
+  getSave() {
+    return localStorage.getItem("save");
   }
   saveLeaderboardVictory(template, difficulty, time) {
     const currentLeaderboard = JSON.parse(localStorage.getItem("victory")) || [];
@@ -867,7 +878,21 @@ class Field extends Component {
       this.append(cell);
     }
   }
+  loadedField(matrix2) {
+    console.log(matrix2);
+    this.destroyChildren();
+    for (let i = 0; i < this.size * this.size; i++) {
+      const row = Math.floor(i / this.size);
+      const column = i % this.size;
+      const cell = new Cell(row, column, this.size, this.cellHandler);
+      if (matrix2[row][column] === 1) {
+        cell.click();
+      }
+      this.append(cell);
+    }
+  }
   createField() {
+    this.destroyChildren();
     for (let i = 0; i < this.size * this.size; i++) {
       const row = Math.floor(i / this.size);
       const column = i % this.size;
@@ -1225,12 +1250,25 @@ class Connector {
   }
   handleLoadGame() {
     this.clickingSound.play();
-    this.openNotififcation("loading");
+    this.openNotififcation("the game is loaded, you can continue");
+    const { template, difficulty, time, matrix: matrix2 } = JSON.parse(
+      localStorage.getItem("save")
+    );
+    this.model.loadPlayerGrid(template, difficulty, matrix2);
+    const arr = this.model.getTemplateMatrix();
+    this.grid.updateGrid(arr);
+    this.grid.field.loadedField(matrix2);
+    this.startingGame();
   }
   handleGameSave() {
     this.clickingSound.play();
-    this.openNotififcation("saving");
-    console.log("saving");
+    const time = this.view.main.getTime();
+    const template = this.model.currentTemplate;
+    const difficulty = this.model.difficulty;
+    const currentMatrix = this.model.playersGrid;
+    this.openNotififcation("Game is saved");
+    this.model.saveGame(template, difficulty, time, currentMatrix);
+    this.endingGame();
   }
   setAllTemplates() {
     const templates = this.model.getAllTemplates();
@@ -1277,4 +1315,4 @@ class Connector {
 const connector = new Connector();
 connector.render();
 connector.init();
-//# sourceMappingURL=index-D6OesPaA.js.map
+//# sourceMappingURL=index-BTyTmOQz.js.map
