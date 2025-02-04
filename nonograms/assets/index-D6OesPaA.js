@@ -249,7 +249,6 @@ class Main extends Component {
     this.setInitialButtonState();
     this.appendChildren([this.wrapper, this.info]);
     this.handlers = {
-      onStart: null,
       onRestart: null,
       onSolution: null,
       onLoad: null,
@@ -262,28 +261,21 @@ class Main extends Component {
   getTime() {
     return this.info.getTime();
   }
-  startTimer() {
-    this.info.startTimer();
-  }
-  resetTimer() {
-    this.info.resetTimer();
-  }
   stopTimer() {
     this.info.stopTimer();
   }
   handleStart() {
-    if (this.handlers.onStart) {
-      this.handlers.onRestart();
-      this.setInitialButtonState();
-      this.startTimer();
-    } else {
-      console.log("something is wrong with restarting handler");
-    }
+    this.info.resetTimer();
+    this.setGameStartedButtons();
+    this.info.startTimer();
+  }
+  handleOver() {
+    this.info.resetTimer();
+    this.setInitialButtonState();
   }
   handelRestart() {
     if (this.handlers.onRestart) {
       this.handlers.onRestart();
-      this.setInitialButtonState();
     } else {
       console.log("something is wrong with restarting handler");
     }
@@ -291,7 +283,6 @@ class Main extends Component {
   handleSolution() {
     if (this.handlers.onSolution) {
       this.handlers.onSolution();
-      this.setAfterSolutionButtons();
     } else {
       console.log("something is wrong with solution handler");
     }
@@ -299,7 +290,6 @@ class Main extends Component {
   handleLoad() {
     if (this.handlers.onLoad) {
       this.handlers.onLoad();
-      this.setGameStartedButtons();
     } else {
       console.log("something is wrong with loading handler");
     }
@@ -579,7 +569,12 @@ class AppData {
     this.difficulty = "easy";
     this.isPlaying = false;
     this.isReady = false;
-    this.playersGrid = [];
+    this.solution = false;
+    this.state = "waiting";
+    this.gameState = this.playersGrid = [];
+  }
+  setState(state) {
+    this.state = state;
   }
   createPlayersGrid() {
     let temp = this.currentMatrix.length;
@@ -619,16 +614,6 @@ class AppData {
       console.log("No grid found in localStorage");
     }
   }
-  checkGrid() {
-  }
-  setWinner() {
-  }
-  setPlaying(value) {
-    this.isPlaying = value;
-  }
-  setReady(value) {
-    this.isReady = value;
-  }
 }
 let isMouseDown = false;
 let current = null;
@@ -657,6 +642,9 @@ class Cell extends Component {
     if ((this.column + 1) % 5 === 0) {
       !(this.column + 1 === this.fieldSize) && this.addClass("right");
     }
+  }
+  click() {
+    this.addChoosen();
   }
   handleMouseDown(e) {
     e.preventDefault();
@@ -862,6 +850,22 @@ class Field extends Component {
     this.size = size;
     this.cellHandler = cellHandler;
     this.createField();
+  }
+  clearField() {
+    this.destroyChildren();
+    this.createField();
+  }
+  showField(matrix2) {
+    this.destroyChildren();
+    for (let i = 0; i < this.size * this.size; i++) {
+      const row = Math.floor(i / this.size);
+      const column = i % this.size;
+      const cell = new Cell(row, column, this.size, this.cellHandler);
+      if (matrix2[row][column] === 1) {
+        cell.click();
+      }
+      this.append(cell);
+    }
   }
   createField() {
     for (let i = 0; i < this.size * this.size; i++) {
@@ -1104,7 +1108,7 @@ class Leaderboard extends Component {
     this.list.destroyChildren();
     data.sort((a, b) => {
       return a.time - b.time;
-    }).forEach((result, index) => {
+    }).splice(0, 5).forEach((result, index) => {
       const element = new Component({
         tag: "li",
         className: "leaderboard-list-item"
@@ -1152,7 +1156,6 @@ class Connector {
       onVolumeToggle: this.handleVolumeToggle.bind(this)
     });
     this.view.main.setHandlers({
-      onStart: this.handleGameStart.bind(this),
       onRestart: this.handleGameRestart.bind(this),
       onSolution: this.handleSolutionShowing.bind(this),
       onLoad: this.handleLoadGame.bind(this),
@@ -1161,12 +1164,24 @@ class Connector {
     this.startSound = new Audio(startingSound);
     this.victorySound = new Audio(vistorySound);
     this.clickingSound = new Audio(clickingSound);
+    document.addEventListener("click", () => console.log(this.model.state));
   }
-  handleGameStart() {
+  handleSubmitForm(formData) {
+    this.asideForm.closeAside();
+    this.clickingSound.play();
+    this.model.setState("ready");
+    this.model.recieveForm(formData);
+    const matrix2 = this.model.getTemplateMatrix();
+    this.grid.updateGrid(matrix2);
+  }
+  startingGame() {
     this.startSound.play();
-    this.view.main.startTimer();
-    this.model.setPlaying(true);
-    console.log("start");
+    this.view.main.handleStart();
+    this.model.setState("playing");
+  }
+  endingGame() {
+    this.view.main.handleOver();
+    this.model.setState("waiting");
   }
   initiatePlayerVictory() {
     this.victorySound.play();
@@ -1179,49 +1194,38 @@ class Connector {
     this.view.main.stopTimer();
     this.model.saveLeaderboardVictory(template, difficulty, time);
     this.leaderboard.setLeaderboardList();
-    this.model.setPlaying(false);
-    this.model.setReady(false);
-    console.log(this.model.isPlaying, this.model.isReady);
+    this.endingGame();
   }
   onCellUpdate(row, column, action) {
-    if (!this.model.isPlaying && !this.model.isReady) {
-      console.log("nothing is ready");
+    if (this.model.state === "setting") {
       return;
     }
-    if (this.model.isReady && !this.model.isPlaying) {
-      console.log("starting game");
-      this.handleGameStart();
+    if (this.model.state === "ready") {
+      this.startingGame();
     }
-    if (this.model.isReady && this.model.isPlaying) {
-      console.log("game is in progress");
+    if (this.model.state === "playing") {
       const value = action === "add" ? 1 : 0;
       this.model.changePlayersGrid(row, column, value);
-      if (this.compareMatrix()) {
+      if (this.compareMatrix() && !this.model.solution) {
         this.initiatePlayerVictory();
       }
     }
   }
-  compareMatrix() {
-    let player = this.model.playersGrid;
-    let original = this.model.currentMatrix;
-    return JSON.stringify(player) === JSON.stringify(original);
-  }
-  showMatrix() {
-  }
   handleGameRestart() {
-    this.clickingSound.play();
-    this.view.main.resetTimer();
-    console.log("restart");
+    this.startingGame();
+    this.grid.field.clearField();
   }
   handleSolutionShowing() {
     this.clickingSound.play();
-    this.openNotififcation("soltuion");
-    console.log("solution");
+    this.openNotififcation(
+      "Now you can see the original image. You cannot continue the game"
+    );
+    this.endingGame();
+    this.showMatrix();
   }
   handleLoadGame() {
     this.clickingSound.play();
     this.openNotififcation("loading");
-    console.log("loading");
   }
   handleGameSave() {
     this.clickingSound.play();
@@ -1231,15 +1235,6 @@ class Connector {
   setAllTemplates() {
     const templates = this.model.getAllTemplates();
     this.form.extractFromMatrix(templates);
-  }
-  handleSubmitForm(formData) {
-    this.asideForm.closeAside();
-    this.clickingSound.play();
-    this.model.recieveForm(formData);
-    this.model.setReady(true);
-    this.view.main.resetTimer();
-    const matrix2 = this.model.getTemplateMatrix();
-    this.grid.updateGrid(matrix2);
   }
   handleRulesOpen() {
     this.clickingSound.play();
@@ -1262,6 +1257,15 @@ class Connector {
     this.notification.setMessage(text);
     this.asideNotification.openAside();
   }
+  compareMatrix() {
+    let player = this.model.playersGrid;
+    let original = this.model.currentMatrix;
+    return JSON.stringify(player) === JSON.stringify(original);
+  }
+  showMatrix() {
+    let original = this.model.currentMatrix;
+    this.grid.field.showField(original);
+  }
   render() {
     this.view.setGrid(this.grid);
     this.view.render();
@@ -1273,4 +1277,4 @@ class Connector {
 const connector = new Connector();
 connector.render();
 connector.init();
-//# sourceMappingURL=index-Bsj_MhuG.js.map
+//# sourceMappingURL=index-D6OesPaA.js.map

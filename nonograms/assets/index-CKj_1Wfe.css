@@ -499,6 +499,7 @@ body.light {
 	z-index: 1;
 	width: 500px;
 	height: 100%;
+	color: var(--form-color);
 	background-color: var(--first-c);
 	transition: transform 0.5s ease;
 	transform: var(--transform-to-close);
@@ -509,10 +510,6 @@ body.light {
 	display: block;
 	transform: translate(0);
 }
-
-/* .aside input[type='radio']:checked {
-	font-weight: lighter;
-} */
 
 .aside-content {
 	display: flex;
@@ -525,12 +522,7 @@ body.light {
 	min-height: 100%;
 	border-right: 2px solid #000000;
 	padding: 3rem 2rem;
-	color: var(--font-color);
 	background-color: var(--bg);
-}
-
-.aside-title {
-	color: var(--font-color);
 }
 
 .overlay {
@@ -583,9 +575,7 @@ body.light {
 	display: inline-block;
 	border: 1px solid var(--second-c);
 	padding: 0.5rem 1rem;
-	transition:
-		background 0.3s,
-		color 0.3s;
+	transition: all 0.3s ease-in-out;
 	cursor: pointer;
 }
 
