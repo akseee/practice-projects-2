@@ -34,6 +34,7 @@ export default class Leaderboard extends Component {
 			.sort((a, b) => {
 				return a.time - b.time
 			})
+			.splice(0, 5)
 			.forEach((result, index) => {
 				const element = new Component({
 					tag: 'li',
