@@ -345,11 +345,12 @@ class Main extends Component {
 }
 class View extends Component {
   constructor() {
-    super({ tag: "div", className: "page " });
+    super({ tag: "div", className: "page" });
     this.grid = null;
     this.header = new Header();
     this.main = new Main();
     this.appendChildren([this.header, this.main]);
+    document.body.classList.add("light");
   }
   setGrid(grid) {
     this.main.append(grid);
@@ -1272,4 +1273,4 @@ class Connector {
 const connector = new Connector();
 connector.render();
 connector.init();
-//# sourceMappingURL=index-Ycx-0cNt.js.map
+//# sourceMappingURL=index-Bsj_MhuG.js.map
