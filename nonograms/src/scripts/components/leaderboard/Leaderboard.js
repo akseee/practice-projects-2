@@ -34,10 +34,10 @@ export default class Leaderboard extends Component {
 
 	setLeaderboardList() {
 		if (localStorage.getItem('nono-leaderboard')) {
-			console.log('not empty')
+			// console.log('not empty')
 			return []
 		} else {
-			console.log('empty')
+			// console.log('empty')
 		}
 	}
 

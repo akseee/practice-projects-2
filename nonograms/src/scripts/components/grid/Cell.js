@@ -9,12 +9,13 @@ document.addEventListener('mouseup', () => {
 })
 
 export default class Cell extends Component {
-	constructor(x, y, size) {
+	constructor(x, y, size, cellHandler) {
 		super({ tag: 'button', className: 'cell' })
 
 		this.row = x
 		this.column = y
 		this.fieldSize = size
+		this.cellHandler = cellHandler
 
 		this.setAttribute('data-row', this.row)
 		this.setAttribute('data-column', this.column)
@@ -107,10 +108,9 @@ export default class Cell extends Component {
 		if (this.checkClass('marked')) {
 			this.removeMarked()
 		}
-		this.addClass('choosen')
 
-		console.log('adding to database')
-		console.log(e.target.getAttribute('data-column'))
+		this.addClass('choosen')
+		this.cellHandler(this.row, this.column, 'add')
 	}
 
 	removeChoosen(e) {
@@ -119,7 +119,6 @@ export default class Cell extends Component {
 		}
 		this.removeClass('choosen')
 
-		console.log(e.target.getAttribute('data-row'))
-		console.log('removing from data')
+		this.cellHandler(this.row, this.column, 'remove')
 	}
 }

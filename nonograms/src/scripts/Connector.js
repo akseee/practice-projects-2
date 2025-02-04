@@ -11,7 +11,7 @@ export default class Connector {
 	constructor() {
 		this.view = new View()
 		this.model = new AppData()
-		this.grid = new Grid()
+		this.grid = new Grid(5, null, this.onCellUpdate.bind(this))
 
 		this.form = new Form(this.handleSubmitForm.bind(this))
 		this.asideForm = new Aside('form', this.form)
@@ -41,12 +41,14 @@ export default class Connector {
 		})
 	}
 
-	handleCellClick() {
-		if (!this.model.isStarted) {
+	onCellUpdate(row, column, action) {
+		console.log(row, column, action)
+		if (!this.model.isStarted && this.model.settingsReady) {
+			console.log('starting game')
 			this.model.isStarted = true
 			this.handleGameStart()
 		} else {
-			console.log('click')
+			console.log('waiting for all conditions')
 		}
 	}
 
@@ -83,8 +85,7 @@ export default class Connector {
 	handleSubmitForm(formData) {
 		this.asideForm.closeAside()
 
-		this.model.setTemplate(formData.template)
-		this.model.setDifficulty(formData.difficulty)
+		this.model.recieveForm(formData)
 
 		const matrix = this.model.getTemplateMatrix()
 
