@@ -558,23 +558,29 @@ class AppData {
     this.currentMatrix = null;
     this.difficulty = "easy";
     this.isStarted = false;
+    this.settingsReady = false;
     this.playersGrid = [];
   }
-  createPlayersGrid(length) {
+  createPlayersGrid() {
+    let temp = this.currentMatrix.length;
+    this.playersGrid = [];
+    for (let i = 0; i < temp; i++) {
+      this.playersGrid.push(new Array(temp).fill(0));
+    }
   }
   changePlayersGrid(x, y, value) {
     this.playersGrid[x][y] = value;
+    console.log(this.playersGrid);
+    console.log(this.currentMatrix);
   }
   getAllTemplates() {
     return this.allTemplates;
   }
-  setTemplate(template) {
+  recieveForm({ difficulty, template }) {
     this.currentTemplate = template;
-    this.currentMatrix = this.allTemplates[this.difficulty][this.currentTemplate];
-    this.createPlayersGrid();
-  }
-  setDifficulty(difficulty) {
+    this.currentMatrix = this.allTemplates[difficulty][template];
     this.difficulty = difficulty;
+    this.createPlayersGrid();
   }
   getTemplateMatrix() {
     return this.allTemplates[this.difficulty][this.currentTemplate];
@@ -601,11 +607,12 @@ document.addEventListener("mouseup", () => {
   current = null;
 });
 class Cell extends Component {
-  constructor(x, y, size) {
+  constructor(x, y, size, cellHandler) {
     super({ tag: "button", className: "cell" });
     this.row = x;
     this.column = y;
     this.fieldSize = size;
+    this.cellHandler = cellHandler;
     this.setAttribute("data-row", this.row);
     this.setAttribute("data-column", this.column);
     this.setEdges();
@@ -685,16 +692,14 @@ class Cell extends Component {
       this.removeMarked();
     }
     this.addClass("choosen");
-    console.log("adding to database");
-    console.log(e.target.getAttribute("data-column"));
+    this.cellHandler(this.row, this.column, "add");
   }
   removeChoosen(e) {
     if (!this.checkClass("choosen")) {
       return;
     }
     this.removeClass("choosen");
-    console.log(e.target.getAttribute("data-row"));
-    console.log("removing from data");
+    this.cellHandler(this.row, this.column, "remove");
   }
 }
 class Hints extends Component {
@@ -772,12 +777,13 @@ function calculateColumnHints(array) {
   return result;
 }
 class Grid extends Component {
-  constructor(size = 5, matrix2 = null) {
+  constructor(size = 5, matrix2 = null, handler) {
     super({ tag: "div", className: "grid-wrapper" });
     this.grid = new Component({ tag: "div", className: "grid" });
     this.size = size;
     this.matrix = matrix2;
-    this.field = new Field(this.size);
+    this.cellHandler = handler;
+    this.field = new Field(this.size, this.cellHandler);
     this.filler = new Hints("filler");
     this.columnHints = new Hints("column");
     this.rowHints = new Hints("row");
@@ -804,7 +810,7 @@ class Grid extends Component {
     this.setMatrix(this.matrix);
   }
   createGrid() {
-    this.field = new Field(this.size);
+    this.field = new Field(this.size, this.cellHandler);
     this.filler = new Hints("filler");
     this.columnHints = new Hints("column");
     this.rowHints = new Hints("row");
@@ -818,19 +824,20 @@ class Grid extends Component {
   }
 }
 class Field extends Component {
-  constructor(size) {
+  constructor(size, cellHandler) {
     super({
       tag: "div",
       className: `field ${size === 5 ? "field-5" : size === 10 ? "field-10" : "field-15"}`
     });
     this.size = size;
+    this.cellHandler = cellHandler;
     this.createField();
   }
   createField() {
     for (let i = 0; i < this.size * this.size; i++) {
       const row = Math.floor(i / this.size);
       const column = i % this.size;
-      const cell = new Cell(row, column, this.size);
+      const cell = new Cell(row, column, this.size, this.cellHandler);
       this.append(cell);
     }
   }
@@ -1070,10 +1077,7 @@ class Leaderboard extends Component {
   }
   setLeaderboardList() {
     if (localStorage.getItem("nono-leaderboard")) {
-      console.log("not empty");
       return [];
-    } else {
-      console.log("empty");
     }
   }
   createList(data) {
@@ -1107,7 +1111,7 @@ class Connector {
   constructor() {
     this.view = new View();
     this.model = new AppData();
-    this.grid = new Grid();
+    this.grid = new Grid(5, null, this.onCellUpdate.bind(this));
     this.form = new Form(this.handleSubmitForm.bind(this));
     this.asideForm = new Aside("form", this.form);
     this.leaderboard = new Leaderboard();
@@ -1130,16 +1134,35 @@ class Connector {
       onSave: this.handleGameSave.bind(this)
     });
   }
-  handleCellClick() {
-    if (!this.model.isStarted) {
-      this.model.isStarted = true;
-      this.handleGameStart();
-    } else {
-      console.log("click");
+  onCellUpdate(row, column, action) {
+    if (!this.model.isStarted && !this.model.settingsReady) {
+      console.log("nothing is ready");
+      return;
     }
+    if (this.model.settingsReady && !this.model.isStarted) {
+      console.log("starting game");
+      this.handleGameStart();
+    }
+    if (this.model.settingsReady && this.model.isStarted) {
+      console.log("game is in progress");
+      const value = action === "add" ? 1 : 0;
+      this.model.changePlayersGrid(row, column, value);
+      let player = this.model.playersGrid;
+      let original = this.model.currentMatrix;
+      if (this.compareMatrix(player, original)) {
+        this.openNotififcation(
+          "Congratulations! You won! Try another one, maybe make it more difficult now?"
+        );
+      }
+    }
+  }
+  compareMatrix(player, original) {
+    console.log(JSON.stringify(player) === JSON.stringify(original));
+    return JSON.stringify(player) === JSON.stringify(original);
   }
   handleGameStart() {
     this.view.main.startTimer();
+    this.model.isStarted = true;
     console.log("start");
   }
   handleGameRestart() {
@@ -1164,8 +1187,8 @@ class Connector {
   }
   handleSubmitForm(formData) {
     this.asideForm.closeAside();
-    this.model.setTemplate(formData.template);
-    this.model.setDifficulty(formData.difficulty);
+    this.model.recieveForm(formData);
+    this.model.settingsReady = true;
     const matrix2 = this.model.getTemplateMatrix();
     this.grid.updateGrid(matrix2);
   }
@@ -1193,4 +1216,4 @@ class Connector {
 const connector = new Connector();
 connector.render();
 connector.init();
-//# sourceMappingURL=index-Bk32l68U.js.map
+//# sourceMappingURL=index-BynUhOYf.js.map
