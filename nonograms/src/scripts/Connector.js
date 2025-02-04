@@ -42,18 +42,40 @@ export default class Connector {
 	}
 
 	onCellUpdate(row, column, action) {
-		console.log(row, column, action)
-		if (!this.model.isStarted && this.model.settingsReady) {
-			console.log('starting game')
-			this.model.isStarted = true
-			this.handleGameStart()
-		} else {
-			console.log('waiting for all conditions')
+		if (!this.model.isStarted && !this.model.settingsReady) {
+			console.log('nothing is ready')
+			return
 		}
+		if (this.model.settingsReady && !this.model.isStarted) {
+			console.log('starting game')
+			this.handleGameStart()
+		}
+
+		if (this.model.settingsReady && this.model.isStarted) {
+			console.log('game is in progress')
+			const value = action === 'add' ? 1 : 0
+			this.model.changePlayersGrid(row, column, value)
+
+			let player = this.model.playersGrid
+			let original = this.model.currentMatrix
+
+			if (this.compareMatrix(player, original)) {
+				this.openNotififcation(
+					'Congratulations! You won! Try another one, maybe make it more difficult now?'
+				)
+			}
+		}
+	}
+
+	compareMatrix(player, original) {
+		console.log(JSON.stringify(player) === JSON.stringify(original))
+		return JSON.stringify(player) === JSON.stringify(original)
 	}
 
 	handleGameStart() {
 		this.view.main.startTimer()
+		this.model.isStarted = true
+
 		console.log('start')
 	}
 
@@ -86,6 +108,7 @@ export default class Connector {
 		this.asideForm.closeAside()
 
 		this.model.recieveForm(formData)
+		this.model.settingsReady = true
 
 		const matrix = this.model.getTemplateMatrix()
 

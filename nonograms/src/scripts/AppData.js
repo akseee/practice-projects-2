@@ -26,6 +26,8 @@ export default class AppData {
 		// const newValue = currentValue === 0 ? 1 : 0
 		// this.changePlayersGrid(x, y, newValue)
 		this.playersGrid[x][y] = value
+		console.log(this.playersGrid)
+		console.log(this.currentMatrix)
 	}
 
 	getAllTemplates() {
