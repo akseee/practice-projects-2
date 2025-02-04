@@ -210,7 +210,6 @@ class Info extends Component {
 class Main extends Component {
   constructor() {
     super({ tag: "main", className: "main" });
-    this.start = new Button("start", "start game", () => this.handleStart());
     this.restart = new Button(
       "restart",
       "restart game",
@@ -229,7 +228,6 @@ class Main extends Component {
     );
     this.wrapper = new Component({ tag: "div", className: "controls-main" });
     this.wrapper.appendChildren([
-      this.start,
       this.restart,
       this.solution,
       this.load,
@@ -257,10 +255,10 @@ class Main extends Component {
   }
   handleStart() {
     if (this.handlers.onStart) {
-      this.handlers.onStart();
-      this.setGameStartedButtons();
+      this.handlers.onRestart();
+      this.setInitialButtonState();
     } else {
-      console.log("something is wrong with starting handler");
+      console.log("something is wrong with restarting handler");
     }
   }
   handelRestart() {
@@ -296,23 +294,23 @@ class Main extends Component {
   }
   setInitialButtonState() {
     this.checkLoadings();
-    this.start.setVisible(true);
-    this.restart.setVisible(false);
+    this.restart.setVisible(true);
+    this.restart.setDisabled(true);
     this.load.setVisible(true);
     this.save.setVisible(false);
     this.solution.setDisabled(true);
   }
   setGameStartedButtons() {
-    this.start.setVisible(false);
     this.restart.setVisible(true);
+    this.restart.setDisabled(false);
     this.load.setVisible(false);
     this.save.setVisible(true);
     this.save.setDisabled(false);
     this.solution.setDisabled(false);
   }
   setAfterSolutionButtons() {
-    this.start.setVisible(false);
     this.restart.setVisible(true);
+    this.restart.setDisabled(false);
     this.load.setVisible(false);
     this.save.setVisible(true);
     this.save.setDisabled(true);
@@ -556,18 +554,24 @@ const matrix = {
 class AppData {
   constructor() {
     this.allTemplates = matrix;
-    this.size = 5;
     this.currentTemplate = null;
+    this.currentMatrix = null;
     this.difficulty = "easy";
     this.isStarted = false;
+    this.playersGrid = [];
+  }
+  createPlayersGrid(length) {
+  }
+  changePlayersGrid(x, y, value) {
+    this.playersGrid[x][y] = value;
   }
   getAllTemplates() {
     return this.allTemplates;
   }
-  saveInLS() {
-  }
   setTemplate(template) {
     this.currentTemplate = template;
+    this.currentMatrix = this.allTemplates[this.difficulty][this.currentTemplate];
+    this.createPlayersGrid();
   }
   setDifficulty(difficulty) {
     this.difficulty = difficulty;
@@ -575,7 +579,15 @@ class AppData {
   getTemplateMatrix() {
     return this.allTemplates[this.difficulty][this.currentTemplate];
   }
+  saveInLS() {
+  }
   getFromLS() {
+    const savedGrid = localStorage.getItem("playersGrid");
+    if (savedGrid) {
+      this.playersGrid = JSON.parse(savedGrid);
+    } else {
+      console.log("No grid found in localStorage");
+    }
   }
   checkGrid() {
   }
@@ -613,7 +625,7 @@ class Cell extends Component {
     e.preventDefault();
     isMouseDown = true;
     if (e.button === 0) {
-      this.handleLeftClick();
+      this.handleLeftClick(e);
     } else if (e.button === 2) {
       this.handleRightClick();
     }
@@ -623,20 +635,20 @@ class Cell extends Component {
       if (current === "set-marked") {
         this.addMarked();
       } else if (current === "set-choosen") {
-        this.addChoosen();
+        this.addChoosen(e);
       } else if (current === "remove-marked") {
         this.removeMarked();
       } else if (current === "remove-choosen") {
-        this.removeChoosen();
+        this.removeChoosen(e);
       }
     }
   }
-  handleLeftClick() {
+  handleLeftClick(e) {
     if (this.checkClass("choosen")) {
-      this.removeChoosen();
+      this.removeChoosen(e);
       current = "remove-choosen";
     } else {
-      this.addChoosen();
+      this.addChoosen(e);
       current = "set-choosen";
     }
   }
@@ -665,14 +677,24 @@ class Cell extends Component {
       this.destroyChildren();
     }
   }
-  addChoosen() {
+  addChoosen(e) {
+    if (this.checkClass("choosen")) {
+      return;
+    }
     if (this.checkClass("marked")) {
       this.removeMarked();
     }
     this.addClass("choosen");
+    console.log("adding to database");
+    console.log(e.target.getAttribute("data-column"));
   }
-  removeChoosen() {
+  removeChoosen(e) {
+    if (!this.checkClass("choosen")) {
+      return;
+    }
     this.removeClass("choosen");
+    console.log(e.target.getAttribute("data-row"));
+    console.log("removing from data");
   }
 }
 class Hints extends Component {
@@ -994,6 +1016,9 @@ class Aside extends Component {
     this.overlay.setVisible(true);
     this.addClass("open");
   }
+  hideButton() {
+    this.button.setVisible(false);
+  }
   toggleAside() {
     if (!this.checkClass("open")) {
       this.openAside();
@@ -1066,6 +1091,18 @@ class Leaderboard extends Component {
     });
   }
 }
+class Notification extends Component {
+  constructor() {
+    super({ tag: "div", className: "aside-content" });
+    this.title = new Component({ tag: "h2", className: "aside-title" });
+    this.title.setTextContent("");
+    this.text = new Component({ tag: "p", className: "notification-text" });
+    this.appendChildren([this.title, this.text]);
+  }
+  setMessage(message) {
+    this.text.setTextContent(message);
+  }
+}
 class Connector {
   constructor() {
     this.view = new View();
@@ -1077,6 +1114,9 @@ class Connector {
     this.asideLeaderboard = new Aside("leaderboard", this.leaderboard);
     this.rules = new Rules();
     this.asideRules = new Aside("rules", this.rules);
+    this.notification = new Notification();
+    this.asideNotification = new Aside("notification", this.notification);
+    this.asideNotification.hideButton();
     this.view.header.setHandlers({
       onRulesOpen: this.handleRulesOpen.bind(this),
       onLeaderboardOpen: this.handleLeaderboardOpen.bind(this),
@@ -1090,6 +1130,14 @@ class Connector {
       onSave: this.handleGameSave.bind(this)
     });
   }
+  handleCellClick() {
+    if (!this.model.isStarted) {
+      this.model.isStarted = true;
+      this.handleGameStart();
+    } else {
+      console.log("click");
+    }
+  }
   handleGameStart() {
     this.view.main.startTimer();
     console.log("start");
@@ -1099,12 +1147,15 @@ class Connector {
     console.log("restart");
   }
   handleSolutionShowing() {
+    this.openNotififcation("soltuion");
     console.log("solution");
   }
   handleLoadGame() {
+    this.openNotififcation("loading");
     console.log("loading");
   }
   handleGameSave() {
+    this.openNotififcation("saving");
     console.log("saving");
   }
   setAllTemplates() {
@@ -1127,6 +1178,10 @@ class Connector {
   handleSetupOpen() {
     this.asideForm.openAside();
   }
+  openNotififcation(text) {
+    this.notification.setMessage(text);
+    this.asideNotification.openAside();
+  }
   render() {
     this.view.setGrid(this.grid);
     this.view.render();
@@ -1138,4 +1193,4 @@ class Connector {
 const connector = new Connector();
 connector.render();
 connector.init();
-//# sourceMappingURL=index-C5EWCxvO.js.map
+//# sourceMappingURL=index-Bk32l68U.js.map
