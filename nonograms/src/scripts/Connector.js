@@ -7,6 +7,9 @@ import Rules from './components/rules/Rules'
 import Leaderboard from './components/leaderboard/Leaderboard'
 import Notification from './components/aside/Notification'
 
+import startingSound from '../assets/start.mp3'
+import vistorySound from '../assets/victory.mp3'
+
 export default class Connector {
 	constructor() {
 		this.view = new View()
@@ -42,12 +45,18 @@ export default class Connector {
 	}
 
 	handleGameStart() {
+		const startSound = new Audio(startingSound)
+		startSound.play()
+
 		this.view.main.startTimer()
 		this.model.setPlaying(true)
 		console.log('start')
 	}
 
 	initiatePlayerVictory() {
+		const startSound = new Audio(vistorySound)
+		startSound.play()
+
 		const time = this.view.main.getTime()
 		const template = this.model.currentTemplate
 		const difficulty = this.model.difficulty
@@ -82,18 +91,21 @@ export default class Connector {
 			const value = action === 'add' ? 1 : 0
 			this.model.changePlayersGrid(row, column, value)
 
-			let player = this.model.playersGrid
-			let original = this.model.currentMatrix
-
-			if (this.compareMatrix(player, original)) {
+			if (this.compareMatrix()) {
 				this.initiatePlayerVictory()
 			}
 		}
 	}
 
-	compareMatrix(player, original) {
-		console.log(JSON.stringify(player) === JSON.stringify(original))
+	compareMatrix() {
+		let player = this.model.playersGrid
+		let original = this.model.currentMatrix
+
 		return JSON.stringify(player) === JSON.stringify(original)
+	}
+
+	showMatrix() {
+		// let original = this.model.currentMatrix
 	}
 
 	handleGameRestart() {
