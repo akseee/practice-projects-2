@@ -4,13 +4,15 @@ import Main from './components/main/Main'
 
 export default class View extends Component {
 	constructor() {
-		super({ tag: 'div', className: 'page ' })
+		super({ tag: 'div', className: 'page' })
 
 		this.grid = null
 		this.header = new Header()
 		this.main = new Main()
 
 		this.appendChildren([this.header, this.main])
+
+		document.body.classList.add('light')
 	}
 
 	setGrid(grid) {
