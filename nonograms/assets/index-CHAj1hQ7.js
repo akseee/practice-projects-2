@@ -1203,6 +1203,7 @@ class Connector {
     this.startSound.play();
     this.view.main.handleStart();
     this.model.setState("playing");
+    console.log(this.model.currentMatrix);
   }
   endingGame() {
     this.view.main.handleOver();
@@ -1315,4 +1316,4 @@ class Connector {
 const connector = new Connector();
 connector.render();
 connector.init();
-//# sourceMappingURL=index-BTyTmOQz.js.map
+//# sourceMappingURL=index-CHAj1hQ7.js.map
