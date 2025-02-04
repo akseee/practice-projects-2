@@ -11,7 +11,7 @@ export default class Header extends Component {
 		this.theme = new Button('theme ', 'theme', () => {
 			this.handleThemeChange()
 		})
-		this.volume = new Button('volume ', '', () => {
+		this.volume = new Button('volume active', '', () => {
 			this.handleVolume()
 		})
 
@@ -43,6 +43,7 @@ export default class Header extends Component {
 			onRulesOpen: null,
 			onLeaderboardOpen: null,
 			onSetupOpen: null,
+			onVolumeToggle: null,
 		}
 	}
 
@@ -89,6 +90,14 @@ export default class Header extends Component {
 
 	handleVolume() {
 		this.volume.toggleClass('active')
-		console.log('toggled volume')
+		if (this.handlers.onVolumeToggle) {
+			if (this.volume.checkClass('active')) {
+				this.handlers.onVolumeToggle(false)
+			} else {
+				this.handlers.onVolumeToggle(true)
+			}
+		} else {
+			console.log('something is wrong with volume handler')
+		}
 	}
 }

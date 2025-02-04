@@ -23,6 +23,8 @@ export default class Info extends Component {
 	startTimer() {
 		if (this.intervalId !== null) return
 
+		this.timer.addClass('active')
+
 		this.intervalId = setInterval(() => {
 			this.seconds++
 			const minutes = Math.floor(this.seconds / 60)
@@ -33,6 +35,7 @@ export default class Info extends Component {
 	}
 
 	stopTimer() {
+		this.timer.removeClass('active')
 		if (this.intervalId === null) return
 
 		clearInterval(this.intervalId)
@@ -40,6 +43,7 @@ export default class Info extends Component {
 	}
 
 	resetTimer() {
+		this.timer.removeClass('active')
 		this.stopTimer()
 		this.seconds = 0
 		this.timer.setTextContent('00:00')

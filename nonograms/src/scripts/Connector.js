@@ -9,6 +9,7 @@ import Notification from './components/aside/Notification'
 
 import startingSound from '../assets/start.mp3'
 import vistorySound from '../assets/victory.mp3'
+import clickingSound from '../assets/click.mp3'
 
 export default class Connector {
 	constructor() {
@@ -33,6 +34,7 @@ export default class Connector {
 			onRulesOpen: this.handleRulesOpen.bind(this),
 			onLeaderboardOpen: this.handleLeaderboardOpen.bind(this),
 			onSetupOpen: this.handleSetupOpen.bind(this),
+			onVolumeToggle: this.handleVolumeToggle.bind(this),
 		})
 
 		this.view.main.setHandlers({
@@ -42,11 +44,14 @@ export default class Connector {
 			onLoad: this.handleLoadGame.bind(this),
 			onSave: this.handleGameSave.bind(this),
 		})
+
+		this.startSound = new Audio(startingSound)
+		this.victorySound = new Audio(vistorySound)
+		this.clickingSound = new Audio(clickingSound)
 	}
 
 	handleGameStart() {
-		const startSound = new Audio(startingSound)
-		startSound.play()
+		this.startSound.play()
 
 		this.view.main.startTimer()
 		this.model.setPlaying(true)
@@ -54,8 +59,7 @@ export default class Connector {
 	}
 
 	initiatePlayerVictory() {
-		const startSound = new Audio(vistorySound)
-		startSound.play()
+		this.victorySound.play()
 
 		const time = this.view.main.getTime()
 		const template = this.model.currentTemplate
@@ -109,21 +113,25 @@ export default class Connector {
 	}
 
 	handleGameRestart() {
+		this.clickingSound.play()
 		this.view.main.resetTimer()
 		console.log('restart')
 	}
 
 	handleSolutionShowing() {
+		this.clickingSound.play()
 		this.openNotififcation('soltuion')
 		console.log('solution')
 	}
 
 	handleLoadGame() {
+		this.clickingSound.play()
 		this.openNotififcation('loading')
 		console.log('loading')
 	}
 
 	handleGameSave() {
+		this.clickingSound.play()
 		this.openNotififcation('saving')
 		console.log('saving')
 	}
@@ -135,7 +143,7 @@ export default class Connector {
 
 	handleSubmitForm(formData) {
 		this.asideForm.closeAside()
-
+		this.clickingSound.play()
 		this.model.recieveForm(formData)
 		this.model.setReady(true)
 		this.view.main.resetTimer()
@@ -146,15 +154,24 @@ export default class Connector {
 	}
 
 	handleRulesOpen() {
+		this.clickingSound.play()
 		this.asideRules.openAside()
 	}
 
 	handleLeaderboardOpen() {
+		this.clickingSound.play()
 		this.asideLeaderboard.openAside()
 	}
 
 	handleSetupOpen() {
+		this.clickingSound.play()
 		this.asideForm.openAside()
+	}
+
+	handleVolumeToggle(activate) {
+		this.startSound.muted = activate
+		this.victorySound.muted = activate
+		this.clickingSound.muted = activate
 	}
 
 	openNotififcation(text) {

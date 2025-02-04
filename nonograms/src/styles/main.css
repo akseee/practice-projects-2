@@ -83,6 +83,7 @@ body {
 }
 
 .volume {
+	opacity: 0.2;
 	color: var(--hover);
 	background: var(--svg-sound);
 	background-color: var(--first-c);
@@ -96,7 +97,7 @@ body {
 }
 
 .volume.active {
-	opacity: 0.2;
+	opacity: 1;
 }
 
 .theme {
@@ -135,7 +136,11 @@ body {
 	background-color: var(--timer-bg);
 }
 
-.info .info-timer {
+.info-timer {
+	color: #ff9696;
+}
+
+.info-timer.active {
 	color: #ff0000;
 }
 
