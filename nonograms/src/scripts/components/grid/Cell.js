@@ -37,6 +37,10 @@ export default class Cell extends Component {
 		}
 	}
 
+	click() {
+		this.addChoosen()
+	}
+
 	handleMouseDown(e) {
 		e.preventDefault()
 		isMouseDown = true

@@ -1,5 +1,7 @@
 import { matrix } from '../matrix'
 
+// gameState = playing || ready || settingup ||
+
 export default class AppData {
 	constructor() {
 		this.allTemplates = matrix
@@ -10,8 +12,26 @@ export default class AppData {
 
 		this.isPlaying = false
 		this.isReady = false
+		this.solution = false
 
-		this.playersGrid = []
+		this.state = 'waiting'
+		// waitingf:
+		// no setup,
+		// not started
+
+		// ready:
+		// setup
+		// not started
+
+		// playing
+		// setup
+		// started
+
+		this.gameState = this.playersGrid = []
+	}
+
+	setState(state) {
+		this.state = state
 	}
 
 	createPlayersGrid() {
@@ -62,17 +82,5 @@ export default class AppData {
 		} else {
 			console.log('No grid found in localStorage')
 		}
-	}
-
-	checkGrid() {}
-
-	setWinner() {}
-
-	setPlaying(value) {
-		this.isPlaying = value
-	}
-
-	setReady(value) {
-		this.isReady = value
 	}
 }

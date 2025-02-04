@@ -38,7 +38,6 @@ export default class Connector {
 		})
 
 		this.view.main.setHandlers({
-			onStart: this.handleGameStart.bind(this),
 			onRestart: this.handleGameRestart.bind(this),
 			onSolution: this.handleSolutionShowing.bind(this),
 			onLoad: this.handleLoadGame.bind(this),
@@ -48,19 +47,35 @@ export default class Connector {
 		this.startSound = new Audio(startingSound)
 		this.victorySound = new Audio(vistorySound)
 		this.clickingSound = new Audio(clickingSound)
+		document.addEventListener('click', () => console.log(this.model.state))
 	}
 
-	handleGameStart() {
-		this.startSound.play()
+	handleSubmitForm(formData) {
+		this.asideForm.closeAside()
+		this.clickingSound.play()
 
-		this.view.main.startTimer()
-		this.model.setPlaying(true)
-		console.log('start')
+		this.model.setState('ready')
+
+		this.model.recieveForm(formData)
+
+		const matrix = this.model.getTemplateMatrix()
+
+		this.grid.updateGrid(matrix)
+	}
+
+	startingGame() {
+		this.startSound.play()
+		this.view.main.handleStart()
+		this.model.setState('playing')
+	}
+
+	endingGame() {
+		this.view.main.handleOver()
+		this.model.setState('waiting')
 	}
 
 	initiatePlayerVictory() {
 		this.victorySound.play()
-
 		const time = this.view.main.getTime()
 		const template = this.model.currentTemplate
 		const difficulty = this.model.difficulty
@@ -74,60 +89,46 @@ export default class Connector {
 		this.model.saveLeaderboardVictory(template, difficulty, time)
 		this.leaderboard.setLeaderboardList()
 
-		this.model.setPlaying(false)
-		this.model.setReady(false)
-
-		console.log(this.model.isPlaying, this.model.isReady)
+		this.endingGame()
 	}
 
 	onCellUpdate(row, column, action) {
-		if (!this.model.isPlaying && !this.model.isReady) {
-			console.log('nothing is ready')
+		if (this.model.state === 'setting') {
 			return
 		}
-		if (this.model.isReady && !this.model.isPlaying) {
-			console.log('starting game')
-			this.handleGameStart()
+
+		if (this.model.state === 'ready') {
+			this.startingGame()
 		}
 
-		if (this.model.isReady && this.model.isPlaying) {
-			console.log('game is in progress')
+		if (this.model.state === 'playing') {
 			const value = action === 'add' ? 1 : 0
 			this.model.changePlayersGrid(row, column, value)
 
-			if (this.compareMatrix()) {
+			if (this.compareMatrix() && !this.model.solution) {
 				this.initiatePlayerVictory()
 			}
 		}
 	}
 
-	compareMatrix() {
-		let player = this.model.playersGrid
-		let original = this.model.currentMatrix
-
-		return JSON.stringify(player) === JSON.stringify(original)
-	}
-
-	showMatrix() {
-		// let original = this.model.currentMatrix
-	}
-
 	handleGameRestart() {
-		this.clickingSound.play()
-		this.view.main.resetTimer()
-		console.log('restart')
+		this.startingGame()
+		this.grid.field.clearField()
 	}
 
 	handleSolutionShowing() {
 		this.clickingSound.play()
-		this.openNotififcation('soltuion')
-		console.log('solution')
+		this.openNotififcation(
+			'Now you can see the original image. You cannot continue the game'
+		)
+
+		this.endingGame()
+		this.showMatrix()
 	}
 
 	handleLoadGame() {
 		this.clickingSound.play()
 		this.openNotififcation('loading')
-		console.log('loading')
 	}
 
 	handleGameSave() {
@@ -139,18 +140,6 @@ export default class Connector {
 	setAllTemplates() {
 		const templates = this.model.getAllTemplates()
 		this.form.extractFromMatrix(templates)
-	}
-
-	handleSubmitForm(formData) {
-		this.asideForm.closeAside()
-		this.clickingSound.play()
-		this.model.recieveForm(formData)
-		this.model.setReady(true)
-		this.view.main.resetTimer()
-
-		const matrix = this.model.getTemplateMatrix()
-
-		this.grid.updateGrid(matrix)
 	}
 
 	handleRulesOpen() {
@@ -177,6 +166,17 @@ export default class Connector {
 	openNotififcation(text) {
 		this.notification.setMessage(text)
 		this.asideNotification.openAside()
+	}
+
+	compareMatrix() {
+		let player = this.model.playersGrid
+		let original = this.model.currentMatrix
+		return JSON.stringify(player) === JSON.stringify(original)
+	}
+
+	showMatrix() {
+		let original = this.model.currentMatrix
+		this.grid.field.showField(original)
 	}
 
 	render() {

@@ -31,7 +31,6 @@ export default class Main extends Component {
 		this.appendChildren([this.wrapper, this.info])
 
 		this.handlers = {
-			onStart: null,
 			onRestart: null,
 			onSolution: null,
 			onLoad: null,
@@ -47,32 +46,24 @@ export default class Main extends Component {
 		return this.info.getTime()
 	}
 
-	startTimer() {
-		this.info.startTimer()
-	}
-
-	resetTimer() {
-		this.info.resetTimer()
-	}
-
 	stopTimer() {
 		this.info.stopTimer()
 	}
 
 	handleStart() {
-		if (this.handlers.onStart) {
-			this.handlers.onRestart()
-			this.setInitialButtonState()
-			this.startTimer()
-		} else {
-			console.log('something is wrong with restarting handler')
-		}
+		this.info.resetTimer()
+		this.setGameStartedButtons()
+		this.info.startTimer()
+	}
+
+	handleOver() {
+		this.info.resetTimer()
+		this.setInitialButtonState()
 	}
 
 	handelRestart() {
 		if (this.handlers.onRestart) {
 			this.handlers.onRestart()
-			this.setInitialButtonState()
 		} else {
 			console.log('something is wrong with restarting handler')
 		}
@@ -81,7 +72,6 @@ export default class Main extends Component {
 	handleSolution() {
 		if (this.handlers.onSolution) {
 			this.handlers.onSolution()
-			this.setAfterSolutionButtons()
 		} else {
 			console.log('something is wrong with solution handler')
 		}
@@ -90,7 +80,7 @@ export default class Main extends Component {
 	handleLoad() {
 		if (this.handlers.onLoad) {
 			this.handlers.onLoad()
-			this.setGameStartedButtons()
+			// this.setGameStartedButtons()
 		} else {
 			console.log('something is wrong with loading handler')
 		}
