@@ -6,26 +6,17 @@ export default class AppData {
 	constructor() {
 		this.allTemplates = matrix
 
-		this.currentTemplate = null
-		this.currentMatrix = null
+		this.currentTemplate = 'dino'
+		this.currentMatrix = [
+			[0, 0, 0, 1, 1],
+			[0, 0, 0, 1, 0],
+			[0, 1, 1, 1, 0],
+			[0, 1, 1, 1, 0],
+			[1, 1, 0, 1, 0],
+		]
 		this.difficulty = 'easy'
 
-		this.isPlaying = false
-		this.isReady = false
-		this.solution = false
-
-		this.state = 'waiting'
-		// waitingf:
-		// no setup,
-		// not started
-
-		// ready:
-		// setup
-		// not started
-
-		// playing
-		// setup
-		// started
+		this.state = 'ready'
 
 		this.gameState = this.playersGrid = []
 	}

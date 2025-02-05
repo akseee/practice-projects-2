@@ -48,12 +48,16 @@ export default class Connector {
 		this.victorySound = new Audio(vistorySound)
 		this.clickingSound = new Audio(clickingSound)
 		document.addEventListener('click', () => console.log(this.model.state))
+
+		const matrix = this.model.getTemplateMatrix()
+
+		this.grid.updateGrid(matrix)
 	}
 
 	handleSubmitForm(formData) {
 		this.asideForm.closeAside()
 		this.clickingSound.play()
-
+		this.view.main.info.resetTimer()
 		this.model.setState('ready')
 
 		this.model.recieveForm(formData)
