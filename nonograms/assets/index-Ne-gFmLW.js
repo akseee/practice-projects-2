@@ -637,12 +637,13 @@ document.addEventListener("mouseup", () => {
   current = null;
 });
 class Cell extends Component {
-  constructor(x, y, size, cellHandler) {
+  constructor(x, y, size, cellHandler, soundHandler) {
     super({ tag: "button", className: "cell" });
     this.row = x;
     this.column = y;
     this.fieldSize = size;
     this.cellHandler = cellHandler;
+    this.soundHandler = soundHandler;
     this.setAttribute("data-row", this.row);
     this.setAttribute("data-column", this.column);
     this.setEdges();
@@ -664,10 +665,11 @@ class Cell extends Component {
   handleMouseDown(e) {
     e.preventDefault();
     isMouseDown = true;
+    this.soundHandler(e.button);
     if (e.button === 0) {
       this.handleLeftClick(e);
     } else if (e.button === 2) {
-      this.handleRightClick();
+      this.handleRightClick(e);
     }
   }
   handleMouseEnter(e) {
@@ -692,7 +694,7 @@ class Cell extends Component {
       current = "set-choosen";
     }
   }
-  handleRightClick() {
+  handleRightClick(e) {
     if (this.checkClass("marked")) {
       this.removeMarked();
       current = "remove-marked";
@@ -711,7 +713,7 @@ class Cell extends Component {
       this.append(cross);
     }
   }
-  removeMarked() {
+  removeMarked(e) {
     if (this.checkClass("marked")) {
       this.removeClass("marked");
       this.destroyChildren();
@@ -725,14 +727,14 @@ class Cell extends Component {
       this.removeMarked();
     }
     this.addClass("choosen");
-    this.cellHandler(this.row, this.column, "add");
+    this.cellHandler(this.row, this.column, "add", e);
   }
   removeChoosen(e) {
     if (!this.checkClass("choosen")) {
       return;
     }
     this.removeClass("choosen");
-    this.cellHandler(this.row, this.column, "remove");
+    this.cellHandler(this.row, this.column, "remove", e);
   }
 }
 class Hints extends Component {
@@ -810,13 +812,14 @@ function calculateColumnHints(array) {
   return result;
 }
 class Grid extends Component {
-  constructor(size = 5, matrix2 = null, handler) {
+  constructor(size = 5, matrix2 = null, handler, soundHandler) {
     super({ tag: "div", className: "grid-wrapper" });
     this.grid = new Component({ tag: "div", className: "grid" });
     this.size = size;
     this.matrix = matrix2;
     this.cellHandler = handler;
-    this.field = new Field(this.size, this.cellHandler);
+    this.soundHandler = soundHandler;
+    this.field = new Field(this.size, this.cellHandler, this.soundHandler);
     this.filler = new Hints("filler");
     this.columnHints = new Hints("column");
     this.rowHints = new Hints("row");
@@ -843,7 +846,7 @@ class Grid extends Component {
     this.setMatrix(this.matrix);
   }
   createGrid() {
-    this.field = new Field(this.size, this.cellHandler);
+    this.field = new Field(this.size, this.cellHandler, this.soundHandler);
     this.filler = new Hints("filler");
     this.columnHints = new Hints("column");
     this.rowHints = new Hints("row");
@@ -857,13 +860,14 @@ class Grid extends Component {
   }
 }
 class Field extends Component {
-  constructor(size, cellHandler) {
+  constructor(size, cellHandler, soundHandler) {
     super({
       tag: "div",
       className: `field ${size === 5 ? "field-5" : size === 10 ? "field-10" : "field-15"}`
     });
     this.size = size;
     this.cellHandler = cellHandler;
+    this.soundHandler = soundHandler;
     this.createField();
   }
   clearField() {
@@ -875,7 +879,13 @@ class Field extends Component {
     for (let i = 0; i < this.size * this.size; i++) {
       const row = Math.floor(i / this.size);
       const column = i % this.size;
-      const cell = new Cell(row, column, this.size, this.cellHandler);
+      const cell = new Cell(
+        row,
+        column,
+        this.size,
+        this.cellHandler,
+        this.soundHandler
+      );
       if (matrix2[row][column] === 1) {
         cell.click();
       }
@@ -888,7 +898,13 @@ class Field extends Component {
     for (let i = 0; i < this.size * this.size; i++) {
       const row = Math.floor(i / this.size);
       const column = i % this.size;
-      const cell = new Cell(row, column, this.size, this.cellHandler);
+      const cell = new Cell(
+        row,
+        column,
+        this.size,
+        this.cellHandler,
+        this.soundHandler
+      );
       if (matrix2[row][column] === 1) {
         cell.click();
       }
@@ -900,7 +916,13 @@ class Field extends Component {
     for (let i = 0; i < this.size * this.size; i++) {
       const row = Math.floor(i / this.size);
       const column = i % this.size;
-      const cell = new Cell(row, column, this.size, this.cellHandler);
+      const cell = new Cell(
+        row,
+        column,
+        this.size,
+        this.cellHandler,
+        this.soundHandler
+      );
       this.append(cell);
     }
   }
@@ -1161,14 +1183,21 @@ class Notification extends Component {
     this.text.setTextContent(message);
   }
 }
-const startingSound = "" + new URL("start-DiYUZ00K.mp3", import.meta.url).href;
+const startingSound = "" + new URL("starts-j-yBrjrE.mp3", import.meta.url).href;
 const vistorySound = "" + new URL("victory-C4ebeegk.mp3", import.meta.url).href;
 const clickingSound = "" + new URL("click-BFwcdGqz.mp3", import.meta.url).href;
+const leftClickingSound = "" + new URL("leftclick-CHAT-68l.mp3", import.meta.url).href;
+const rightClickingSound = "" + new URL("rightclick-oiXSgytb.mp3", import.meta.url).href;
 class Connector {
   constructor() {
     this.view = new View();
     this.model = new AppData();
-    this.grid = new Grid(5, null, this.onCellUpdate.bind(this));
+    this.grid = new Grid(
+      5,
+      null,
+      this.onCellUpdate.bind(this),
+      this.onSoundChange.bind(this)
+    );
     this.form = new Form(this.handleSubmitForm.bind(this));
     this.asideForm = new Aside("form", this.form);
     this.leaderboard = new Leaderboard();
@@ -1193,7 +1222,8 @@ class Connector {
     this.startSound = new Audio(startingSound);
     this.victorySound = new Audio(vistorySound);
     this.clickingSound = new Audio(clickingSound);
-    document.addEventListener("click", () => console.log(this.model.state));
+    this.leftClickSound = new Audio(leftClickingSound);
+    this.rightClickSound = new Audio(rightClickingSound);
     const matrix2 = this.model.getTemplateMatrix();
     this.grid.updateGrid(matrix2);
   }
@@ -1229,7 +1259,14 @@ class Connector {
     this.leaderboard.setLeaderboardList();
     this.endingGame();
   }
-  onCellUpdate(row, column, action) {
+  onSoundChange(e) {
+    if (e === 0) {
+      this.leftClickSound.play();
+    } else if (e = 2) {
+      this.rightClickSound.play();
+    }
+  }
+  onCellUpdate(row, column, action, e) {
     if (this.model.state === "setting") {
       return;
     }
@@ -1323,4 +1360,4 @@ class Connector {
 const connector = new Connector();
 connector.render();
 connector.init();
-//# sourceMappingURL=index-1fvbzqeO.js.map
+//# sourceMappingURL=index-Ne-gFmLW.js.map
