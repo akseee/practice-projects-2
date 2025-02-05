@@ -9,13 +9,14 @@ document.addEventListener('mouseup', () => {
 })
 
 export default class Cell extends Component {
-	constructor(x, y, size, cellHandler) {
+	constructor(x, y, size, cellHandler, soundHandler) {
 		super({ tag: 'button', className: 'cell' })
 
 		this.row = x
 		this.column = y
 		this.fieldSize = size
 		this.cellHandler = cellHandler
+		this.soundHandler = soundHandler
 
 		this.setAttribute('data-row', this.row)
 		this.setAttribute('data-column', this.column)
@@ -44,11 +45,11 @@ export default class Cell extends Component {
 	handleMouseDown(e) {
 		e.preventDefault()
 		isMouseDown = true
-
+		this.soundHandler(e.button)
 		if (e.button === 0) {
 			this.handleLeftClick(e)
 		} else if (e.button === 2) {
-			this.handleRightClick()
+			this.handleRightClick(e)
 		}
 	}
 
@@ -76,7 +77,7 @@ export default class Cell extends Component {
 		}
 	}
 
-	handleRightClick() {
+	handleRightClick(e) {
 		if (this.checkClass('marked')) {
 			this.removeMarked()
 			current = 'remove-marked'
@@ -97,7 +98,7 @@ export default class Cell extends Component {
 		}
 	}
 
-	removeMarked() {
+	removeMarked(e) {
 		if (this.checkClass('marked')) {
 			this.removeClass('marked')
 			this.destroyChildren()
@@ -114,7 +115,7 @@ export default class Cell extends Component {
 		}
 
 		this.addClass('choosen')
-		this.cellHandler(this.row, this.column, 'add')
+		this.cellHandler(this.row, this.column, 'add', e)
 	}
 
 	removeChoosen(e) {
@@ -123,6 +124,6 @@ export default class Cell extends Component {
 		}
 		this.removeClass('choosen')
 
-		this.cellHandler(this.row, this.column, 'remove')
+		this.cellHandler(this.row, this.column, 'remove', e)
 	}
 }

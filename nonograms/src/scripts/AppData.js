@@ -18,7 +18,9 @@ export default class AppData {
 
 		this.state = 'ready'
 
-		this.gameState = this.playersGrid = []
+		this.playersGrid = []
+
+		this.createPlayersGrid()
 	}
 
 	setState(state) {

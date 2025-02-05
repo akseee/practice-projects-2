@@ -7,15 +7,22 @@ import Rules from './components/rules/Rules'
 import Leaderboard from './components/leaderboard/Leaderboard'
 import Notification from './components/aside/Notification'
 
-import startingSound from '../assets/start.mp3'
+import startingSound from '../assets/starts.mp3'
 import vistorySound from '../assets/victory.mp3'
 import clickingSound from '../assets/click.mp3'
+import leftClickingSound from '../assets/leftclick.mp3'
+import rightClickingSound from '../assets/rightclick.mp3'
 
 export default class Connector {
 	constructor() {
 		this.view = new View()
 		this.model = new AppData()
-		this.grid = new Grid(5, null, this.onCellUpdate.bind(this))
+		this.grid = new Grid(
+			5,
+			null,
+			this.onCellUpdate.bind(this),
+			this.onSoundChange.bind(this)
+		)
 
 		this.form = new Form(this.handleSubmitForm.bind(this))
 		this.asideForm = new Aside('form', this.form)
@@ -47,7 +54,8 @@ export default class Connector {
 		this.startSound = new Audio(startingSound)
 		this.victorySound = new Audio(vistorySound)
 		this.clickingSound = new Audio(clickingSound)
-		document.addEventListener('click', () => console.log(this.model.state))
+		this.leftClickSound = new Audio(leftClickingSound)
+		this.rightClickSound = new Audio(rightClickingSound)
 
 		const matrix = this.model.getTemplateMatrix()
 
@@ -97,7 +105,15 @@ export default class Connector {
 		this.endingGame()
 	}
 
-	onCellUpdate(row, column, action) {
+	onSoundChange(e) {
+		if (e === 0) {
+			this.leftClickSound.play()
+		} else if ((e = 2)) {
+			this.rightClickSound.play()
+		}
+	}
+
+	onCellUpdate(row, column, action, e) {
 		if (this.model.state === 'setting') {
 			return
 		}

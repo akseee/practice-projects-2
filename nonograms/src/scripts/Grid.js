@@ -5,7 +5,7 @@ import Hints from './components/grid/Hints'
 import { calculateColumnHints, calculateRowHints } from './utils/utils'
 
 export default class Grid extends Component {
-	constructor(size = 5, matrix = null, handler) {
+	constructor(size = 5, matrix = null, handler, soundHandler) {
 		super({ tag: 'div', className: 'grid-wrapper' })
 
 		this.grid = new Component({ tag: 'div', className: 'grid' })
@@ -14,8 +14,9 @@ export default class Grid extends Component {
 		this.matrix = matrix
 
 		this.cellHandler = handler
+		this.soundHandler = soundHandler
 
-		this.field = new Field(this.size, this.cellHandler)
+		this.field = new Field(this.size, this.cellHandler, this.soundHandler)
 		this.filler = new Hints('filler')
 		this.columnHints = new Hints('column')
 		this.rowHints = new Hints('row')
@@ -47,7 +48,7 @@ export default class Grid extends Component {
 	}
 
 	createGrid() {
-		this.field = new Field(this.size, this.cellHandler)
+		this.field = new Field(this.size, this.cellHandler, this.soundHandler)
 		this.filler = new Hints('filler')
 		this.columnHints = new Hints('column')
 		this.rowHints = new Hints('row')
@@ -64,7 +65,7 @@ export default class Grid extends Component {
 }
 
 class Field extends Component {
-	constructor(size, cellHandler) {
+	constructor(size, cellHandler, soundHandler) {
 		super({
 			tag: 'div',
 			className: `field ${size === 5 ? 'field-5' : size === 10 ? 'field-10' : 'field-15'}`,
@@ -72,6 +73,7 @@ class Field extends Component {
 
 		this.size = size
 		this.cellHandler = cellHandler
+		this.soundHandler = soundHandler
 
 		this.createField()
 	}
@@ -87,7 +89,13 @@ class Field extends Component {
 		for (let i = 0; i < this.size * this.size; i++) {
 			const row = Math.floor(i / this.size)
 			const column = i % this.size
-			const cell = new Cell(row, column, this.size, this.cellHandler)
+			const cell = new Cell(
+				row,
+				column,
+				this.size,
+				this.cellHandler,
+				this.soundHandler
+			)
 			if (matrix[row][column] === 1) {
 				cell.click()
 			}
@@ -101,7 +109,13 @@ class Field extends Component {
 		for (let i = 0; i < this.size * this.size; i++) {
 			const row = Math.floor(i / this.size)
 			const column = i % this.size
-			const cell = new Cell(row, column, this.size, this.cellHandler)
+			const cell = new Cell(
+				row,
+				column,
+				this.size,
+				this.cellHandler,
+				this.soundHandler
+			)
 			if (matrix[row][column] === 1) {
 				cell.click()
 			}
@@ -114,7 +128,13 @@ class Field extends Component {
 		for (let i = 0; i < this.size * this.size; i++) {
 			const row = Math.floor(i / this.size)
 			const column = i % this.size
-			const cell = new Cell(row, column, this.size, this.cellHandler)
+			const cell = new Cell(
+				row,
+				column,
+				this.size,
+				this.cellHandler,
+				this.soundHandler
+			)
 
 			this.append(cell)
 		}
