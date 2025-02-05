@@ -1199,6 +1199,7 @@ class Connector {
   handleSubmitForm(formData) {
     this.asideForm.closeAside();
     this.clickingSound.play();
+    this.view.main.info.resetTimer();
     this.model.setState("ready");
     this.model.recieveForm(formData);
     const matrix2 = this.model.getTemplateMatrix();
@@ -1321,4 +1322,4 @@ class Connector {
 const connector = new Connector();
 connector.render();
 connector.init();
-//# sourceMappingURL=index-D3ejEkHy.js.map
+//# sourceMappingURL=index-Cwc7STxV.js.map
