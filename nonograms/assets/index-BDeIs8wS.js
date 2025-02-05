@@ -1185,7 +1185,6 @@ class Notification extends Component {
 }
 const startingSound = "" + new URL("starts-j-yBrjrE.mp3", import.meta.url).href;
 const vistorySound = "" + new URL("victory-C4ebeegk.mp3", import.meta.url).href;
-const clickingSound = "" + new URL("click-BFwcdGqz.mp3", import.meta.url).href;
 const leftClickingSound = "" + new URL("leftclick-CHAT-68l.mp3", import.meta.url).href;
 const rightClickingSound = "" + new URL("rightclick-oiXSgytb.mp3", import.meta.url).href;
 class Connector {
@@ -1221,7 +1220,6 @@ class Connector {
     });
     this.startSound = new Audio(startingSound);
     this.victorySound = new Audio(vistorySound);
-    this.clickingSound = new Audio(clickingSound);
     this.leftClickSound = new Audio(leftClickingSound);
     this.rightClickSound = new Audio(rightClickingSound);
     const matrix2 = this.model.getTemplateMatrix();
@@ -1229,7 +1227,7 @@ class Connector {
   }
   handleSubmitForm(formData) {
     this.asideForm.closeAside();
-    this.clickingSound.play();
+    this.leftClickSound.play();
     this.view.main.info.resetTimer();
     this.model.setState("ready");
     this.model.recieveForm(formData);
@@ -1286,7 +1284,7 @@ class Connector {
     this.grid.field.clearField();
   }
   handleSolutionShowing() {
-    this.clickingSound.play();
+    this.leftClickSound.play();
     this.openNotififcation(
       "Now you can see the original image. You cannot continue the game"
     );
@@ -1294,7 +1292,7 @@ class Connector {
     this.showMatrix();
   }
   handleLoadGame() {
-    this.clickingSound.play();
+    this.leftClickSound.play();
     this.openNotififcation("the game is loaded, you can continue");
     const { template, difficulty, time, matrix: matrix2 } = JSON.parse(
       localStorage.getItem("save")
@@ -1306,7 +1304,7 @@ class Connector {
     this.startingGame();
   }
   handleGameSave() {
-    this.clickingSound.play();
+    this.leftClickSound.play();
     const time = this.view.main.getTime();
     const template = this.model.currentTemplate;
     const difficulty = this.model.difficulty;
@@ -1320,21 +1318,21 @@ class Connector {
     this.form.extractFromMatrix(templates);
   }
   handleRulesOpen() {
-    this.clickingSound.play();
+    this.leftClickSound.play();
     this.asideRules.openAside();
   }
   handleLeaderboardOpen() {
-    this.clickingSound.play();
+    this.leftClickSound.play();
     this.asideLeaderboard.openAside();
   }
   handleSetupOpen() {
-    this.clickingSound.play();
+    this.leftClickSound.play();
     this.asideForm.openAside();
   }
   handleVolumeToggle(activate) {
     this.startSound.muted = activate;
     this.victorySound.muted = activate;
-    this.clickingSound.muted = activate;
+    this.leftClickSound.muted = activate;
   }
   openNotififcation(text) {
     this.notification.setMessage(text);
@@ -1360,4 +1358,4 @@ class Connector {
 const connector = new Connector();
 connector.render();
 connector.init();
-//# sourceMappingURL=index-Ne-gFmLW.js.map
+//# sourceMappingURL=index-BDeIs8wS.js.map
