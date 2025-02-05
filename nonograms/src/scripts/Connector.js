@@ -53,7 +53,6 @@ export default class Connector {
 
 		this.startSound = new Audio(startingSound)
 		this.victorySound = new Audio(vistorySound)
-		this.clickingSound = new Audio(clickingSound)
 		this.leftClickSound = new Audio(leftClickingSound)
 		this.rightClickSound = new Audio(rightClickingSound)
 
@@ -64,7 +63,7 @@ export default class Connector {
 
 	handleSubmitForm(formData) {
 		this.asideForm.closeAside()
-		this.clickingSound.play()
+		this.leftClickSound.play()
 		this.view.main.info.resetTimer()
 		this.model.setState('ready')
 
@@ -138,7 +137,7 @@ export default class Connector {
 	}
 
 	handleSolutionShowing() {
-		this.clickingSound.play()
+		this.leftClickSound.play()
 		this.openNotififcation(
 			'Now you can see the original image. You cannot continue the game'
 		)
@@ -148,7 +147,7 @@ export default class Connector {
 	}
 
 	handleLoadGame() {
-		this.clickingSound.play()
+		this.leftClickSound.play()
 		this.openNotififcation('the game is loaded, you can continue')
 
 		const { template, difficulty, time, matrix } = JSON.parse(
@@ -166,7 +165,7 @@ export default class Connector {
 	}
 
 	handleGameSave() {
-		this.clickingSound.play()
+		this.leftClickSound.play()
 		const time = this.view.main.getTime()
 		const template = this.model.currentTemplate
 		const difficulty = this.model.difficulty
@@ -183,24 +182,24 @@ export default class Connector {
 	}
 
 	handleRulesOpen() {
-		this.clickingSound.play()
+		this.leftClickSound.play()
 		this.asideRules.openAside()
 	}
 
 	handleLeaderboardOpen() {
-		this.clickingSound.play()
+		this.leftClickSound.play()
 		this.asideLeaderboard.openAside()
 	}
 
 	handleSetupOpen() {
-		this.clickingSound.play()
+		this.leftClickSound.play()
 		this.asideForm.openAside()
 	}
 
 	handleVolumeToggle(activate) {
 		this.startSound.muted = activate
 		this.victorySound.muted = activate
-		this.clickingSound.muted = activate
+		this.leftClickSound.muted = activate
 	}
 
 	openNotififcation(text) {
