@@ -575,6 +575,7 @@ class AppData {
     this.difficulty = "easy";
     this.state = "ready";
     this.gameState = this.playersGrid = [];
+    this.createPlayersGrid();
   }
   setState(state) {
     this.state = state;
@@ -1322,4 +1323,4 @@ class Connector {
 const connector = new Connector();
 connector.render();
 connector.init();
-//# sourceMappingURL=index-Cwc7STxV.js.map
+//# sourceMappingURL=index-Mavwukos.js.map
