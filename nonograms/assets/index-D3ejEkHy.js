@@ -564,13 +564,16 @@ const matrix = {
 class AppData {
   constructor() {
     this.allTemplates = matrix;
-    this.currentTemplate = null;
-    this.currentMatrix = null;
+    this.currentTemplate = "dino";
+    this.currentMatrix = [
+      [0, 0, 0, 1, 1],
+      [0, 0, 0, 1, 0],
+      [0, 1, 1, 1, 0],
+      [0, 1, 1, 1, 0],
+      [1, 1, 0, 1, 0]
+    ];
     this.difficulty = "easy";
-    this.isPlaying = false;
-    this.isReady = false;
-    this.solution = false;
-    this.state = "waiting";
+    this.state = "ready";
     this.gameState = this.playersGrid = [];
   }
   setState(state) {
@@ -1190,6 +1193,8 @@ class Connector {
     this.victorySound = new Audio(vistorySound);
     this.clickingSound = new Audio(clickingSound);
     document.addEventListener("click", () => console.log(this.model.state));
+    const matrix2 = this.model.getTemplateMatrix();
+    this.grid.updateGrid(matrix2);
   }
   handleSubmitForm(formData) {
     this.asideForm.closeAside();
@@ -1316,4 +1321,4 @@ class Connector {
 const connector = new Connector();
 connector.render();
 connector.init();
-//# sourceMappingURL=index-CHAj1hQ7.js.map
+//# sourceMappingURL=index-D3ejEkHy.js.map
