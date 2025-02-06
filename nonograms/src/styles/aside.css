@@ -162,3 +162,33 @@
 	line-height: 2;
 	text-align: center;
 }
+
+@media (max-width: 768px) {
+	.aside-button {
+		border-left-color: var(--form-color);
+	}
+
+	.aside-button.open {
+		top: 0;
+		right: 0;
+		z-index: 3;
+		transform: translateX(0);
+	}
+
+	.aside {
+		right: 0;
+		left: 0;
+	}
+
+	.aside.open {
+		width: 100%;
+	}
+
+	.aside-content {
+		width: 100%;
+	}
+
+	.leaderboard-list {
+		text-align: center;
+	}
+}

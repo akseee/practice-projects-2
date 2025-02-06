@@ -22,6 +22,12 @@ export default class Aside extends Component {
 		})
 		document.body.append(this.overlay.getNode())
 
+		if (this.name === 'notification') {
+			this.addListener('click', () => {
+				this.closeAside()
+			})
+		}
+
 		document.body.append(this.button.getNode())
 		document.body.append(this.getNode())
 	}
