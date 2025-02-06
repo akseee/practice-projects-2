@@ -1093,6 +1093,11 @@ class Aside extends Component {
       this.closeAside();
     });
     document.body.append(this.overlay.getNode());
+    if (this.name === "notification") {
+      this.addListener("click", () => {
+        this.closeAside();
+      });
+    }
     document.body.append(this.button.getNode());
     document.body.append(this.getNode());
   }
@@ -1358,4 +1363,4 @@ class Connector {
 const connector = new Connector();
 connector.render();
 connector.init();
-//# sourceMappingURL=index-BDeIs8wS.js.map
+//# sourceMappingURL=index-DHZayNzG.js.map
