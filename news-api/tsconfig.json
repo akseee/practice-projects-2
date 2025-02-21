@@ -1,4 +1,7 @@
 {
+    "module": "commonjs",
+    "strict": true,
+    "noImplicitAny": true,
     "compilerOptions": {
         "outDir": "./dist",
         "allowJs": true,
