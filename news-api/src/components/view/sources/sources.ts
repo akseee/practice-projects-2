@@ -1,12 +1,17 @@
 import './sources.css';
 
-class Sources {
-    draw(data) {
-        const fragment = document.createDocumentFragment();
-        const sourceItemTemp = document.querySelector('#sourceItemTemp');
+interface ISource {
+    name: string;
+    id: string;
+}
 
-        data.forEach((item) => {
-            const sourceClone = sourceItemTemp.content.cloneNode(true);
+class Sources {
+    draw(data: ISource[]) {
+        const fragment = document.createDocumentFragment();
+        const sourceItemTemp = document.querySelector('#sourceItemTemp') as HTMLTemplateElement | null;
+
+        data.forEach((item: ISource) => {
+            const sourceClone = sourceItemTemp.content.cloneNode(true) as DocumentFragment;
 
             sourceClone.querySelector('.source__item-name').textContent = item.name;
             sourceClone.querySelector('.source__item').setAttribute('data-source-id', item.id);
