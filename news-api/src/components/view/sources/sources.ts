@@ -22,7 +22,8 @@ class Sources {
 
         Object.keys(categorized).forEach((category) => {
             const categoryClone = sourceCategoryTemp.content.cloneNode(true) as DocumentFragment;
-            categoryClone.querySelector('.source__category-name').textContent = category;
+            categoryClone.querySelector('.source__category-name').textContent =
+                category.charAt(0).toUpperCase() + category.slice(1);
             categoryClone.querySelector('.source__category-name').setAttribute('data-category', category);
 
             const fragment = document.createDocumentFragment();
