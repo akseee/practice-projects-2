@@ -15,6 +15,7 @@ const baseConfig = {
                 use: ['style-loader', 'css-loader'],
             },
             { test: /\.ts$/i, use: 'ts-loader' },
+            { test: /\.js$/, loader: 'source-map-loader' },
         ],
     },
     resolve: {
@@ -31,7 +32,7 @@ const baseConfig = {
             filename: 'index.html',
         }),
         new CleanWebpackPlugin(),
-        new EslingPlugin({ extensions: 'ts' }),
+        new EslingPlugin({ extensions: ['ts'] }),
     ],
 };
 

@@ -17,6 +17,7 @@
         "node": true
     },
     "rules": {
+        "@typescript-eslint/no-require-imports": "off",
         "no-debugger": "off",
         "no-console": 0,
         "class-methods-use-this": "off",
