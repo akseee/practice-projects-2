@@ -14,7 +14,7 @@ class News {
             if (idx % 2) newsClone.querySelector('.news__item').classList.add('alt');
             const metaPhoto = newsClone.querySelector('.news__meta-photo') as HTMLDivElement | null;
 
-            metaPhoto.style.backgroundImage = `url(${item.urlToImage || 'img/news_placeholder.jpg'})`;
+            metaPhoto.style.backgroundImage = `url(${item.urlToImage || 'https://archive.org/download/placeholder-image/placeholder-image.jpg'})`;
 
             newsClone.querySelector('.news__meta-author').textContent = item.author || item.source.name;
             newsClone.querySelector('.news__meta-date').textContent = item.publishedAt

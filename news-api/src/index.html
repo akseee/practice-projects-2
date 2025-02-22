@@ -11,7 +11,8 @@
             <h1 class="title">News Portal</h1>
         </header>
         <main class="main">
-            <div class="sources buttons"></div>
+            <div class="categories"></div>
+            <div class="sources"></div>
             <div class="news"></div>
         </main>
         <footer class="footer">
@@ -21,6 +22,12 @@
             /></a>
             <p class="copyright">Copyright <a href="https://newsapi.org">NewsAPI</a></p>
         </footer>
+
+        <template id="sourceCategoryTemp">
+            <div class="source__category">
+                <span class="source__category-name"></span>
+            </div>
+        </template>
 
         <template id="sourceItemTemp">
             <div class="source__item">

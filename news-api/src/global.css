@@ -1,4 +1,10 @@
-/* globalize */
+:root {
+    --blue: #30c5ff;
+    --blue-lighter: #6fd6ff;
+    --green: #3fcc59;
+    --green-lighter: #69db7e;
+    --active: #dbd769;
+}
 
 *,
 *::after,
@@ -54,6 +60,15 @@ img {
     width: 100%;
 }
 
+.visually-hidden {
+    position: absolute;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    inline-size: 1px;
+    block-size: 1px;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
 /* page */
 
 .page {
@@ -61,6 +76,7 @@ img {
     flex-direction: column;
     gap: 2rem;
     max-width: 1920px;
+    height: 100vh;
     margin: 0 auto;
     padding: 2rem;
     color: #fff;
@@ -73,10 +89,19 @@ img {
     font-size: 2rem;
 }
 
+.main {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: center;
+    gap: 1rem;
+}
+
 .footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-bottom: 1rem;
     color: #878787;
 }
 
