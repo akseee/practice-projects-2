@@ -9,9 +9,7 @@ export interface ISourcesResponse {
 export interface INewsItem {
     urlToImage: URL;
     author?: string;
-    source: {
-        name: string;
-    };
+    source: ISource;
     publishedAt: string;
     title: string;
     description: string;
