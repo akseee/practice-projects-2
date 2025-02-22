@@ -19,15 +19,22 @@ export interface INewsItem {
 }
 
 export interface ISource {
-    name: string;
-    id: string;
-}
-
-export interface Source {
     id: string;
     name: string;
     description: string;
     url: URL;
+    category: Categories;
+    language: Languages;
+    country: Countries;
+}
+
+export interface IResponse {
+    status: string;
+    sources: ISource[];
+}
+
+export interface IRequest {
+    apiKey: string;
     category: Categories;
     language: Languages;
     country: Countries;
@@ -90,8 +97,3 @@ type Countries =
     | 'us'
     | 've'
     | 'za';
-
-export interface Response {
-    status: string;
-    sources: Source[];
-}
