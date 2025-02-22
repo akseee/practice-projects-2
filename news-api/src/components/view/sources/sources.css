@@ -1,19 +1,19 @@
-.sources {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    font:
-        300 1em 'Fira Sans',
-        sans-serif;
-}
-
 .categories {
     display: flex;
-    justify-content: center;
-    gap: 1rem;
+    justify-content: space-between;
+    gap: 0.5rem;
     width: 100%;
     border-bottom: 2px solid var(--green-lighter);
     padding-bottom: 1rem;
+}
+
+.sources {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    font:
+        300 1em 'Fira Sans',
+        sans-serif;
 }
 
 .source__category-name {
@@ -25,7 +25,7 @@
     font: inherit;
     line-height: 1;
     background: none;
-    transition: 0.25s;
+    transition: all 0.3s ease-in-out;
     cursor: pointer;
 }
 
@@ -36,11 +36,10 @@
     color: var(--active);
 }
 
-.source__category-name:hover,
-.source__category-name:focus {
-    border-color: var(--blue);
-    box-shadow: 0 0.5em 0.5em -0.4em var(--blue);
-    color: var(--blue-lighter);
+.source__category-name:hover {
+    border-color: var(--active);
+    box-shadow: 0 0.5em 0.5em -0.4em var(--active);
+    color: var(--active);
 }
 
 .category-items {
@@ -51,24 +50,50 @@
 .source__item {
     margin: 0.5em;
     border: 2px solid var(--blue);
-    padding: 1em 2em;
+    padding: 1em 1em;
     color: var(--blue-lighter);
     font: inherit;
     line-height: 1;
     background: none;
-    transition: 0.25s;
+    transition: all 0.3s ease-in-out;
     cursor: pointer;
 }
 
 .source__item:hover,
 .source__item:focus {
-    border-color: var(--green);
-    box-shadow: 0 0.5em 0.5em -0.4em var(--green);
-    color: var(--green-lighter);
+    border-color: var(--active);
+    box-shadow: 0 0.5em 0.5em -0.4em var(--active);
+    color: var(--active);
     transform: translateY(-0.25em);
 }
 
 .source__item-name {
     font-weight: 400;
     white-space: nowrap;
+}
+
+@media (width < 1024px) {
+    .categories {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0rem;
+        padding-bottom: 0.2rem;
+    }
+
+    .sources {
+        flex-wrap: wrap;
+        justify-content: space-between;
+        font-size: 0.8em;
+    }
+
+    .source__category-name {
+        margin: 0.2em;
+        padding: 0.7em 1em;
+        text-align: center;
+    }
+
+    .category-items {
+        display: flex;
+        flex-wrap: wrap;
+    }
 }

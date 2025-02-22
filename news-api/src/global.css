@@ -86,7 +86,7 @@ img {
 
 .title {
     font-weight: bold;
-    font-size: 2rem;
+    font-size: clamp(1rem, -0.5rem + 3.125vw, 2rem);
 }
 
 .main {
