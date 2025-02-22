@@ -1,3 +1,28 @@
+export interface INewsResponse {
+    articles?: INewsItem[];
+}
+
+export interface ISourcesResponse {
+    sources?: ISource[];
+}
+
+export interface INewsItem {
+    urlToImage: URL;
+    author?: string;
+    source: {
+        name: string;
+    };
+    publishedAt: string;
+    title: string;
+    description: string;
+    url: string;
+}
+
+export interface ISource {
+    name: string;
+    id: string;
+}
+
 export interface Source {
     id: string;
     name: string;

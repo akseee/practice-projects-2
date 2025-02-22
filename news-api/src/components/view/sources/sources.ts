@@ -1,9 +1,5 @@
+import { ISource } from '../../../types';
 import './sources.css';
-
-interface ISource {
-    name: string;
-    id: string;
-}
 
 class Sources {
     draw(data: ISource[]) {
