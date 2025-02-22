@@ -38,6 +38,8 @@ export interface IRequest {
     country: Countries;
 }
 
+export type URLMethodTypes = 'GET' | 'POST' | 'PUT' | 'DELETE';
+
 type Categories = 'business' | 'entertainment' | 'general' | 'health' | 'science' | 'sports' | 'technology';
 type Languages = 'ar' | 'de' | 'en' | 'es' | 'fr' | 'he' | 'it' | 'nl' | 'no' | 'pt' | 'ru' | 'sv' | 'ud' | 'zh';
 type Countries =
