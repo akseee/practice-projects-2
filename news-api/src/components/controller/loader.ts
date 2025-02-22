@@ -11,8 +11,8 @@ class Loader {
 
     public getResp(
         { endpoint, options = {} }: { endpoint: string; options?: Record<string, string> },
-        callback = (): void => {
-            console.error('No callback for GET response');
+        callback = (data: ISourcesResponse | INewsResponse): void => {
+            console.error('No callback for GET response', data);
         }
     ): void {
         this.load('GET', endpoint, callback, options);
