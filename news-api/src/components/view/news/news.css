@@ -166,3 +166,9 @@
         padding-left: 25px;
     }
 }
+
+.empty {
+    padding: 3rem 0;
+    color: tomato;
+    font-size: 2rem;
+}
