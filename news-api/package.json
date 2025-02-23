@@ -6,7 +6,8 @@
     "scripts": {
         "start": "webpack serve --open --config ./webpack.config.js --env mode=dev",
         "build": "webpack --config ./webpack.config.js --env mode=prod",
-        "lint": "eslint . --ext .ts"
+        "lint": "eslint . --ext .ts",
+        "deploy": "npm run build && gh-pages -d dist -e news-api"
     },
     "repository": {
         "type": "git",
@@ -38,6 +39,7 @@
         "webpack-merge": "^5.10.0"
     },
     "dependencies": {
+        "gh-pages": "^6.3.0",
         "source-map-loader": "^5.0.0",
         "typescript": "^5.7.3"
     }
