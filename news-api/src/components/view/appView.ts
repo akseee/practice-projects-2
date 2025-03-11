@@ -12,14 +12,14 @@ export class AppView {
     }
 
     drawNews(data: INewsResponse): void {
-        const values: INewsItem[] = data?.articles ? data?.articles : [];
+        const values: INewsItem[] = data?.articles ? data.articles : [];
         this.news.draw(values);
     }
 
     drawSources(data: ISourcesResponse): void {
-        const values: ISource[] = data?.sources ? data?.sources : [];
+        const values: ISource[] = data?.sources ? data.sources : [];
         this.sources.draw(values);
     }
 }
 
-export default AppView;
+

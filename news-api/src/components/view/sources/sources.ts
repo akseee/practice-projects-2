@@ -4,7 +4,7 @@ import './sources.css';
 class Sources {
     draw(data: ISource[]) {
         const categoryFragment = document.createDocumentFragment();
-        const sourceCategoryTemp = document.querySelector('#sourceCategoryTemp') as HTMLTemplateElement | null;
+        const sourceCategoryTemp = document.querySelector<HTMLTemplateElement>('#sourceCategoryTemp')
 
         const categorized: Record<Categories, ISource[]> = data.reduce(
             (acc, item) => {

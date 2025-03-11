@@ -1,8 +1,7 @@
 .news__item {
     display: flex;
     flex-direction: column;
-    margin: 1rem auto;
-    margin-bottom: 1.6%;
+    margin: 1rem auto 1.6%;
     border-radius: 5px;
     overflow: hidden;
     color: #333;
@@ -120,7 +119,7 @@
 }
 
 .news__item:hover .news__meta-details {
-    left: 0%;
+    left: 0;
 }
 
 @media (min-width: 640px) {
