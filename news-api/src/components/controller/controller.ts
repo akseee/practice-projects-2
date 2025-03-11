@@ -12,8 +12,12 @@ class AppController extends AppLoader {
     }
 
     getNews(e: Event, callback: (data: INewsResponse) => void): void {
-        let target = e.target as HTMLElement;
-        const newsContainer = e.currentTarget as HTMLElement;
+
+        if (!(e.target instanceof HTMLElement) || !(e.currentTarget instanceof HTMLElement)) {
+            return;
+        }
+        let target = e.target;
+        const newsContainer = e.currentTarget;
 
         while (target !== newsContainer) {
             if (target.classList.contains('source__item')) {
@@ -32,7 +36,11 @@ class AppController extends AppLoader {
                 }
                 return;
             }
-            target = target.parentNode as HTMLElement;
+
+            if (!(target.parentNode instanceof HTMLElement)) {
+                return
+            }
+            target = target.parentNode ;
         }
     }
 }

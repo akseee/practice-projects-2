@@ -6,7 +6,7 @@ class News {
         const news = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
 
         const fragment = document.createDocumentFragment();
-        const newsItemTemp = document.querySelector('#newsItemTemp') as HTMLTemplateElement | null;
+        const newsItemTemp = document.querySelector<HTMLTemplateElement>('#newsItemTemp')
 
         if (news.length === 0) {
             document.querySelector('.news').innerHTML = '';
@@ -22,7 +22,7 @@ class News {
             const newsClone = newsItemTemp.content.cloneNode(true) as DocumentFragment;
 
             if (idx % 2) newsClone.querySelector('.news__item').classList.add('alt');
-            const metaPhoto = newsClone.querySelector('.news__meta-photo') as HTMLDivElement | null;
+            const metaPhoto = newsClone.querySelector<HTMLDivElement>('.news__meta-photo')
 
             metaPhoto.style.backgroundImage = `url(${item.urlToImage || 'https://archive.org/download/placeholder-image/placeholder-image.jpg'})`;
 

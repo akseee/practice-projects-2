@@ -27,7 +27,7 @@ class Sources {
             categoryClone.querySelector('.source__category-name').setAttribute('data-category', category);
 
             const fragment = document.createDocumentFragment();
-            const sourceItemTemp = document.querySelector('#sourceItemTemp') as HTMLTemplateElement | null;
+            const sourceItemTemp = document.querySelector<HTMLTemplateElement>('#sourceItemTemp')
             const sourcesContainer = document.querySelector('.sources');
 
             categorized[category as Categories].forEach((item: ISource) => {
