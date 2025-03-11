@@ -3,9 +3,10 @@ import AppController from '../controller/controller';
 import { AppView } from '../view/appView';
 
 class App {
-    constructor( private controller = new AppController(),
-    private view = new AppView()) {
-    }
+    constructor(
+        private controller = new AppController(),
+        private view = new AppView()
+    ) {}
 
     start(): void {
         document

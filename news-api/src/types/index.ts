@@ -38,62 +38,93 @@ export interface IRequest {
     country: Countries;
 }
 
-export type URLMethodTypes = 'GET' | 'POST' | 'PUT' | 'DELETE';
+export enum URLMethodTypes {
+    GET = 'GET',
+    POST = 'POST',
+    PUT = 'PUT',
+    DELETE = 'DELETE',
+}
 
-export type Categories = 'business' | 'entertainment' | 'general' | 'health' | 'science' | 'sports' | 'technology';
-type Languages = 'ar' | 'de' | 'en' | 'es' | 'fr' | 'he' | 'it' | 'nl' | 'no' | 'pt' | 'ru' | 'sv' | 'ud' | 'zh';
-type Countries =
-    | 'ae'
-    | 'ar'
-    | 'at'
-    | 'au'
-    | 'be'
-    | 'bg'
-    | 'br'
-    | 'ca'
-    | 'ch'
-    | 'cn'
-    | 'co'
-    | 'cu'
-    | 'cz'
-    | 'de'
-    | 'ee'
-    | 'eg'
-    | 'fr'
-    | 'gb'
-    | 'gr'
-    | 'hk'
-    | 'hu'
-    | 'id'
-    | 'ie'
-    | 'il'
-    | 'in'
-    | 'it'
-    | 'jp'
-    | 'kr'
-    | 'lt'
-    | 'lv'
-    | 'ma'
-    | 'mx'
-    | 'my'
-    | 'ng'
-    | 'nl'
-    | 'no'
-    | 'nz'
-    | 'ph'
-    | 'pl'
-    | 'pt'
-    | 'ro'
-    | 'rs'
-    | 'ru'
-    | 'se'
-    | 'sg'
-    | 'si'
-    | 'sk'
-    | 'th'
-    | 'tr'
-    | 'tw'
-    | 'ua'
-    | 'us'
-    | 've'
-    | 'za';
+export enum Categories {
+    BUSINESS = 'business',
+    ENTERTAINMENT = 'entertainment',
+    GENERAL = 'general',
+    HEALTH = 'health',
+    SCIENCE = 'science',
+    SPORTS = 'sports',
+    TECHNOLOGY = 'technology',
+}
+
+export enum Languages {
+    AR = 'ar',
+    DE = 'de',
+    EN = 'en',
+    ES = 'es',
+    FR = 'fr',
+    HE = 'he',
+    IT = 'it',
+    NL = 'nl',
+    NO = 'no',
+    PT = 'pt',
+    RU = 'ru',
+    SV = 'sv',
+    UD = 'ud',
+    ZH = 'zh',
+}
+
+export enum Countries {
+    AE = 'ae',
+    AR = 'ar',
+    AT = 'at',
+    AU = 'au',
+    BE = 'be',
+    BG = 'bg',
+    BR = 'br',
+    CA = 'ca',
+    CH = 'ch',
+    CN = 'cn',
+    CO = 'co',
+    CU = 'cu',
+    CZ = 'cz',
+    DE = 'de',
+    EE = 'ee',
+    EG = 'eg',
+    FR = 'fr',
+    GB = 'gb',
+    GR = 'gr',
+    HK = 'hk',
+    HU = 'hu',
+    ID = 'id',
+    IE = 'ie',
+    IL = 'il',
+    IN = 'in',
+    IT = 'it',
+    JP = 'jp',
+    KR = 'kr',
+    LT = 'lt',
+    LV = 'lv',
+    MA = 'ma',
+    MX = 'mx',
+    MY = 'my',
+    NG = 'ng',
+    NL = 'nl',
+    NO = 'no',
+    NZ = 'nz',
+    PH = 'ph',
+    PL = 'pl',
+    PT = 'pt',
+    RO = 'ro',
+    RS = 'rs',
+    RU = 'ru',
+    SE = 'se',
+    SG = 'sg',
+    SI = 'si',
+    SK = 'sk',
+    TH = 'th',
+    TR = 'tr',
+    TW = 'tw',
+    UA = 'ua',
+    US = 'us',
+    VE = 've',
+    ZA = 'za',
+}

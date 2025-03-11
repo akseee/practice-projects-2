@@ -12,7 +12,6 @@ class AppController extends AppLoader {
     }
 
     getNews(e: Event, callback: (data: INewsResponse) => void): void {
-
         if (!(e.target instanceof HTMLElement) || !(e.currentTarget instanceof HTMLElement)) {
             return;
         }
@@ -38,9 +37,9 @@ class AppController extends AppLoader {
             }
 
             if (!(target.parentNode instanceof HTMLElement)) {
-                return
+                return;
             }
-            target = target.parentNode ;
+            target = target.parentNode;
         }
     }
 }

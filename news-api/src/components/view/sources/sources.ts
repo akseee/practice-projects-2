@@ -4,11 +4,11 @@ import './sources.css';
 class Sources {
     draw(data: ISource[]) {
         const categoryFragment = document.createDocumentFragment();
-        const sourceCategoryTemp = document.querySelector<HTMLTemplateElement>('#sourceCategoryTemp')
+        const sourceCategoryTemp = document.querySelector<HTMLTemplateElement>('#sourceCategoryTemp');
 
         const categorized: Record<Categories, ISource[]> = data.reduce(
             (acc, item) => {
-                if (item.category === 'general') {
+                if (item.category === Categories.GENERAL) {
                     return acc;
                 }
                 if (!acc[item.category]) {
@@ -21,21 +21,22 @@ class Sources {
         );
 
         Object.keys(categorized).forEach((category) => {
+            const categoryKey = category as Categories;
             const categoryClone = sourceCategoryTemp.content.cloneNode(true) as DocumentFragment;
             categoryClone.querySelector('.source__category-name').textContent =
-                category.charAt(0).toUpperCase() + category.slice(1);
-            categoryClone.querySelector('.source__category-name').setAttribute('data-category', category);
+                categoryKey.charAt(0).toUpperCase() + categoryKey.slice(1);
+            categoryClone.querySelector('.source__category-name').setAttribute('data-category', categoryKey);
 
             const fragment = document.createDocumentFragment();
-            const sourceItemTemp = document.querySelector<HTMLTemplateElement>('#sourceItemTemp')
+            const sourceItemTemp = document.querySelector<HTMLTemplateElement>('#sourceItemTemp');
             const sourcesContainer = document.querySelector('.sources');
 
-            categorized[category as Categories].forEach((item: ISource) => {
+            categorized[categoryKey].forEach((item: ISource) => {
                 const sourceClone = sourceItemTemp.content.cloneNode(true) as DocumentFragment;
 
                 sourceClone.querySelector('.source__item-name').textContent = item.name;
                 sourceClone.querySelector('.source__item').setAttribute('data-source-id', item.id);
-                sourceClone.querySelector('.source__item').setAttribute('data-source-category', category);
+                sourceClone.querySelector('.source__item').setAttribute('data-source-category', categoryKey);
 
                 sourceClone.querySelector('.source__item')!.classList.add('visually-hidden');
 
@@ -51,7 +52,7 @@ class Sources {
         const categoryElements = document.querySelectorAll('.source__category-name');
         categoryElements.forEach((element) => {
             element.addEventListener('click', () => {
-                const selectedCategory = element.getAttribute('data-category');
+                const selectedCategory = element.getAttribute('data-category') as Categories;
 
                 categoryElements.forEach((element) => element.classList.remove('active'));
                 element.classList.add('active');
