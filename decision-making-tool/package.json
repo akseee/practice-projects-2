@@ -1,0 +1,50 @@
+{
+  "name": "decision-making-tool",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint --ext .js,.ts .",
+    "lint:scripts": "eslint src --ext .ts",
+    "lint:styles": "stylelint src/**/*.{css}  --allow-empty-input",
+    "format:scripts": "prettier --write 'src/**/*.{ts,tsx,js,jsx,json,css,scss,md}'",
+    "format:styles": "stylelint src/**/*.{css} --fix --allow-empty-input",
+    "format": "npm run format:scripts && npm run format:styles",
+    "prepare": "husky install ../.husky"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.22.0",
+    "@types/node": "^22.13.10",
+    "@typescript-eslint/eslint-plugin": "^8.26.1",
+    "@typescript-eslint/parser": "^8.26.1",
+    "eslint": "^9.22.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "globals": "^16.0.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^15.5.0",
+    "prettier": "^3.5.3",
+    "stylelint": "^16.15.0",
+    "stylelint-config-recommended": "^15.0.0",
+    "stylelint-prettier": "^5.0.3",
+    "typescript": "~5.7.2",
+    "typescript-eslint": "^8.26.1",
+    "vite": "^6.2.0"
+  },
+  "dependencies": {
+    "postcss": "^8.5.3"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx,js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "src/**/*.{css,scss}": [
+      "stylelint --fix",
+      "prettier --write"
+    ]
+  }
+}
