@@ -9,9 +9,9 @@
     "preview": "vite preview",
     "lint": "eslint --ext .js,.ts .",
     "lint:scripts": "eslint src --ext .ts",
-    "lint:styles": "stylelint src/**/*.{css}  --allow-empty-input",
+    "lint:styles": "stylelint src/**/*.css  --allow-empty-input",
     "format:scripts": "prettier --write 'src/**/*.{ts,tsx,js,jsx,json,css,scss,md}'",
-    "format:styles": "stylelint src/**/*.{css} --fix --allow-empty-input",
+    "format:styles": "stylelint src/**/*.css --fix --allow-empty-input",
     "format": "npm run format:scripts && npm run format:styles",
     "prepare": "husky install ../.husky"
   },
