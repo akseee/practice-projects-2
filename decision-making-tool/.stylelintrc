@@ -1,11 +1,16 @@
 {
   "plugins": ["stylelint-prettier"],
-  "extends": ["stylelint-config-recommended"],
-
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-clean-order",
+    "stylelint-config-recommended"
+  ],
   "rules": {
     "prettier/prettier": true,
     "no-descending-specificity": null,
     "max-nesting-depth": 2,
-    "selector-max-id": 1
+    "selector-max-id": 1,
+    "selector-class-pattern": null,
+    "color-named": "never"
   }
 }

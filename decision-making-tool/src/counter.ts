@@ -1,4 +1,4 @@
-export function setupCounter(element: HTMLButtonElement) {
+export function setupCounter(element: HTMLButtonElement): void {
   let counter = 0
   const setCounter = (count: number) => {
     counter = count
@@ -6,4 +6,5 @@ export function setupCounter(element: HTMLButtonElement) {
   }
   element.addEventListener("click", () => setCounter(counter + 1))
   setCounter(0)
+  return
 }
