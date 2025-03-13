@@ -13,6 +13,7 @@
   /* props */
   --body-color: var(--first-color-lighter);
   --section-color: var(--first-color-darker);
+  --font-color: var(--first-color-lighter);
 }
 
 .app {
@@ -24,8 +25,17 @@
   min-height: 100vh;
   margin: 0 auto;
   padding: 0.5rem 1rem;
+
+  font-family: sans-serif;
+  color: var(--font-color);
 }
 
 .wrapper {
-  height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 0.5rem 0;
+
+  background-color: var(--section-color);
 }

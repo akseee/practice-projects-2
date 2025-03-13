@@ -56,4 +56,8 @@ export default class BaseComponent {
     this.destroyChildren()
     this.node.remove()
   }
+
+  public setTextContent(text: string): void {
+    this.node.textContent = text
+  }
 }

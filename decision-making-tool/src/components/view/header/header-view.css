@@ -1,4 +1,7 @@
 .header {
   flex: 0 0 auto;
-  background-color: var(--section-color);
+}
+
+.title {
+  text-align: center;
 }
