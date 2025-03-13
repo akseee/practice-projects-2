@@ -1,0 +1,31 @@
+:root {
+  /* colors */
+  --first-color: #8cf296;
+  --first-color-darker: #64b16b;
+  --first-color-lighter: #b3ebb9;
+  --second-color: #968cf2;
+  --second-color-darker: #7a72c5;
+  --second-color-ligher: #b4adf1;
+  --third-color: #f2968c;
+  --third-color-darker: #c47870;
+  --third-color-lighter: #eeaca5;
+
+  /* props */
+  --body-color: var(--first-color-lighter);
+  --section-color: var(--first-color-darker);
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  max-width: 1280px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+}
+
+.wrapper {
+  height: 50px;
+}
