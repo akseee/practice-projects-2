@@ -1,23 +1,22 @@
 import BaseComponent from "../../common/base-component"
-import ListModel from "../../model/list-model"
+import OptionsModel from "../../model/options-model"
 import type { TOption } from "../../utils/types"
-import Controls from "./controls"
+import DecisionControls from "./decision-controls"
 import OptionList from "./list"
 
 export default class DecisionContent extends BaseComponent {
   public list: OptionList
-  public controls: Controls
-  public model: ListModel
+  public controls: DecisionControls
+  public model: OptionsModel
 
   constructor() {
     super({ tag: "section", classNames: [] })
 
-    this.model = new ListModel()
-
+    this.model = new OptionsModel()
     this.list = new OptionList(this.model.options)
+    this.controls = new DecisionControls()
 
-    this.controls = new Controls()
-    this.appendChildrenComponents([this.list, this.controls])
+    this.appendChildrenComponents([this.controls, this.list])
 
     this.configBaseControls()
   }
@@ -31,7 +30,7 @@ export default class DecisionContent extends BaseComponent {
     this.controls.createLoadFileButton("load list from file", () => this.loadFromFile())
 
     this.controls.createButton("start", () => this.start())
-    this.controls.createButton("temp: check data", () =>
+    this.controls.createButton("temp: check all data", () =>
       console.log(console.log(this.getAllData())),
     )
   }
@@ -48,21 +47,14 @@ export default class DecisionContent extends BaseComponent {
     this.list.clearList()
   }
 
-  private getValidData(): TOption[] {
-    const data = this.list.getListValues().filter((value: TOption) => {
-      return value.weight !== 0 && value.title !== ""
-    })
-    return data
-  }
-
   private getAllData(): TOption[] {
     const data = this.list.getListValues()
     return data
   }
 
   public start(): void {
-    const data = this.getValidData()
-    console.log(data)
+    const data = this.getAllData()
+    this.model.options = data
   }
 
   public saveToFile(): void {}

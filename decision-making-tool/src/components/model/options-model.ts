@@ -7,7 +7,7 @@ const optionsMock = [
   { id: "4", title: "New Option", weight: 30 },
 ]
 
-export default class ListModel {
+export default class OptionsModel {
   private _options: TOption[]
   public test: string
 
@@ -20,7 +20,7 @@ export default class ListModel {
     return this._options
   }
 
-  private set options(newOptions) {
+  public set options(newOptions) {
     this._options = newOptions
   }
 }

@@ -1,9 +1,9 @@
-import ListModel from "./list-model"
+import OptionsModel from "./options-model"
 
 export default class AppModel {
-  public list: ListModel
+  public list: OptionsModel
   constructor() {
-    this.list = new ListModel()
+    this.list = new OptionsModel()
 
     // list model
     // local storage

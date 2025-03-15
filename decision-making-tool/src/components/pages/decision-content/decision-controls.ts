@@ -5,7 +5,8 @@ import type { TOption } from "../../utils/types"
 const enum CSSClasses {
   CONTROLS_WRAPPER = "controls-wrapper",
 }
-export default class Controls extends BaseComponent {
+
+export default class DecisionControls extends BaseComponent {
   constructor() {
     super({ tag: "div", classNames: [CSSClasses.CONTROLS_WRAPPER] })
   }
