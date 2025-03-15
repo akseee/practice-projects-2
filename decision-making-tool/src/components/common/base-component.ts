@@ -41,6 +41,21 @@ export default class BaseComponent {
     }
   }
 
+  public removeChildComponent(child: HTMLElement | BaseComponent): void {
+    const childNode = child instanceof BaseComponent ? child.getNode() : child
+
+    if (this.node.contains(childNode)) {
+      childNode.remove()
+    }
+
+    if (child instanceof BaseComponent) {
+      const index = this.children.indexOf(child)
+      if (index !== -1) {
+        this.children.splice(index, 1)
+      }
+    }
+  }
+
   public getChildren(): BaseComponent[] {
     return this.children
   }
@@ -53,12 +68,12 @@ export default class BaseComponent {
     this.node.removeEventListener(type, listener)
   }
 
-  protected destroyChildren(): void {
+  public destroyChildren(): void {
     this.children.forEach((child) => child.destroy())
     this.children.length = 0
   }
 
-  protected destroy(): void {
+  public destroy(): void {
     this.destroyChildren()
     this.node.remove()
   }
@@ -73,5 +88,13 @@ export default class BaseComponent {
 
   public removeAttribute(attribute: string): void {
     this.node.removeAttribute(attribute)
+  }
+
+  public addClass(name: string): void {
+    this.node.classList.add(name)
+  }
+
+  public removeClass(name: string): void {
+    this.node.classList.remove(name)
   }
 }
