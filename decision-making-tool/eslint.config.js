@@ -38,7 +38,7 @@ export default [
         { accessibility: "explicit", overrides: { constructors: "off" } },
       ],
       "@typescript-eslint/member-ordering": "off",
-      "class-methods-use-this": "error",
+      "class-methods-use-this": "off",
       "unicorn/no-array-callback-reference": "off",
       "unicorn/no-array-for-each": "off",
       "unicorn/no-array-reduce": "off",

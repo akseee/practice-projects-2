@@ -1,4 +1,6 @@
 import BaseComponent from "./common/base-component"
+import DecisionContent from "./pages/decision-content/decision-content"
+
 import FooterView from "./view/footer/footer-view"
 import HeaderView from "./view/header/header-view"
 import MainView from "./view/main/main-view"
@@ -8,21 +10,24 @@ const enum CSSClasses {
 }
 
 export default class App extends BaseComponent {
+  // protected router: Router
   constructor() {
     const appParameters = {
       tag: "div",
       classNames: [CSSClasses.APP],
     }
     super(appParameters)
-
-    document.body.append(this.getNode())
   }
 
   public render(): void {
+    const decisionContent = new DecisionContent()
+
     const header = new HeaderView()
-    const main = new MainView()
+    const main = new MainView(decisionContent)
     const footer = new FooterView()
+
     this.appendChildrenComponents([header, main, footer])
+    document.body.append(this.getNode())
   }
 
   // public setup(): void {
