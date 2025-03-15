@@ -1,17 +1,33 @@
 import BaseComponent from "../../common/base-component"
+import ListModel from "../../model/list-model"
+import Controls from "./controls"
 import OptionList from "./list"
 
-const optionsMock = [
-  { id: 1, weight: 2, title: "heavy rain" },
-  { id: 2, weight: 2, title: "left4dead2" },
-]
 export default class DecisionContent extends BaseComponent {
   public list: OptionList
+  public controls: Controls
+  public model: ListModel
+
   constructor() {
     super({ tag: "section", classNames: [] })
 
-    this.list = new OptionList(optionsMock)
+    this.model = new ListModel()
 
-    this.appendChildComponent(this.list)
+    this.list = new OptionList(this.model.options)
+
+    this.controls = new Controls()
+    this.appendChildrenComponents([this.list, this.controls])
+
+    this.configBaseControls()
+  }
+
+  public configBaseControls(): void {
+    this.controls.createButton("add option", () => this.addOption())
+  }
+
+  public addOption(): void {
+    const id = String(this.model.options.length + 1)
+    this.list.addOption(id)
+    // this.model.addOption()
   }
 }

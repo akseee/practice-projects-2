@@ -14,12 +14,17 @@ export default class OptionList extends BaseComponent {
     })
 
     list.forEach((option: TOption) => {
-      const li = new OptionInput(option)
-      this.addListItem(li)
+      this.addListItem(option)
     })
   }
 
-  public addListItem(option: BaseComponent): void {
-    this.appendChildComponent(option)
+  public addListItem(option: TOption): void {
+    const li = new OptionInput(option)
+    this.appendChildComponent(li)
+  }
+
+  public addOption(id: string): void {
+    const li = new OptionInput(id)
+    this.appendChildComponent(li)
   }
 }
