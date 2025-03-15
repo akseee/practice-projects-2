@@ -10,7 +10,7 @@ export default class Button extends BaseComponent {
     public callback: () => void,
   ) {
     super({ tag: "button", classNames: [CSSClasses.BUTTON] })
-
+    this.setAttribute("type", "button")
     this.setTextContent(text)
     this.addListener("click", callback)
   }

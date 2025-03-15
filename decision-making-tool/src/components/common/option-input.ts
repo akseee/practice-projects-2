@@ -3,6 +3,7 @@ import BaseComponent from "./base-component"
 import Button from "./button"
 
 type TInputOptions = {
+  id?: string
   name: string
   value: string | number
 }
@@ -14,35 +15,14 @@ const enum CSSClasses {
 }
 
 export default class OptionInput extends BaseComponent {
-  public id: string
-  constructor(public options: TOption | string) {
+  constructor(
+    public options: TOption,
+    private removeOption: (id: string, node: OptionInput) => void,
+  ) {
     super({ tag: "li", classNames: [CSSClasses.OPTION_WRAPPER] })
     this.options = options
 
-    if (typeof options === "string") {
-      this.createEmptyOption(options)
-      this.id = options
-    } else {
-      this.createFilledInOption(options)
-      this.id = options.id
-    }
-  }
-
-  private createEmptyOption(id: string): void {
-    const tag = `option#${id}}`
-    const label = new BaseComponent({ tag: "label", classNames: [CSSClasses.LABEL] })
-    label.setAttribute("for", tag)
-    label.setTextContent(`#${id}`)
-
-    const titleInput = this.createInput({ name: "title", value: "" })
-    titleInput.setAttribute("id", id)
-
-    const weightInput = this.createInput({ name: "weight", value: 0 })
-    weightInput.setAttribute("type", "number")
-
-    const deleteButton = new Button("Delete", () => this.destroyInput())
-
-    this.appendChildrenComponents([label, titleInput, weightInput, deleteButton])
+    this.createFilledInOption(options)
   }
 
   public createFilledInOption(options: TOption): void {
@@ -54,7 +34,7 @@ export default class OptionInput extends BaseComponent {
     const titleInput = this.createInput({ name: "title", value: options.title })
     titleInput.setAttribute("id", id)
 
-    const weightInput = this.createInput({ name: "weight", value: 0 })
+    const weightInput = this.createInput({ name: "weight", value: options.weight })
     weightInput.setAttribute("type", "number")
 
     const deleteButton = new Button("Delete", () => this.destroyInput())
@@ -80,13 +60,13 @@ export default class OptionInput extends BaseComponent {
     }
 
     return {
-      id: this.id,
+      id: this.options.id,
       title: titleNode.value,
       weight: Number(weightNode.value),
     }
   }
 
-  private destroyInput(): void {
-    this.destroy()
+  public destroyInput(): void {
+    this.removeOption(this.options.id, this)
   }
 }
