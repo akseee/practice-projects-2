@@ -16,7 +16,8 @@ export default class OptionList extends BaseComponent {
     })
     this.options = []
     this.renderList(list)
-    this.count = Math.max(...this.options.map((option) => Number(option.id))) + 1
+    this.count =
+      this.options.length > 0 ? Math.max(...this.options.map((option) => Number(option.id))) + 1 : 1
   }
 
   private renderList(list: TOption[]): void {
