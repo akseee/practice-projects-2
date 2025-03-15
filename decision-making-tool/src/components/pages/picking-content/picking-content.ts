@@ -25,6 +25,10 @@ export default class PickingContent extends BaseComponent {
     this.configBaseControls()
   }
 
+  public updateResultContent(text: string): void {
+    this.result.setTextContent(text)
+  }
+
   public configBaseControls(): void {
     this.controls.createButton("back", () => this.handleBack())
     this.controls.createButton("turn off sound", () => this.toggleSound())

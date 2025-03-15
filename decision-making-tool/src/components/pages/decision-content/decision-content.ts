@@ -1,6 +1,8 @@
 import BaseComponent from "../../common/base-component"
 import OptionsModel from "../../model/options-model"
 import type { TOption } from "../../utils/types"
+import Modal from "../../view/modal/modal"
+
 import DecisionControls from "./decision-controls"
 import OptionList from "./list"
 
@@ -19,6 +21,11 @@ export default class DecisionContent extends BaseComponent {
     this.appendChildrenComponents([this.controls, this.list])
 
     this.configBaseControls()
+  }
+
+  public openModal(data: string): void {
+    const modal = new Modal(data)
+    modal.open()
   }
 
   public configBaseControls(): void {
@@ -40,7 +47,7 @@ export default class DecisionContent extends BaseComponent {
   }
 
   public pasteList(): void {
-    console.log("yet to be implemented")
+    this.openModal(JSON.stringify(this.getAllData()))
   }
 
   public clearList(): void {
