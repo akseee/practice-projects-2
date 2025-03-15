@@ -1,4 +1,4 @@
-export interface IBaseComponentParameters {
+interface IBaseComponentParameters {
   tag?: string
   classNames?: string[]
 }
@@ -9,7 +9,7 @@ export default class BaseComponent {
 
   constructor(options: IBaseComponentParameters, ...children: BaseComponent[]) {
     const { tag = "div", classNames = [] } = options
-    this.children = children
+    this.children = []
 
     this.node = document.createElement(tag)
     classNames.forEach((className) => this.node.classList.add(className))
@@ -19,19 +19,26 @@ export default class BaseComponent {
     }
   }
 
+  public getNode(): HTMLElement {
+    return this.node
+  }
+
   public appendChildrenComponents(children: BaseComponent[]): void {
     children.forEach((child): void => {
       this.appendChildComponent(child)
     })
   }
 
-  public getNode(): HTMLElement {
-    return this.node
-  }
+  public appendChildComponent(child: HTMLElement | BaseComponent): void {
+    const node = child instanceof BaseComponent ? child.getNode() : child
 
-  public appendChildComponent(child: BaseComponent): void {
-    this.children.push(child)
-    this.node.append(child.getNode())
+    if (!this.node.contains(node)) {
+      this.node.append(node)
+    }
+
+    if (child instanceof BaseComponent && !this.children.includes(child)) {
+      this.children.push(child)
+    }
   }
 
   public getChildren(): BaseComponent[] {
@@ -47,9 +54,8 @@ export default class BaseComponent {
   }
 
   protected destroyChildren(): void {
-    this.children.forEach((child) => {
-      child.destroy()
-    })
+    this.children.forEach((child) => child.destroy())
+    this.children.length = 0
   }
 
   protected destroy(): void {
@@ -59,5 +65,13 @@ export default class BaseComponent {
 
   public setTextContent(text: string): void {
     this.node.textContent = text
+  }
+
+  public setAttribute(attribute: string, value: string): void {
+    this.node.setAttribute(attribute, value)
+  }
+
+  public removeAttribute(attribute: string): void {
+    this.node.removeAttribute(attribute)
   }
 }
