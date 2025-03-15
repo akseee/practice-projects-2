@@ -14,12 +14,17 @@ const enum CSSClasses {
 }
 
 export default class OptionInput extends BaseComponent {
+  public id: string
   constructor(public options: TOption | string) {
     super({ tag: "li", classNames: [CSSClasses.OPTION_WRAPPER] })
+    this.options = options
+
     if (typeof options === "string") {
       this.createEmptyOption(options)
+      this.id = options
     } else {
       this.createFilledInOption(options)
+      this.id = options.id
     }
   }
 
@@ -32,10 +37,10 @@ export default class OptionInput extends BaseComponent {
     const titleInput = this.createInput({ name: "title", value: "" })
     titleInput.setAttribute("id", id)
 
-    const weightInput = this.createInput({ name: "weight", value: 1 })
+    const weightInput = this.createInput({ name: "weight", value: 0 })
     weightInput.setAttribute("type", "number")
 
-    const deleteButton = new Button("Delete", () => console.log("click"))
+    const deleteButton = new Button("Delete", () => this.destroyInput())
 
     this.appendChildrenComponents([label, titleInput, weightInput, deleteButton])
   }
@@ -49,10 +54,10 @@ export default class OptionInput extends BaseComponent {
     const titleInput = this.createInput({ name: "title", value: options.title })
     titleInput.setAttribute("id", id)
 
-    const weightInput = this.createInput({ name: "weight", value: 1 })
+    const weightInput = this.createInput({ name: "weight", value: 0 })
     weightInput.setAttribute("type", "number")
 
-    const deleteButton = new Button("Delete", () => console.log("click"))
+    const deleteButton = new Button("Delete", () => this.destroyInput())
 
     this.appendChildrenComponents([label, titleInput, weightInput, deleteButton])
   }
@@ -64,5 +69,24 @@ export default class OptionInput extends BaseComponent {
     input.setAttribute("name", options.name)
 
     return input
+  }
+
+  public getValues(): TOption {
+    const titleNode = this.getNode().querySelector<HTMLInputElement>('input[name="title"]')
+    const weightNode = this.getNode().querySelector<HTMLInputElement>('input[name="weight"]')
+
+    if (!titleNode || !weightNode) {
+      return { id: "0", title: "", weight: 0 }
+    }
+
+    return {
+      id: this.id,
+      title: titleNode.value,
+      weight: Number(weightNode.value),
+    }
+  }
+
+  private destroyInput(): void {
+    this.destroy()
   }
 }

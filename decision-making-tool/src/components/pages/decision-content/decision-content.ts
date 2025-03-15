@@ -26,8 +26,6 @@ export default class DecisionContent extends BaseComponent {
   }
 
   public addOption(): void {
-    const id = String(this.model.options.length + 1)
-    this.list.addOption(id)
-    // this.model.addOption()
+    this.list.addOption()
   }
 }

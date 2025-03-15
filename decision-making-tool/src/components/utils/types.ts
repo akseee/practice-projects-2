@@ -1,5 +1,5 @@
 export type TOption = {
-  id: number
+  id: string
   title: string
   weight: number
 }
