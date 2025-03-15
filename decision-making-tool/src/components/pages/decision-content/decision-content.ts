@@ -55,7 +55,7 @@ export default class DecisionContent extends BaseComponent {
   }
 
   private getAllData(): TOption[] {
-    const data = this.list.getListValues()
+    const data = this.list.getOptions()
     return data
   }
 

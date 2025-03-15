@@ -16,16 +16,17 @@ const enum CSSClasses {
 
 export default class OptionInput extends BaseComponent {
   constructor(
-    public options: TOption,
+    public option: TOption,
     private removeOption: (id: string, node: OptionInput) => void,
+    private updateData: (option: TOption) => void,
   ) {
     super({ tag: "li", classNames: [CSSClasses.OPTION_WRAPPER] })
-    this.options = options
+    this.option = option
 
-    this.createFilledInOption(options)
+    this.createOption(this.option)
   }
 
-  public createFilledInOption(options: TOption): void {
+  public createOption(options: TOption): void {
     const id = `option#${options.id}`
     const label = new BaseComponent({ tag: "label", classNames: [CSSClasses.LABEL] })
     label.setAttribute("for", id)
@@ -33,12 +34,13 @@ export default class OptionInput extends BaseComponent {
 
     const titleInput = this.createInput({ name: "title", value: options.title })
     titleInput.setAttribute("id", id)
+    titleInput.getNode().addEventListener("input", () => this.updateOption())
 
     const weightInput = this.createInput({ name: "weight", value: options.weight })
     weightInput.setAttribute("type", "number")
+    weightInput.getNode().addEventListener("input", () => this.updateOption())
 
     const deleteButton = new Button("Delete", () => this.destroyInput())
-
     this.appendChildrenComponents([label, titleInput, weightInput, deleteButton])
   }
 
@@ -51,22 +53,19 @@ export default class OptionInput extends BaseComponent {
     return input
   }
 
-  public getValues(): TOption {
+  public updateOption(): void {
     const titleNode = this.getNode().querySelector<HTMLInputElement>('input[name="title"]')
     const weightNode = this.getNode().querySelector<HTMLInputElement>('input[name="weight"]')
 
-    if (!titleNode || !weightNode) {
-      return { id: "0", title: "", weight: 0 }
-    }
+    if (!titleNode || !weightNode) return
 
-    return {
-      id: this.options.id,
-      title: titleNode.value,
-      weight: Number(weightNode.value),
-    }
+    this.option.title = titleNode.value
+    this.option.weight = Number(weightNode.value)
+
+    this.updateData({ ...this.option })
   }
 
   public destroyInput(): void {
-    this.removeOption(this.options.id, this)
+    this.removeOption(this.option.id, this)
   }
 }

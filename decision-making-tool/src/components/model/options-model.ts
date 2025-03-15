@@ -1,26 +1,22 @@
 import type { TOption } from "../utils/types"
 
-const optionsMock = [
-  { id: "1", weight: 2, title: "heavy rain" },
-  { id: "2", weight: 2, title: "left4dead2" },
-  { id: "3", title: "New Option", weight: 30 },
-  { id: "4", title: "New Option", weight: 30 },
-]
-
 export default class OptionsModel {
   private _options: TOption[]
-  public test: string
 
   constructor() {
-    this._options = optionsMock
-    this.test = "test"
+    this._options = []
+    const storedOptions = localStorage.getItem("options")
+    if (storedOptions) {
+      this._options = JSON.parse(storedOptions)
+    }
   }
 
   public get options(): TOption[] {
     return this._options
   }
 
-  public set options(newOptions) {
+  public set options(newOptions: TOption[]) {
     this._options = newOptions
+    localStorage.setItem("options", JSON.stringify(this._options))
   }
 }
