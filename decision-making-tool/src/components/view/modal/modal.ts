@@ -13,7 +13,10 @@ export default class Modal extends BaseComponent {
   public container: BaseComponent
   public content: BaseComponent
 
-  constructor(public data: string) {
+  constructor(
+    public data: string,
+    public type: string,
+  ) {
     super({ tag: "div", classNames: [CSSClasses.MODAL_WRAPPER] })
     this.container = new BaseComponent({ tag: "div", classNames: [CSSClasses.MODAL_CONTAINER] })
     this.content = new BaseComponent({ tag: "div", classNames: [CSSClasses.MODAL_CONTENT] })
@@ -26,11 +29,15 @@ export default class Modal extends BaseComponent {
     })
     this.appendChildComponent(this.container)
 
-    this.configureButtons()
-    this.container.appendChildrenComponents([this.content])
+    if (type === "close") {
+      this.configureOneButton()
+      this.configureText(data)
+    } else if (type === "confirm") {
+      this.configureTextarea(data)
+      this.configureTwoButtons()
+    }
 
-    // this.configureTextarea(data)
-    this.configureText(data)
+    this.container.appendChildrenComponents([this.content])
   }
 
   public open(): void {
@@ -41,11 +48,17 @@ export default class Modal extends BaseComponent {
     this.getNode().remove()
   }
 
-  protected configureButtons(): void {
+  protected configureTwoButtons(): void {
     const cancelButton = new Button("cancel", () => this.handleCancel())
     const confirmButton = new Button("confirm", () => this.handleConfirm())
 
     this.container.appendChildrenComponents([cancelButton, confirmButton])
+  }
+
+  protected configureOneButton(): void {
+    const closeButton = new Button("close", () => this.close())
+
+    this.container.appendChildComponent(closeButton)
   }
 
   public configureText(data: string): void {

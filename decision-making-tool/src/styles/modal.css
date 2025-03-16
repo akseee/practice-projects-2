@@ -18,18 +18,26 @@
   grid-template-rows: 1fr max-content;
 
   min-width: 50%;
-  min-height: 50%;
+  min-height: 30%;
+  margin: 1rem;
   padding: 1rem;
   border-radius: 1rem;
 
+  font-family: sans-serif;
+  font-size: 1.3rem;
   color: var(--modal-color);
 
   background-color: var(--modal-background-color);
 }
 
 .modal-content {
+  display: flex;
   grid-column: 1/-1;
   grid-row: 1/2;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
   padding: 1rem;
   border-radius: 1rem;
 }
@@ -45,8 +53,4 @@
 
   background-color: var(--modal-color);
   outline: none;
-}
-
-.text {
-  font-size: 1rem;
 }

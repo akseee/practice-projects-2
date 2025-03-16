@@ -23,11 +23,6 @@ export default class DecisionContent extends BaseComponent {
     this.configBaseControls()
   }
 
-  public openModal(data: string): void {
-    const modal = new Modal(data)
-    modal.open()
-  }
-
   public configBaseControls(): void {
     this.controls.createButton("add option", () => this.addOption())
     this.controls.createButton("paste list", () => this.pasteList())
@@ -47,12 +42,15 @@ export default class DecisionContent extends BaseComponent {
   }
 
   public pasteList(): void {
-    this.openModal(JSON.stringify(this.getAllData()))
+    const data = JSON.stringify(this.getAllData())
+    this.openModal(data, "confirm")
   }
 
   public clearList(): void {
     this.list.clearList()
   }
+
+  public loadFromFile(): void {}
 
   private getAllData(): TOption[] {
     const data = this.list.getOptions()
@@ -60,11 +58,16 @@ export default class DecisionContent extends BaseComponent {
   }
 
   public start(): void {
-    const data = this.getAllData()
-    this.model.options = data
+    const data = this.list.getValidOptions()
+    console.log(data)
+    if (data.length === 0) {
+      const text = `Please add at least 2 valid options. An option is considered valid if its title is not empty and its weight is greater than 0`
+      this.openModal(text, "close")
+    }
   }
 
-  public saveToFile(): void {}
-
-  public loadFromFile(): void {}
+  public openModal(data: string, type: string): void {
+    const modal = new Modal(data, type)
+    modal.open()
+  }
 }

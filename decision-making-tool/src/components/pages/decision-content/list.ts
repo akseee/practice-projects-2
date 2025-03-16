@@ -65,4 +65,9 @@ export default class OptionList extends BaseComponent {
   public saveToLS(): void {
     localStorage.setItem("options", JSON.stringify(this.options))
   }
+
+  public getValidOptions(): TOption[] {
+    const data = [...this.options].filter((option) => option.weight > 0 && option.title !== "")
+    return data.length > 1 ? data : []
+  }
 }

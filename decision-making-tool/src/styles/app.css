@@ -5,7 +5,7 @@
   --first-color-lighter: #b3ebb9;
   --second-color: #968cf2;
   --second-color-darker: #7a72c5;
-  --second-color-ligher: #b4adf1;
+  --second-color-ligther: #b4adf1;
   --third-color: #f2968c;
   --third-color-darker: #c47870;
   --third-color-lighter: #eeaca5;
@@ -16,8 +16,8 @@
   --font-color: #d2e6d4;
 
   /* modal */
-  --modal-color: var(--second-color-ligher);
-  --modal-background-color: var(--second-color-darker);
+  --modal-color: var(--third-color-lighter);
+  --modal-background-color: var(--third-color-darker);
 }
 
 .app {
