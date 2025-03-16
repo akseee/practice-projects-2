@@ -44,3 +44,16 @@
 
   background-color: var(--section-color);
 }
+
+svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+  color: #ffffff;
+}
+
+svg use {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
