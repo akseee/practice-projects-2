@@ -14,4 +14,18 @@ export default class Button extends BaseComponent {
     this.setTextContent(text)
     this.addListener("click", callback)
   }
+
+  public disable(): void {
+    const node = this.getNode()
+    if (node instanceof HTMLButtonElement) {
+      node.disabled = true
+    }
+  }
+
+  public enable(): void {
+    const node = this.getNode()
+    if (node instanceof HTMLButtonElement) {
+      node.disabled = false
+    }
+  }
 }

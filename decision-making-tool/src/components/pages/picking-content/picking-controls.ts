@@ -1,6 +1,6 @@
 import BaseComponent from "../../common/base-component"
 import Button from "../../common/button"
-import WheelTimer from "./wheel-timer"
+import WheelTimer from "./picking-timer"
 
 const enum CSSClasses {
   CONTROLS_WRAPPER = "controls-wrapper",
@@ -16,7 +16,7 @@ export default class PickingControls extends BaseComponent {
     this.appendChildComponent(button)
   }
 
-  public createTimerButton(callback: (time: string) => string): void {
+  public createTimerButton(callback: (time: string) => void): void {
     const clock = new WheelTimer(callback)
     this.appendChildComponent(clock)
   }
