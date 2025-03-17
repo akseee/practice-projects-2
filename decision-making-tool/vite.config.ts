@@ -3,7 +3,7 @@ import path from "path"
 import postcss from "postcss"
 
 export default defineConfig({
-  base: "/",
+  base: "./",
   build: {
     outDir: "dist",
     sourcemap: true,
@@ -13,7 +13,13 @@ export default defineConfig({
       },
     },
   },
-
+  server: {
+    port: 3000,
+    open: true,
+  },
+  esbuild: {
+    legalComments: "none",
+  },
   css: {
     postcss: {
       plugins: [postcss()],

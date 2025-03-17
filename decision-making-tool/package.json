@@ -13,7 +13,8 @@
     "format:scripts": "prettier --write 'src/**/*.{ts,tsx,js,jsx,json,css,scss,md}'",
     "format:styles": "stylelint src/**/*.css --fix --allow-empty-input",
     "format": "npm run format:scripts && npm run format:styles",
-    "prepare": "husky install ../.husky"
+    "prepare": "husky install ../.husky",
+    "deploy": "npm run build && gh-pages -d dist -e decision-making-tool"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.0",
@@ -26,6 +27,7 @@
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-unicorn": "^57.0.0",
+    "gh-pages": "^6.3.0",
     "globals": "^16.0.0",
     "husky": "^8.0.3",
     "lint-staged": "^15.5.0",
