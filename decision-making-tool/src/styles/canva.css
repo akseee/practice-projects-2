@@ -25,7 +25,40 @@
   transition: 0.5s ease-in-out;
 }
 
+.start-button:hover {
+  color: #ffffff;
+  background-color: var(--third-color-lighter);
+}
+
 .start-button:active,
 .start-button:focus {
-  background-color: #dadada;
+  color: #ffffff;
+  background-color: var(--third-color-darker);
+}
+
+.start-button[disabled] {
+  color: transparent;
+  background-color: #ffffff7a;
+}
+
+.special {
+  margin: 0 2rem;
+  padding: 0.5rem 0;
+  border-radius: 1rem;
+
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffffff;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1rem;
+
+  background-color: var(--first-color-lighter);
+
+  transition: 0.3s ease-in-out;
+}
+
+.highlighted {
+  background-color: var(--third-color);
+  box-shadow: 0 0 10px 10px var(--third-color);
 }

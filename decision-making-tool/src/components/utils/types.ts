@@ -8,4 +8,5 @@ export type Slice = {
   option: TOption
   startAngle: number
   endAngle: number
+  color: string
 }

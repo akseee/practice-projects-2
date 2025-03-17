@@ -11,6 +11,7 @@ export default class PickingContent extends BaseComponent {
   public result: BaseComponent
   public time: number
   public wheel: Wheel
+  public isMuted: boolean = false
 
   constructor() {
     super({ tag: "section", classNames: [] })
@@ -26,23 +27,27 @@ export default class PickingContent extends BaseComponent {
       { id: "0", title: "one", weight: 2 },
       { id: "1", title: "two", weight: 5 },
       { id: "2", title: "three", weight: 3 },
-      { id: "3", title: "three", weight: 55 },
-      { id: "2", title: "three", weight: 3 },
+      { id: "3", title: "four", weight: 3 },
+      { id: "4", title: "five", weight: 3 },
     ]
-    this.wheel = new Wheel(items, this.time)
 
-    this.wheel.onSliceChange = (): void => {
-      // option: TOption
-      // this.updateResultContent("Начало: " + option.title)
-    }
-    this.wheel.onSpinEnd = (): void => {
-      // winningOption: TOption
-      // this.updateResultContent("Победитель: " + winningOption.title)
-    }
+    this.wheel = new Wheel(items, this.time)
 
     this.appendChildrenComponents([this.controls, this.result, this.wheel])
 
     this.configBaseControls()
+    this.wheel.onSliceChange = (winningOption: TOption): void => {
+      this.updateResultContent(winningOption.title)
+      this.result.removeClass("highlighted")
+    }
+
+    this.wheel.onSpinEnd = (winningOption: TOption): void => {
+      this.updateResultContent(winningOption.title)
+      this.result.addClass("highlighted")
+      // if (!this.isMuted) {
+      //   new Audio("").play().catch(() => {})
+      // }
+    }
   }
   public updateResultContent(text: string): void {
     this.result.setTextContent(text)
@@ -68,6 +73,6 @@ export default class PickingContent extends BaseComponent {
   }
 
   public toggleSound(): void {
-    console.log("Переключение звука")
+    this.isMuted = !this.isMuted
   }
 }

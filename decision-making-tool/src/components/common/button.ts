@@ -18,6 +18,7 @@ export default class Button extends BaseComponent {
   public disable(): void {
     const node = this.getNode()
     if (node instanceof HTMLButtonElement) {
+      node.style.pointerEvents = "none"
       node.disabled = true
     }
   }
@@ -25,6 +26,7 @@ export default class Button extends BaseComponent {
   public enable(): void {
     const node = this.getNode()
     if (node instanceof HTMLButtonElement) {
+      node.style.pointerEvents = "auto"
       node.disabled = false
     }
   }
