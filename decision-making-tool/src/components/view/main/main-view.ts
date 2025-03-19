@@ -44,7 +44,6 @@ export default class MainView extends View {
     })
 
     this.appendChildrenComponents(this.components)
-    this.router.navigate(EnumPages.DECISION)
   }
 
   public setContent(component: HTMLElement | BaseComponent): void {
