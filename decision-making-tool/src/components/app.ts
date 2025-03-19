@@ -1,6 +1,4 @@
 import BaseComponent from "./common/base-component"
-// import DecisionContent from "./pages/decision-content/decision-content"
-import PickingContent from "./pages/picking-content/picking-content"
 
 import FooterView from "./view/footer/footer-view"
 import HeaderView from "./view/header/header-view"
@@ -21,11 +19,8 @@ export default class App extends BaseComponent {
   }
 
   public render(): void {
-    // const decisionContent = new DecisionContent()
-    const pickingContent = new PickingContent()
-
     const header = new HeaderView()
-    const main = new MainView(pickingContent)
+    const main = new MainView()
     const footer = new FooterView()
 
     this.appendChildrenComponents([header, main, footer])

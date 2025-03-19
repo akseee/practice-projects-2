@@ -1,5 +1,7 @@
 import BaseComponent from "../../common/base-component"
 import OptionsModel from "../../model/options-model"
+import { EnumPages } from "../../routes/pages"
+import type Router from "../../routes/router"
 import type { TOption } from "../../utils/types"
 import Modal from "../../view/modal/modal"
 
@@ -11,7 +13,7 @@ export default class DecisionContent extends BaseComponent {
   public controls: DecisionControls
   public model: OptionsModel
 
-  constructor() {
+  constructor(public router: Router) {
     super({ tag: "section", classNames: [] })
 
     this.model = new OptionsModel()
@@ -59,10 +61,11 @@ export default class DecisionContent extends BaseComponent {
 
   public start(): void {
     const data = this.list.getValidOptions()
-    console.log(data)
-    if (data.length === 0) {
+    if (data.length < 2) {
       const text = `Please add at least 2 valid options. An option is considered valid if its title is not empty and its weight is greater than 0`
       this.openModal(text, "close")
+    } else {
+      this.router.navigate(EnumPages.WHEEL)
     }
   }
 

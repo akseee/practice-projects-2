@@ -4,24 +4,25 @@ import PickingControls from "./picking-controls"
 
 import type { TOption } from "../../utils/types"
 import Wheel from "./wheel"
+import type Router from "../../routes/router"
+import { EnumPages } from "../../routes/pages"
 
 export default class PickingContent extends BaseComponent {
   public controls: PickingControls
   public model: OptionsModel
   public result: BaseComponent
-  public time: number
   public wheel: Wheel
+
   public isMuted: boolean = false
 
-  constructor() {
+  constructor(public router: Router) {
+    console.log("creating")
     super({ tag: "section", classNames: [] })
     this.model = new OptionsModel()
     this.controls = new PickingControls()
 
     this.result = new BaseComponent({ tag: "p", classNames: ["special"] })
     this.result.setTextContent("Нажмите старт")
-
-    this.time = 5
 
     const items: TOption[] = [
       { id: "0", title: "one", weight: 2 },
@@ -31,7 +32,7 @@ export default class PickingContent extends BaseComponent {
       { id: "4", title: "five", weight: 3 },
     ]
 
-    this.wheel = new Wheel(items, this.time)
+    this.wheel = new Wheel(items)
 
     this.appendChildrenComponents([this.controls, this.result, this.wheel])
 
@@ -59,17 +60,13 @@ export default class PickingContent extends BaseComponent {
     this.controls.createTimerButton((time: string) => this.setupTimer(time))
   }
 
-  public startWheel(): void {
-    console.log("Запуск колеса")
-    this.wheel.spinWheel()
-  }
-
   public setupTimer(time: string): void {
-    this.time = Number(time)
+    this.wheel.setTime(time)
   }
 
   public handleBack(): void {
-    console.log("Возврат назад")
+    console.log("handing back")
+    this.router.navigate(EnumPages.DECISION)
   }
 
   public toggleSound(): void {

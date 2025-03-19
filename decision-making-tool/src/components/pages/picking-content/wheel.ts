@@ -23,10 +23,10 @@ export default class Wheel extends BaseComponent {
   public onSliceChange: (option: TOption) => void = () => {}
   public onSpinEnd: (option: TOption) => void = () => {}
 
-  constructor(items: TOption[], time: number) {
+  constructor(items: TOption[]) {
     super({ tag: "div", classNames: [CSSClasses.WHEEL] })
     this.items = this.shuffleItems(items)
-    this.time = time
+    this.time = 5
 
     this.startButton = new Button("Старт", () => this.spinWheel())
     this.startButton.addClass(CSSClasses.START_BUTTON)
@@ -34,6 +34,10 @@ export default class Wheel extends BaseComponent {
     this.canvas = new Canvas(500, 500, this.items)
 
     this.appendChildrenComponents([this.canvas, this.startButton])
+  }
+
+  public setTime(time: string): void {
+    this.time = Number(time)
   }
 
   public spinWheel(): void {

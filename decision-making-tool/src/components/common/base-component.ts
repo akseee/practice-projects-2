@@ -97,4 +97,12 @@ export default class BaseComponent {
   public removeClass(name: string): void {
     this.node.classList.remove(name)
   }
+
+  public hide(): void {
+    this.node.style.display = "none"
+  }
+
+  public show(): void {
+    this.node.style.display = ""
+  }
 }
