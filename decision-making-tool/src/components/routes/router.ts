@@ -14,7 +14,7 @@ export default class Router {
   constructor(protected routes: TRoute[]) {
     document.addEventListener("DOMContentLoaded", () => {
       const path = this.getCurrentPath()
-      this.navigate(path)
+      this.navigate(path, true)
     })
 
     globalThis.addEventListener("popstate", () => {
@@ -26,7 +26,13 @@ export default class Router {
     })
   }
 
-  public navigate(url: string): void {
+  public navigate(url: string, replace: boolean = false): void {
+    if (replace) {
+      history.replaceState({}, "", `/${url}`)
+    } else {
+      history.pushState({}, "", `/${url}`)
+    }
+
     const route = this.routes.find((routeItem) => routeItem.path === url)
     if (!route) {
       this.redirectToNotFound()
@@ -45,20 +51,11 @@ export default class Router {
 
   public browserChangeHandler(): void {
     const path = this.getCurrentPath()
-    this.navigate(path)
+    this.navigate(path, true)
   }
 
   public getCurrentPath(): string {
-    if (globalThis.location.hash) {
-      return globalThis.location.hash.slice(1)
-    }
-    return globalThis.location.pathname.slice(1)
+    const path = globalThis.location.pathname
+    return path.startsWith("/") ? path.slice(1) : path
   }
-
-  // public parseUrl(url: string): TParameters {
-  //   const result: TParameters = {}
-  //   const path = url.split("/")
-  //   ;[result.path = "", result.resource = ""] = path
-  //   return result
-  // }
 }

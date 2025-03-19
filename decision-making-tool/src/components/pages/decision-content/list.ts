@@ -27,9 +27,13 @@ export default class OptionList extends BaseComponent {
   }
 
   public addOption(option?: TOption): void {
+    if (this.options.length === 0) {
+      this.count = 1
+    }
     if (!option) {
       option = { id: String(this.count), title: "", weight: 0 }
     }
+
     this.count++
     const li = new OptionInput(option, this.removeOption.bind(this), this.updateData.bind(this))
     this.options.push(option)
