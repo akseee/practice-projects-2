@@ -11,7 +11,7 @@ const enum CSSClasses {
 export default class Wheel extends BaseComponent {
   public startButton: Button
   public canvas: Canvas
-  public items: TOption[]
+  public wheelOptions: TOption[]
   public time: number
 
   public startAngle: number = 0
@@ -23,17 +23,23 @@ export default class Wheel extends BaseComponent {
   public onSliceChange: (option: TOption) => void = () => {}
   public onSpinEnd: (option: TOption) => void = () => {}
 
-  constructor(items: TOption[]) {
+  constructor() {
     super({ tag: "div", classNames: [CSSClasses.WHEEL] })
-    this.items = this.shuffleItems(items)
+    this.wheelOptions = []
     this.time = 5
 
     this.startButton = new Button("Старт", () => this.spinWheel())
     this.startButton.addClass(CSSClasses.START_BUTTON)
 
-    this.canvas = new Canvas(500, 500, this.items)
+    this.canvas = new Canvas(500, 500, this.wheelOptions)
 
     this.appendChildrenComponents([this.canvas, this.startButton])
+  }
+
+  public updateOptions(newOptions: TOption[]): void {
+    this.wheelOptions = this.shuffleItems(newOptions)
+    this.canvas.updateOptions(this.wheelOptions)
+    this.canvas.draw()
   }
 
   public setTime(time: string): void {
@@ -61,6 +67,7 @@ export default class Wheel extends BaseComponent {
 
     this.canvas.rotationAngle =
       this.startAngle + (this.targetAngle - this.startAngle) * easedProgress
+
     this.canvas.draw()
 
     const pointerAngle = -Math.PI / 2

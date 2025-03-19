@@ -1,4 +1,5 @@
 import BaseComponent from "../../common/base-component"
+import OptionsModel from "../../model/options-model"
 import DecisionContent from "../../pages/decision-content/decision-content"
 import NotFoundContent from "../../pages/not-found/not-found"
 import PickingContent from "../../pages/picking-content/picking-content"
@@ -19,6 +20,8 @@ export default class MainView extends View {
   public pickingContent: PickingContent
   public notFound: NotFoundContent
 
+  public model: OptionsModel
+
   private components: BaseComponent[]
   constructor() {
     super({
@@ -29,8 +32,10 @@ export default class MainView extends View {
     const routes = this.createRoutes()
     this.router = new Router(routes)
 
-    this.decisionContent = new DecisionContent(this.router)
-    this.pickingContent = new PickingContent(this.router)
+    this.model = new OptionsModel()
+
+    this.decisionContent = new DecisionContent(this.router, this.model)
+    this.pickingContent = new PickingContent(this.router, this.model)
     this.notFound = new NotFoundContent(this.router)
 
     this.components = [this.decisionContent, this.pickingContent, this.notFound]
@@ -48,7 +53,6 @@ export default class MainView extends View {
     })
 
     if (component instanceof BaseComponent) {
-      console.log(component)
       component.show()
     } else {
       component.style.display = ""
@@ -67,12 +71,12 @@ export default class MainView extends View {
         path: EnumPages.WHEEL,
         callback: (): void => {
           this.setContent(this.pickingContent)
+          this.pickingContent.updateWheel()
         },
       },
       {
         path: EnumPages.DECISION,
         callback: (): void => {
-          console.log("decision")
           this.setContent(this.decisionContent)
         },
       },

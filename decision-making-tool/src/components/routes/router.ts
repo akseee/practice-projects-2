@@ -19,7 +19,6 @@ export default class Router {
       this.redirectToNotFound()
       return
     }
-    console.log(route.callback)
     route.callback()
   }
 

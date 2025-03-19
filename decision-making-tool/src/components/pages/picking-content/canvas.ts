@@ -34,6 +34,12 @@ export default class Canvas extends BaseComponent {
     this.draw()
   }
 
+  public updateOptions(newItems: TOption[]): void {
+    this.items = newItems
+    this.computeSlices()
+    this.draw()
+  }
+
   public computeSlices(): void {
     const totalWeight = this.items.reduce((sum, item) => sum + item.weight, 0)
     let currentAngle = 0

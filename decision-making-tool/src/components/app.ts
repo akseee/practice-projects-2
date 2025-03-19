@@ -9,13 +9,11 @@ const enum CSSClasses {
 }
 
 export default class App extends BaseComponent {
-  // protected router: Router
   constructor() {
-    const appParameters = {
+    super({
       tag: "div",
       classNames: [CSSClasses.APP],
-    }
-    super(appParameters)
+    })
   }
 
   public render(): void {
@@ -26,8 +24,4 @@ export default class App extends BaseComponent {
     this.appendChildrenComponents([header, main, footer])
     document.body.append(this.getNode())
   }
-
-  // public setup(): void {
-  //   return console.log("setup")
-  // }
 }
