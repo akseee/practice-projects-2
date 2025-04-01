@@ -15,7 +15,7 @@ export default class WheelTimer extends BaseComponent {
     input.setAttribute("type", "number")
     input.setAttribute("min", "5")
     input.setAttribute("required", "true")
-
+    input.setAttribute("defaultValue", "5")
     input.getNode().addEventListener("change", (event: Event) => {
       const target = event.target
       if (target instanceof HTMLInputElement && target) {

@@ -5,11 +5,6 @@ export type TRoute = {
   callback: () => void
 }
 
-// type TParameters = {
-//   path: string
-//   resource: string
-// }
-
 export default class Router {
   constructor(protected routes: TRoute[]) {
     document.addEventListener("DOMContentLoaded", () => {
@@ -17,20 +12,21 @@ export default class Router {
       this.navigate(path, true)
     })
 
-    globalThis.addEventListener("popstate", () => {
-      this.browserChangeHandler.bind(this)
-    })
+    // globalThis.addEventListener("popstate", () => {
+    //   this.browserChangeHandler.bind(this)
+    // })
 
     globalThis.addEventListener("hashchange", () => {
-      this.browserChangeHandler.bind(this)
+      this.browserChangeHandler()
     })
   }
 
   public navigate(url: string, replace: boolean = false): void {
+    const newHash = `#/${url}`
     if (replace) {
-      history.replaceState({}, "", `/${url}`)
+      location.replace(newHash)
     } else {
-      history.pushState({}, "", `/${url}`)
+      location.hash = newHash
     }
 
     const route = this.routes.find((routeItem) => routeItem.path === url)
@@ -55,7 +51,6 @@ export default class Router {
   }
 
   public getCurrentPath(): string {
-    const path = globalThis.location.pathname
-    return path.startsWith("/") ? path.slice(1) : path
+    return location.hash.slice(2) || ""
   }
 }

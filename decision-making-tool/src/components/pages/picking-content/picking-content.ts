@@ -29,29 +29,34 @@ export default class PickingContent extends BaseComponent {
 
     this.appendChildrenComponents([this.controls, this.result, this.wheel])
 
-    this.configBaseControls()
     this.wheel.onSliceChange = (winningOption: TOption): void => {
-      this.updateResultContent(winningOption.title)
+      this.updateResultContent(winningOption.title, false)
       this.result.removeClass("highlighted")
     }
 
     this.wheel.onSpinEnd = (winningOption: TOption): void => {
-      this.updateResultContent(winningOption.title)
-      this.result.addClass("highlighted")
+      this.updateResultContent(winningOption.title, true)
+
       // if (!this.isMuted) {
       //   new Audio("").play().catch(() => {})
       // }
     }
     this.updateWheel()
+    this.configBaseControls()
   }
 
   public updateWheel(): void {
     this.wheel.updateOptions(this.model.valid)
-    this.result.removeClass("highlighted")
+    this.updateResultContent("Нажмите старт", false)
   }
 
-  public updateResultContent(text: string): void {
+  public updateResultContent(text: string, highlight: boolean): void {
     this.result.setTextContent(text)
+    if (highlight) {
+      this.result.addClass("highlighted")
+    } else {
+      this.result.removeClass("highlighted")
+    }
   }
 
   public configBaseControls(): void {
