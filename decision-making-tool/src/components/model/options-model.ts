@@ -9,9 +9,7 @@ export default class OptionsModel {
     this._valid = []
 
     const storedOptions = localStorage.getItem("options")
-    if (storedOptions) {
-      this._options = JSON.parse(storedOptions)
-    }
+    this._options = storedOptions ? JSON.parse(storedOptions) : [{ id: "1", title: "", weight: 0 }]
     this.updateValidOptions()
   }
 
