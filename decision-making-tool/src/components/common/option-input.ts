@@ -32,15 +32,28 @@ export default class OptionInput extends BaseComponent {
     label.setAttribute("for", id)
     label.setTextContent(`#${options.id}`)
 
-    const titleInput = this.createInput({ name: "title", value: options.title })
-    titleInput.setAttribute("id", id)
-    titleInput.getNode().addEventListener("input", () => this.updateOption())
-
-    const weightInput = this.createInput({ name: "weight", value: options.weight })
-    weightInput.setAttribute("type", "number")
-    weightInput.getNode().addEventListener("input", () => this.updateOption())
-
     const deleteButton = new Button("Delete", () => this.destroyInput())
+    const titleInput = this.createInput({ name: "title", value: options.title })
+    const weightInput = this.createInput({ name: "weight", value: options.weight })
+
+    titleInput.setAttribute("id", id)
+    weightInput.setAttribute("type", "number")
+
+    const updateOption = (): void => {
+      const titleValue = titleInput.getValue()
+      const weightValue = weightInput.getValue()
+
+      if (!titleValue || !weightValue) return
+
+      this.option.title = titleValue
+      this.option.weight = Number(weightValue)
+
+      this.updateData({ ...this.option })
+    }
+
+    titleInput.getNode().addEventListener("input", () => updateOption())
+    weightInput.getNode().addEventListener("input", () => updateOption())
+
     this.appendChildrenComponents([label, titleInput, weightInput, deleteButton])
   }
 
@@ -51,18 +64,6 @@ export default class OptionInput extends BaseComponent {
     input.setAttribute("name", options.name)
 
     return input
-  }
-
-  public updateOption(): void {
-    const titleNode = this.getNode().querySelector<HTMLInputElement>('input[name="title"]')
-    const weightNode = this.getNode().querySelector<HTMLInputElement>('input[name="weight"]')
-
-    if (!titleNode || !weightNode) return
-
-    this.option.title = titleNode.value
-    this.option.weight = Number(weightNode.value)
-
-    this.updateData({ ...this.option })
   }
 
   public destroyInput(): void {

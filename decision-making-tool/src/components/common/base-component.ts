@@ -105,4 +105,12 @@ export default class BaseComponent {
   public show(): void {
     this.node.style.display = ""
   }
+
+  public getValue(): string | void {
+    if (this.node instanceof HTMLInputElement) {
+      return this.node.value
+    }
+
+    return undefined
+  }
 }
