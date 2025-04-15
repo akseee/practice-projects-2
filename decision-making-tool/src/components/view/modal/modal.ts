@@ -27,6 +27,13 @@ export default class Modal extends BaseComponent {
         this.close()
       }
     })
+
+    globalThis.addEventListener("keydown", (event) => {
+      if (event instanceof KeyboardEvent && event.key === "Escape") {
+        this.close()
+      }
+    })
+
     this.appendChildComponent(this.container)
 
     if (type === "close") {
