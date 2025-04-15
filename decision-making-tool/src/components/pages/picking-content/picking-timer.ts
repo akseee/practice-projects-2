@@ -11,6 +11,7 @@ export default class WheelTimer extends BaseComponent {
     const svg = new Svg("../../../assets/timer.svg")
 
     const input = new BaseComponent({ tag: "input", classNames: [] })
+    input.setAttribute("value", 5)
     input.setAttribute("placeholder", "sec")
     input.setAttribute("type", "number")
     input.setAttribute("min", "5")
