@@ -7,7 +7,11 @@ export default class Header extends View {
   constructor() {
     super({ tag: "header", classNames: ["header"] })
 
-    this.wrapper = new BaseComponent({ tag: "div", classNames: ["wrapper"] })
+    this.wrapper = new BaseComponent({ tag: "div", classNames: ["header-wrapper"] })
+    this.render()
+  }
+
+  public render(): void {
     this.setTitle("fun-chat")
     this.setAbout("#")
     this.setUser({ auth: true, name: "axe" })
@@ -15,7 +19,7 @@ export default class Header extends View {
   }
 
   private setTitle(text: string): void {
-    const title = new BaseComponent({ tag: "h1", classNames: ["title"] })
+    const title = new BaseComponent({ tag: "h1", classNames: ["header__title"] })
     title.setTextContent(text)
     this.wrapper.appendChildComponent(title)
   }
@@ -23,7 +27,7 @@ export default class Header extends View {
   public setUser(user: { auth: boolean; name: string }): void {
     const userWrapper = new BaseComponent({ tag: "div", classNames: ["user-wrapper"] })
     if (user.auth) {
-      const name = new BaseComponent({ tag: "p", classNames: ["user-name"] })
+      const name = new BaseComponent({ tag: "p", classNames: ["header__user-name"] })
       name.setTextContent(`Hello, ${user.name}!`)
 
       const exitButton = new Button()
@@ -37,7 +41,7 @@ export default class Header extends View {
   }
 
   private setAbout(url: string): void {
-    const link = new BaseComponent({ tag: "a", classNames: ["about-link"] })
+    const link = new BaseComponent({ tag: "a", classNames: ["header__about-link"] })
     link.setTextContent("About us")
     link.setAttribute("href", url)
 

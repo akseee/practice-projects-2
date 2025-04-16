@@ -2,32 +2,33 @@
   background-color: var(--color-lavender-darker);
 }
 
-.wrapper {
+.header-wrapper {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2em;
   place-items: center;
+
   padding: 1em 5em;
 }
 
-.title {
+.header__title {
   color: var(--color-white);
 }
 
 .user-wrapper {
-  height: 100%;
   display: flex;
   gap: 4rem;
   align-items: center;
+  height: 100%;
 }
 
-.about-link {
+.header__about-link {
   display: inline-block;
   padding: 0.5em 1em;
   border-bottom: 2px solid transparent;
   transition: 0.3s ease-in-out;
 }
 
-.about-link:hover {
+.header__about-link:hover {
   border-bottom-color: var(--color-celadon-lighter);
 }
