@@ -1,0 +1,33 @@
+.header {
+  background-color: var(--color-lavender-darker);
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2em;
+  place-items: center;
+  padding: 1em 5em;
+}
+
+.title {
+  color: var(--color-white);
+}
+
+.user-wrapper {
+  height: 100%;
+  display: flex;
+  gap: 4rem;
+  align-items: center;
+}
+
+.about-link {
+  display: inline-block;
+  padding: 0.5em 1em;
+  border-bottom: 2px solid transparent;
+  transition: 0.3s ease-in-out;
+}
+
+.about-link:hover {
+  border-bottom-color: var(--color-celadon-lighter);
+}

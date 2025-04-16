@@ -1,0 +1,15 @@
+:root {
+  --color-lavender: #e6e6fa;
+  --color-lavender-darker: #cacae6;
+  --color-celadon: #b2f2bb;
+  --color-celadon-darker: #91cf99;
+  --color-celadon-lighter: #8ff19c;
+  --color-cream: #fffdd0;
+  --color-cream-darker: #dcd89c;
+  --color-quartz: #4a4a4a;
+  --color-white: #ffffff;
+  --font-color: var(--color-quartz);
+  --button-background: var(--color-celadon);
+  --button-shadow: 0 0 5px 0 #00000050;
+  --border-radius: 3px;
+}

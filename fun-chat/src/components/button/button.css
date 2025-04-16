@@ -1,0 +1,16 @@
+.button {
+  border-radius: var(--border-radius);
+  box-shadow: var(--button-shadow);
+  background-color: var(--button-background);
+  transition: 0.3s ease-in-out;
+  padding: 0.5em 1em;
+}
+
+.button:hover {
+  background-color: var(--color-celadon-lighter);
+  cursor: pointer;
+}
+
+.button:active {
+  background-color: var(--color-celadon-darker);
+}
