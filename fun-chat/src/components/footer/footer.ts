@@ -19,7 +19,8 @@ export default class Footer extends View {
   }
 
   private setLogo(): void {
-    const logo = new BaseComponent({ tag: "div", classNames: ["footer__logo"] })
+    const logo = new BaseComponent({ tag: "a", classNames: ["footer__logo"] })
+    logo.setAttribute("href", "https://rs.school/courses/javascript-preschool-ru")
     logo.setTextContent("")
 
     this.wrapper.appendChildComponent(logo)
