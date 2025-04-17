@@ -1,7 +1,8 @@
 import BaseComponent from "../../shared/base-component"
 
 export default class Button extends BaseComponent {
-  constructor() {
+  constructor(name: string) {
     super({ tag: "button", classNames: ["button"] })
+    this.setTextContent(name)
   }
 }

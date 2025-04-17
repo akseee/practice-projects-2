@@ -33,3 +33,12 @@
   border-bottom-color: var(--color-celadon-lighter);
   opacity: 1;
 }
+
+@media (width <= 768px) {
+  .footer-wrapper {
+    display: grid;
+    gap: 0.5em;
+    place-items: center;
+    padding: 1em;
+  }
+}

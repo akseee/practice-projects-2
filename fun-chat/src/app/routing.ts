@@ -41,6 +41,7 @@ export default class Router {
       this.navigate(EnumPages.LOGIN, true)
       return
     }
+
     route.callback()
   }
 

@@ -27,8 +27,21 @@
   padding: 0.5em 1em;
   border-bottom: 2px solid transparent;
   transition: 0.3s ease-in-out;
+  opacity: 0.8;
 }
 
 .header__about-link:hover {
   border-bottom-color: var(--color-celadon-lighter);
+  opacity: 1;
+  color: #000000;
+}
+
+@media (width <= 768px) {
+  .header-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    place-items: center;
+    padding: 1em;
+  }
 }
