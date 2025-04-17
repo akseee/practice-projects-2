@@ -1,12 +1,17 @@
+import type UserState from "../services/user-state-service"
 import { EnumPages } from "../shared/routes"
 
 export type TRoute = {
   path: string
   callback: () => void
+  isProtected?: boolean
 }
 
 export default class Router {
-  constructor(protected routes: TRoute[]) {
+  constructor(
+    protected routes: TRoute[],
+    protected userState: UserState,
+  ) {
     document.addEventListener("DOMContentLoaded", () => {
       const path = this.getCurrentPath()
       this.navigate(path, true)
@@ -19,6 +24,7 @@ export default class Router {
 
   public navigate(url: string, replace: boolean = false): void {
     const newHash = `#/${url}`
+
     if (replace) {
       location.replace(newHash)
     } else {
@@ -28,6 +34,11 @@ export default class Router {
     const route = this.routes.find((routeItem) => routeItem.path === url)
     if (!route) {
       this.redirectToNotFound()
+      return
+    }
+
+    if (route.isProtected && !this.userState.isAuth()) {
+      this.navigate(EnumPages.LOGIN, true)
       return
     }
     route.callback()
