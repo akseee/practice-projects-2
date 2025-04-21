@@ -32,9 +32,16 @@ export default class Header extends View {
 
   private setTitle(text: string): void {
     const title = new BaseComponent({ tag: "h1", classNames: ["header__title"] })
-    title.setAttribute("href", "")
-    title.setTextContent(text)
+    const link = new BaseComponent({ tag: "a" })
 
+    link.setAttribute("href", "")
+    link.setTextContent(text)
+    link.addListener("click", (event: Event) => {
+      event.preventDefault()
+      this.router.navigate("")
+    })
+
+    title.appendChildComponent(link)
     this.wrapper.appendChildComponent(title)
   }
 
