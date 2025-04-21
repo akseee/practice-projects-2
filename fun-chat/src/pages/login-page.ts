@@ -15,9 +15,24 @@ export default class LoginPage extends BaseComponent {
     super({ tag: "section", classNames: ["login-page"] })
 
     this.webSocket = webSocket
-
-    this.form = new LoginForm()
+    this.form = new LoginForm(router, state, webSocket)
 
     this.appendChildComponent(this.form)
+
+    globalThis.addEventListener("click", () => {
+      console.log(state)
+    })
   }
+
+  // private handleUserLogin(data:): void {
+  //   console.log("User logged in:", data)
+  //   this.userState.setCurrentUser(data.payload.user)
+  //   this.userState.setAuth(true)
+  // }
+
+  // private handleUserLogout(data): void {
+  //   console.log("User logged out:", data)
+  //   this.userState.setCurrentUser(null)
+  //   this.userState.setAuth(false)
+  // }
 }

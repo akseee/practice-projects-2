@@ -10,5 +10,10 @@ export default class ChatsPage extends BaseComponent {
     public router: Router,
   ) {
     super({ tag: "section", classNames: ["chats-page"] })
+
+    const title = new BaseComponent({ tag: "h2", classNames: ["chats__title"] })
+    title.setTextContent("chats!")
+
+    this.appendChildComponent(title)
   }
 }

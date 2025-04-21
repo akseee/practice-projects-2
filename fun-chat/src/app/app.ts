@@ -1,5 +1,6 @@
 import Footer from "../components/footer/footer"
 import Header from "../components/header/header"
+import MainLayout from "../components/layout/main-layout"
 import AboutPage from "../pages/about-page"
 import ChatsPage from "../pages/chats-page"
 import LoginPage from "../pages/login-page"
@@ -8,7 +9,6 @@ import ChatsState from "../services/chats-state-service"
 import UserState from "../services/user-state-service"
 import WebSocketService from "../services/websocket-service"
 import { EnumPages } from "../shared/routes"
-import MainLayout from "./layout/main-layout"
 import Router, { type TRoute } from "./routing"
 
 export default class App {
@@ -20,9 +20,7 @@ export default class App {
   protected router: Router
 
   protected main: MainLayout
-  protected loginPage: LoginPage
-  protected chatsPage: ChatsPage
-  protected aboutPage: AboutPage
+  protected header: Header
 
   constructor() {
     this.userState = new UserState()
@@ -30,34 +28,19 @@ export default class App {
 
     this.wsService = new WebSocketService()
 
-    this.router = new Router(this.createRoutes(), this.userState)
     this.main = new MainLayout()
-
-    this.loginPage = new LoginPage(this.userState, this.router, this.wsService)
-    this.chatsPage = new ChatsPage(this.chatsState, this.userState, this.router)
-    this.aboutPage = new AboutPage()
+    this.header = new Header()
+    this.router = new Router(this.createRoutes(), this.userState)
   }
 
-  // private handleUserLogin(data:): void {
-  //   console.log("User logged in:", data)
-  //   this.userState.setCurrentUser(data.payload.user)
-  //   this.userState.setAuth(true)
-  // }
-
-  // private handleUserLogout(data): void {
-  //   console.log("User logged out:", data)
-  //   this.userState.setCurrentUser(null)
-  //   this.userState.setAuth(false)
-  // }
-
   public render(): void {
-    const footer = new Footer()
-
-    const user = this.userState.currentUser()
-    const header = new Header({ auth: this.userState.isAuth(), name: user ? user.name : "" })
-
     document.body.classList.add("body")
-    document.body.append(header.getHtmlElement())
+
+    const footer = new Footer()
+    const user = this.userState.currentUser()
+    this.header.setUser(user)
+
+    document.body.append(this.header.getHtmlElement())
     document.body.append(this.main.getHtmlElement())
     document.body.append(footer.getHtmlElement())
   }
@@ -67,26 +50,36 @@ export default class App {
       {
         path: "",
         callback: (): void => {
-          this.main.setContent(this.loginPage)
+          const loginPage = new LoginPage(this.userState, this.router, this.wsService)
+
+          this.main.setContent(loginPage)
         },
+        isUnauth: true,
       },
       {
         path: EnumPages.LOGIN,
         callback: (): void => {
-          this.main.setContent(this.loginPage)
+          const loginPage = new LoginPage(this.userState, this.router, this.wsService)
+          this.main.setContent(loginPage)
         },
+        isUnauth: true,
       },
       {
         path: EnumPages.CHATS,
         callback: (): void => {
-          this.main.setContent(this.chatsPage)
+          const chatsPage = new ChatsPage(this.chatsState, this.userState, this.router)
+          this.main.setContent(chatsPage)
+
+          const user = this.userState.currentUser()
+          this.header.activeUser(user)
         },
         isProtected: true,
       },
       {
         path: EnumPages.ABOUT,
         callback: (): void => {
-          this.main.setContent(this.aboutPage)
+          const aboutPage = new AboutPage()
+          this.main.setContent(aboutPage)
         },
       },
 

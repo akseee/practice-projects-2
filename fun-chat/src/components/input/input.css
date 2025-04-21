@@ -25,10 +25,3 @@
   color: inherit;
   opacity: 1;
 }
-
-.input-error {
-  color: #ff5757;
-  font-size: 0.7em;
-  width: 100%;
-  height: fit-content;
-}

@@ -1,27 +1,18 @@
-import { type TUser } from "../shared/types"
+import { type TUserResponse } from "../shared/types"
 
 export default class UserState {
-  private _currentUser: null | TUser = null
-  private _isAuth = false
+  private _currentUser: null | TUserResponse = null
 
-  public isAuth(): boolean {
-    return this._isAuth
-  }
-
-  public setAuth(isLogged: boolean): void {
-    this._isAuth = isLogged
-  }
-
-  public currentUser(): null | TUser {
+  public currentUser(): null | TUserResponse {
     return this._currentUser
   }
 
-  public setCurrentUser(user: null | TUser): void {
+  public setCurrentUser(user: null | TUserResponse): void | null {
     this._currentUser = user
+    this.addUserToSessionStorage(user)
   }
 
-  public addUserToSessionStorage(user: TUser): void {
-    this.setCurrentUser(user)
+  public addUserToSessionStorage(user: TUserResponse | null): void {
     sessionStorage.setItem("user", JSON.stringify(user))
   }
 
@@ -30,11 +21,11 @@ export default class UserState {
     this.setCurrentUser(null)
   }
 
-  public getUserFromSessionStorage(): { login: string; password: string } | undefined {
+  public getUserFromSessionStorage(): TUserResponse | null {
     const user = sessionStorage.getItem("user")
 
     if (user === null) {
-      return undefined
+      return null
     }
 
     const parsedUser = JSON.parse(user)

@@ -1,8 +1,9 @@
 import BaseComponent from "../../shared/base-component"
+import ErrorSpan from "../error-span/error-span"
 
 export default class Input extends BaseComponent {
   public input: BaseComponent
-  public error: BaseComponent
+  public errorSpan: ErrorSpan
   constructor(name: string, placeholder: string, type = "text") {
     super({ tag: "label", classNames: ["input-label"] })
 
@@ -12,9 +13,8 @@ export default class Input extends BaseComponent {
     this.input.setAttribute("placeholder", placeholder)
     this.input.setAttribute("type", type)
 
-    this.error = new BaseComponent({ tag: "span", classNames: ["input-error"] })
-
-    this.appendChildrenComponents([this.input, this.error])
+    this.errorSpan = new ErrorSpan()
+    this.appendChildrenComponents([this.input, this.errorSpan])
   }
 
   public getValue(): string {
@@ -23,12 +23,6 @@ export default class Input extends BaseComponent {
   }
 
   public setErrorText(visible: boolean, text: string): void {
-    if (visible) {
-      this.error.setTextContent(text)
-      this.error.removeClass("visually-hidden")
-    } else {
-      this.error.setTextContent("")
-      this.error.addClass("visually-hidden")
-    }
+    this.errorSpan.setError(visible, text)
   }
 }

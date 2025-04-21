@@ -1,4 +1,4 @@
-import { type WSHandlers, type WSMessage } from "../shared/types"
+import { type TUserLoginResponsePayload, type WSHandlers, type WSMessage } from "../shared/types"
 
 export default class WebSocketService {
   private socket: WebSocket
@@ -33,8 +33,8 @@ export default class WebSocketService {
       console.warn("[WebSocket] Соединение закрыто")
     })
 
-    this.socket.addEventListener("error", (err) => {
-      console.error("[WebSocket] Ошибка:", err)
+    this.socket.addEventListener("error", (error) => {
+      console.error("[WebSocket] Ошибка:", error)
     })
   }
 
@@ -42,22 +42,25 @@ export default class WebSocketService {
     this.handlers[type] = handler
   }
 
-  public sendRequest(type: string, payload: any): Promise<WSMessage> {
+  public sendRequest<T extends WSMessage["type"]>(
+    type: T,
+    payload: Extract<WSMessage, { type: T }>["payload"],
+  ): Promise<Extract<WSMessage, { type: T }>> {
     const id = crypto.randomUUID()
     const message = JSON.stringify({ id, type, payload })
 
     return new Promise((resolve) => {
-      this.pendingRequests.set(id, resolve)
+      this.pendingRequests.set(id, resolve as (res: Extract<WSMessage, { type: T }>) => void)
       this.socket.send(message)
     })
   }
 
-  public send(type: string, payload: any): void {
+  public send(type: string, payload: object): void {
     const message = JSON.stringify({ id: null, type, payload })
     this.socket.send(message)
   }
 
-  public login(login: string, password: string): Promise<WSMessage> {
+  public login(login: string, password: string): Promise<TUserLoginResponsePayload> {
     return this.sendRequest("USER_LOGIN", { user: { login, password } })
   }
 

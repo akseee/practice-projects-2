@@ -5,6 +5,7 @@ export type TRoute = {
   path: string
   callback: () => void
   isProtected?: boolean
+  isUnauth?: boolean
 }
 
 export default class Router {
@@ -37,8 +38,15 @@ export default class Router {
       return
     }
 
-    if (route.isProtected && !this.userState.isAuth()) {
+    const isAuth = this.userState.currentUser()
+
+    if (route.isProtected && !isAuth) {
       this.navigate(EnumPages.LOGIN, true)
+      return
+    }
+
+    if (isAuth && route.isUnauth) {
+      this.navigate(EnumPages.CHATS, true)
       return
     }
 
