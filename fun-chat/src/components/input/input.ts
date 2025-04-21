@@ -15,6 +15,10 @@ export default class Input extends BaseComponent {
 
     this.errorSpan = new ErrorSpan()
     this.appendChildrenComponents([this.input, this.errorSpan])
+
+    this.input.addListener("input", () => {
+      this.setErrorText(false, "")
+    })
   }
 
   public getValue(): string {

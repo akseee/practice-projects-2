@@ -5,6 +5,7 @@ import {
   type WSHandlers,
   type UserLoginResponse,
   type UserLogoutResponse,
+  type ErrorMessage,
 } from "../shared/types"
 
 export default class WebSocketService {
@@ -63,11 +64,7 @@ export default class WebSocketService {
 
       this.pendingRequests.set(id, (response: WSResponse) => {
         clearTimeout(timer)
-        if (response.type === "ERROR") {
-          reject(response)
-        } else {
-          resolve(response as R)
-        }
+        resolve(response as R)
       })
 
       if (this.socket.readyState === WebSocket.OPEN) {
@@ -79,13 +76,13 @@ export default class WebSocketService {
     })
   }
 
-  public login(login: string, password: string): Promise<UserLoginResponse> {
+  public login(login: string, password: string): Promise<UserLoginResponse | ErrorMessage> {
     return this.sendRequest<UserLoginResponse>("USER_LOGIN", {
       user: { login, password },
     })
   }
 
-  public logout(login: string, password: string): Promise<UserLogoutResponse> {
+  public logout(login: string, password: string): Promise<UserLogoutResponse | ErrorMessage> {
     return this.sendRequest<UserLogoutResponse>("USER_LOGOUT", {
       user: { login, password },
     })

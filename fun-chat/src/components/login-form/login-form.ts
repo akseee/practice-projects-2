@@ -37,6 +37,14 @@ export default class LoginForm extends BaseComponent {
 
     this.errorSpan = new ErrorSpan()
 
+    this.loginInput.addListener("input", () => {
+      this.errorSpan.setError(false, "")
+    })
+
+    this.passwordInput.addListener("input", () => {
+      this.errorSpan.setError(false, "")
+    })
+
     this.form.appendChildrenComponents([
       this.loginInput,
       this.passwordInput,
@@ -61,16 +69,16 @@ export default class LoginForm extends BaseComponent {
     try {
       const response = await this.ws.login(login, password)
 
-      if (response.payload?.user) {
-        this.state.addUserToSessionStorage(response.payload.user)
-        this.state.setCurrentUser(response.payload.user)
-
-        this.state.setUserDetails({ login, password })
-
-        this.router.navigate(EnumPages.CHATS, true)
-      } else {
-        this.errorSpan.setError(true, response.payload?.error)
+      if (response.type === "ERROR") {
+        this.errorSpan.setError(true, response.payload.error)
+        return
       }
+
+      this.state.addUserToSessionStorage(response.payload.user)
+      this.state.setCurrentUser(response.payload.user)
+      this.state.setUserDetails({ login, password })
+
+      this.router.navigate(EnumPages.CHATS, true)
     } catch (error) {
       console.error("Login error:", error)
     }
@@ -94,7 +102,7 @@ export default class LoginForm extends BaseComponent {
     if (!login) {
       this.loginInput.setErrorText(true, "Login cannot be empty!")
       isValid = false
-    } else if (login.length < 3) {
+    } else if (login.length < 4) {
       this.loginInput.setErrorText(true, "Login should be at least 4 symbols")
       isValid = false
     }
@@ -102,7 +110,7 @@ export default class LoginForm extends BaseComponent {
     if (!password) {
       this.passwordInput.setErrorText(true, "Password cannot be empty!")
       isValid = false
-    } else if (password.length < 5) {
+    } else if (password.length < 6) {
       this.passwordInput.setErrorText(true, "Password should be at least 6 symbols")
       isValid = false
     } else if (!/[a-z]/.test(password)) {
@@ -116,6 +124,9 @@ export default class LoginForm extends BaseComponent {
         true,
         "Password should consist at least one upper case letter",
       )
+      isValid = false
+    } else if (!/[0-9]/.test(password)) {
+      this.passwordInput.setErrorText(true, "Password should consist at least one number")
       isValid = false
     }
 
