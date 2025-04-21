@@ -13,7 +13,7 @@
     "format:scripts": "prettier --write 'src/**/*.{ts,tsx,js,jsx,json,css,scss,md}'",
     "format:styles": "stylelint src/**/*.css --fix --allow-empty-input",
     "format": "npm run format:scripts && npm run format:styles",
-    "deploy": "npm run build && gh-pages -d dist -e decision-making-tool"
+    "deploy": "npm run build && gh-pages -d dist -e fun-chat"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.0",
