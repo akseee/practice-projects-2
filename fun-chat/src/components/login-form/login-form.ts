@@ -32,17 +32,20 @@ export default class LoginForm extends BaseComponent {
     this.loginInput = new Input("login", "Login")
     this.passwordInput = new Input("password", "Password", "password")
 
-    this.loginButton = new Button("login", () => console.log("loggining in"))
+    this.loginButton = new Button("login", (): void => {}, "submit")
     this.loginButton.addClass("login__button")
+    this.loginButton.disable()
 
     this.errorSpan = new ErrorSpan()
 
     this.loginInput.addListener("input", () => {
       this.errorSpan.setError(false, "")
+      this.toggleLoginButton()
     })
 
     this.passwordInput.addListener("input", () => {
       this.errorSpan.setError(false, "")
+      this.toggleLoginButton()
     })
 
     this.form.appendChildrenComponents([
@@ -56,12 +59,19 @@ export default class LoginForm extends BaseComponent {
     this.appendChildComponent(this.form)
   }
 
+  private toggleLoginButton(): void {
+    const loginValue = this.loginInput.getValue().trim()
+    const passwordValue = this.passwordInput.getValue().trim()
+
+    if (loginValue && passwordValue && this.validateFields()) {
+      this.loginButton.enable()
+    } else {
+      this.loginButton.disable()
+    }
+  }
+
   private async handleSubmit(event: Event): Promise<void> {
     event.preventDefault()
-
-    if (!this.validateFields()) {
-      return
-    }
 
     const login = this.loginInput.getValue().trim()
     const password = this.passwordInput.getValue().trim()
@@ -102,8 +112,8 @@ export default class LoginForm extends BaseComponent {
     if (!login) {
       this.loginInput.setErrorText(true, "Login cannot be empty!")
       isValid = false
-    } else if (login.length < 4) {
-      this.loginInput.setErrorText(true, "Login should be at least 4 symbols")
+    } else if (login.length < 3) {
+      this.loginInput.setErrorText(true, "Login should be at least 3 symbols")
       isValid = false
     }
 

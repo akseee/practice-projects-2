@@ -53,6 +53,11 @@ export default class App {
     try {
       if (user) {
         const response = await this.wsService.logout(user.login, user.password)
+        if (response.type === "ERROR") {
+          console.log("Logout error:", response.payload.error)
+          return
+        }
+
         this.userState.setCurrentUser(null)
         this.userState.setUserDetails(null)
         this.header.activeUser(null)

@@ -4,9 +4,11 @@ export default class Button extends BaseComponent {
   constructor(
     public name: string,
     public callback: () => void,
+    public type: string = "button",
   ) {
     super({ tag: "button", classNames: ["button"] })
     this.setTextContent(name)
+    this.setAttribute("type", type)
     this.addListener("click", callback)
   }
 
