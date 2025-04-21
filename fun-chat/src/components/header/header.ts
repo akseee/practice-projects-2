@@ -1,4 +1,6 @@
+import type Router from "../../app/routing"
 import BaseComponent from "../../shared/base-component"
+import { EnumPages } from "../../shared/routes"
 import { type TCurrentUser } from "../../shared/types"
 import { View } from "../../shared/view"
 import Button from "../button/button"
@@ -6,18 +8,20 @@ import Button from "../button/button"
 export default class Header extends View {
   protected wrapper: BaseComponent
   protected userWrapper: BaseComponent
-  constructor() {
+  constructor(private router: Router) {
     super({ tag: "header", classNames: ["header"] })
 
     this.wrapper = new BaseComponent({ tag: "div", classNames: ["header-wrapper"] })
     this.userWrapper = new BaseComponent({ tag: "div", classNames: ["user-wrapper"] })
+
+    this.router = router
 
     this.render()
   }
 
   public render(): void {
     this.setTitle("fun-chat")
-    this.setAbout("#")
+    this.setAbout()
     this.wrapper.appendChildComponent(this.userWrapper)
     this.appendChildComponent(this.wrapper)
   }
@@ -51,11 +55,14 @@ export default class Header extends View {
     }
   }
 
-  private setAbout(url: string): void {
+  private setAbout(): void {
     const link = new BaseComponent({ tag: "a", classNames: ["header__about-link"] })
-    link.setTextContent("About us")
-    link.setAttribute("href", url)
-
+    link.setTextContent("About the application")
+    link.setAttribute("href", "#/" + EnumPages.ABOUT)
+    link.addListener("click", (event: Event) => {
+      event.preventDefault()
+      this.router.navigate(EnumPages.ABOUT)
+    })
     this.wrapper.appendChildComponent(link)
   }
 }

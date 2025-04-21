@@ -28,11 +28,11 @@ export default class App {
 
     this.wsService = new WebSocketService()
 
-    this.main = new MainLayout()
-    this.header = new Header()
-
     this.logout = this.logout.bind(this)
     this.router = new Router(this.createRoutes(), this.userState)
+
+    this.main = new MainLayout()
+    this.header = new Header(this.router)
   }
 
   public render(): void {
@@ -106,6 +106,8 @@ export default class App {
           const aboutPage = new AboutPage()
           this.main.setContent(aboutPage)
         },
+        isProtected: false,
+        isUnauth: false,
       },
 
       {

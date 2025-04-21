@@ -123,6 +123,9 @@ export default class LoginForm extends BaseComponent {
     } else if (password.length < 6) {
       this.passwordInput.setErrorText(true, "Password should be at least 6 symbols")
       isValid = false
+    } else if (!/[a-zA-Z]/.test(password)) {
+      this.passwordInput.setErrorText(true, "Password should consist of Latin letters")
+      isValid = false
     } else if (!/[a-z]/.test(password)) {
       this.passwordInput.setErrorText(
         true,
@@ -139,7 +142,6 @@ export default class LoginForm extends BaseComponent {
       this.passwordInput.setErrorText(true, "Password should consist at least one number")
       isValid = false
     }
-
     return isValid
   }
 }
