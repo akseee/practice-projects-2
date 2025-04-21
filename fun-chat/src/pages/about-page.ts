@@ -1,11 +1,13 @@
+import AboutContent from "../components/about-content/about-content"
 import BaseComponent from "../shared/base-component"
 
 export default class AboutPage extends BaseComponent {
+  public content: AboutContent
   constructor() {
     super({ tag: "section", classNames: ["about-page"] })
 
-    const title = new BaseComponent({ tag: "h2", classNames: ["about__title"] })
-    title.setTextContent("About this application")
-    this.appendChildComponent(title)
+    this.content = new AboutContent()
+
+    this.appendChildComponent(this.content)
   }
 }

@@ -1,0 +1,13 @@
+.about-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  align-items: center;
+  min-height: 300px;
+  margin: 3em;
+  padding: 2em;
+  border-radius: var(--border-radius);
+
+  background-color: var(--color-cream);
+  box-shadow: var(--box-shadow);
+}
