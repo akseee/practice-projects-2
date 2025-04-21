@@ -11,9 +11,9 @@ export default class Footer extends View {
   }
 
   public render(): void {
-    this.setLink("")
+    this.setAuthor("akseee", "https://github.com/akseee")
     this.setLogo()
-    this.setAuthor("akseee")
+    this.setLink()
 
     this.appendChildComponent(this.wrapper)
   }
@@ -26,19 +26,18 @@ export default class Footer extends View {
     this.wrapper.appendChildComponent(link)
   }
 
-  private setAuthor(name: string): void {
-    const author = new BaseComponent({ tag: "p", classNames: ["footer__authour"] })
+  private setAuthor(name: string, link: string): void {
+    const author = new BaseComponent({ tag: "a", classNames: ["footer__authour"] })
     author.setTextContent(`made by @${name}`)
+    author.setAttribute("href", link)
 
     this.wrapper.appendChildComponent(author)
   }
 
-  private setLink(url: string): void {
-    const link = new BaseComponent({ tag: "a", classNames: ["footer__link"] })
-    const year = new Date().getFullYear()
+  private setLink(): void {
+    const link = new BaseComponent({ tag: "p", classNames: ["footer__year"] })
 
-    link.setTextContent(`GH-pages, ${year}`)
-    link.setAttribute("href", url)
+    link.setTextContent(`2025`)
 
     this.wrapper.appendChildComponent(link)
   }

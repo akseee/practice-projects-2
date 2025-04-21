@@ -11,10 +11,6 @@
   padding: 1em 5em;
 }
 
-.footer-wrapper a {
-  opacity: 0.7;
-}
-
 .footer__logo-link {
   border-radius: var(--border-radius);
   background-color: var(--color-white);
@@ -26,16 +22,22 @@
   text-align: center;
 }
 
-.footer__link {
+.footer__authour {
+  opacity: 0.7;
   display: inline-block;
   padding: 0.5em 1em;
   border-bottom: 2px solid transparent;
   transition: 0.3s ease-in-out;
 }
 
-.footer__link:hover {
+.footer__authour:hover {
   border-bottom-color: var(--color-celadon-lighter);
   opacity: 1;
+}
+
+.footer__year {
+  opacity: 0.7;
+  font-size: 0.9em;
 }
 
 @media (width <= 768px) {
