@@ -1,5 +1,5 @@
-import BaseComponent from "../../shared/base-component"
-import { View } from "../../shared/view"
+import BaseComponent from "../../shared/view/base-component"
+import { View } from "../../shared/view/view"
 
 export default class Footer extends View {
   protected wrapper: BaseComponent

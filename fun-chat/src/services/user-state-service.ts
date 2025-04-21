@@ -1,4 +1,4 @@
-import { type TUserDetails, type TCurrentUser } from "../shared/types"
+import { type TUserDetails, type TCurrentUser } from "../shared/types/types"
 
 export default class UserState {
   private _currentUser: null | TCurrentUser = null

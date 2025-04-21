@@ -1,5 +1,5 @@
-import type UserState from "../services/user-state-service"
-import { EnumPages } from "../shared/routes"
+import type UserState from "../../services/user-state-service"
+import { EnumPages } from "./routes"
 
 export type TRoute = {
   path: string

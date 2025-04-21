@@ -6,7 +6,7 @@ import {
   type UserLoginResponse,
   type UserLogoutResponse,
   type ErrorMessage,
-} from "../shared/types"
+} from "../shared/types/types"
 
 export default class WebSocketService {
   private socket: WebSocket

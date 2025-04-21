@@ -8,8 +8,8 @@ import ChatsState from "../services/chats-state-service"
 
 import UserState from "../services/user-state-service"
 import WebSocketService from "../services/websocket-service"
-import { EnumPages } from "../shared/routes"
-import Router, { type TRoute } from "./routing"
+import { EnumPages } from "../shared/router/routes"
+import Router, { type TRoute } from "../shared/router/routing"
 
 export default class App {
   protected userState: UserState

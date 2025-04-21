@@ -1,5 +1,5 @@
 import AboutContent from "../components/about-content/about-content"
-import BaseComponent from "../shared/base-component"
+import BaseComponent from "../shared/view/base-component"
 
 export default class AboutPage extends BaseComponent {
   public content: AboutContent

@@ -1,9 +1,9 @@
-import type Router from "../../app/routing"
-import BaseComponent from "../../shared/base-component"
-import { EnumPages } from "../../shared/routes"
-import { type TCurrentUser } from "../../shared/types"
-import { View } from "../../shared/view"
+import BaseComponent from "../../shared/view/base-component"
+import { EnumPages } from "../../shared/router/routes"
+import { type TCurrentUser } from "../../shared/types/types"
 import Button from "../button/button"
+import { View } from "../../shared/view/view"
+import type Router from "../../shared/router/routing"
 
 export default class Header extends View {
   protected wrapper: BaseComponent

@@ -1,4 +1,4 @@
-import BaseComponent from "../../shared/base-component"
+import BaseComponent from "../../shared/view/base-component"
 import ErrorSpan from "../error-span/error-span"
 
 export default class Input extends BaseComponent {

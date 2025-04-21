@@ -9,6 +9,6 @@
 @import url("../components/button/button.css");
 @import url("../components/input/input.css");
 @import url("../components/error-span/error-span.css");
-
-@import url("../components/login-form/login-form.css");
 @import url("../components/about-content/about-content.css");
+
+@import url("../features/login/login-form/login-form.css");

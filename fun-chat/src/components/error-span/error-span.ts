@@ -1,4 +1,4 @@
-import BaseComponent from "../../shared/base-component"
+import BaseComponent from "../../shared/view/base-component"
 
 export default class ErrorSpan extends BaseComponent {
   constructor() {

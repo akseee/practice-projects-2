@@ -1,11 +1,11 @@
-import Input from "../input/input"
-import BaseComponent from "../../shared/base-component"
-import Button from "../button/button"
-import type Router from "../../app/routing"
-import type UserState from "../../services/user-state-service"
-import type WebSocketService from "../../services/websocket-service"
-import { EnumPages } from "../../shared/routes"
-import ErrorSpan from "../error-span/error-span"
+import Input from "../../../components/input/input"
+import BaseComponent from "../../../shared/view/base-component"
+import Button from "../../../components/button/button"
+import type UserState from "../../../services/user-state-service"
+import type WebSocketService from "../../../services/websocket-service"
+import { EnumPages } from "../../../shared/router/routes"
+import ErrorSpan from "../../../components/error-span/error-span"
+import type Router from "../../../shared/router/routing"
 
 export default class LoginForm extends BaseComponent {
   public loginInput: Input

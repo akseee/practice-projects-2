@@ -1,7 +1,7 @@
-import type Router from "../app/routing"
 import type ChatsState from "../services/chats-state-service"
 import type UserState from "../services/user-state-service"
-import BaseComponent from "../shared/base-component"
+import type Router from "../shared/router/routing"
+import BaseComponent from "../shared/view/base-component"
 
 export default class ChatsPage extends BaseComponent {
   constructor(

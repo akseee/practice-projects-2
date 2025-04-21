@@ -1,8 +1,8 @@
-import type Router from "../app/routing"
-import LoginForm from "../components/login-form/login-form"
+import LoginForm from "../features/login/login-form/login-form"
 import type UserState from "../services/user-state-service"
 import type WebSocketService from "../services/websocket-service"
-import BaseComponent from "../shared/base-component"
+import type Router from "../shared/router/routing"
+import BaseComponent from "../shared/view/base-component"
 
 export default class LoginPage extends BaseComponent {
   public form: LoginForm
