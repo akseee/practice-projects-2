@@ -30,6 +30,8 @@ export default class App {
 
     this.main = new MainLayout()
     this.header = new Header()
+
+    this.logout = this.logout.bind(this)
     this.router = new Router(this.createRoutes(), this.userState)
   }
 
@@ -38,11 +40,29 @@ export default class App {
 
     const footer = new Footer()
     const user = this.userState.currentUser()
-    this.header.setUser(user)
+    this.header.setUser(user, this.logout)
 
     document.body.append(this.header.getHtmlElement())
     document.body.append(this.main.getHtmlElement())
     document.body.append(footer.getHtmlElement())
+  }
+
+  public async logout(): Promise<void> {
+    const user = this.userState.userDetails()
+
+    try {
+      if (user) {
+        const response = await this.wsService.logout(user.login, user.password)
+        this.userState.setCurrentUser(null)
+        this.userState.setUserDetails(null)
+        this.header.activeUser(null)
+        if (response.payload?.user) {
+          this.router.navigate(EnumPages.LOGIN, true)
+        }
+      }
+    } catch (error) {
+      console.error("Logout error:", error)
+    }
   }
 
   public createRoutes(): TRoute[] {
@@ -71,7 +91,7 @@ export default class App {
           this.main.setContent(chatsPage)
 
           const user = this.userState.currentUser()
-          this.header.activeUser(user)
+          this.header.activeUser(user, this.logout)
         },
         isProtected: true,
       },

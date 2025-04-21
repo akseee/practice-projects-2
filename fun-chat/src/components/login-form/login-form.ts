@@ -65,6 +65,8 @@ export default class LoginForm extends BaseComponent {
         this.state.addUserToSessionStorage(response.payload.user)
         this.state.setCurrentUser(response.payload.user)
 
+        this.state.setUserDetails({ login, password })
+
         this.router.navigate(EnumPages.CHATS, true)
       } else {
         this.errorSpan.setError(true, response.payload?.error)

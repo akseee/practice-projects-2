@@ -1,5 +1,5 @@
 import BaseComponent from "../../shared/base-component"
-import { type TUserResponse } from "../../shared/types"
+import { type TCurrentUser } from "../../shared/types"
 import { View } from "../../shared/view"
 import Button from "../button/button"
 
@@ -22,8 +22,8 @@ export default class Header extends View {
     this.appendChildComponent(this.wrapper)
   }
 
-  public activeUser(user: TUserResponse | null): void {
-    this.setUser(user)
+  public activeUser(user: TCurrentUser | null, logoutMethod?: () => Promise<void>): void {
+    this.setUser(user, logoutMethod)
   }
 
   private setTitle(text: string): void {
@@ -34,15 +34,17 @@ export default class Header extends View {
     this.wrapper.appendChildComponent(title)
   }
 
-  public setUser(user: TUserResponse | null): void {
+  public setUser(user: TCurrentUser | null, logoutMethod?: () => Promise<void>): void {
     this.userWrapper.destroyChildren()
-    console.log("setting")
-    console.log(user)
     if (user !== null) {
       const name = new BaseComponent({ tag: "p", classNames: ["header__user-name"] })
       name.setTextContent(`Hello, ${user.login}!`)
 
-      const exitButton = new Button("logout", () => console.log("logging out"))
+      const exitButton = new Button("logout", async () => {
+        if (logoutMethod) {
+          await logoutMethod()
+        }
+      })
       exitButton.addClass("exit-button")
 
       this.userWrapper.appendChildrenComponents([name, exitButton])

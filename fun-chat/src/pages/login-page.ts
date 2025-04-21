@@ -1,4 +1,3 @@
-// import type Router from "../app/routing"
 import type Router from "../app/routing"
 import LoginForm from "../components/login-form/login-form"
 import type UserState from "../services/user-state-service"
@@ -18,21 +17,5 @@ export default class LoginPage extends BaseComponent {
     this.form = new LoginForm(router, state, webSocket)
 
     this.appendChildComponent(this.form)
-
-    globalThis.addEventListener("click", () => {
-      console.log(state)
-    })
   }
-
-  // private handleUserLogin(data:): void {
-  //   console.log("User logged in:", data)
-  //   this.userState.setCurrentUser(data.payload.user)
-  //   this.userState.setAuth(true)
-  // }
-
-  // private handleUserLogout(data): void {
-  //   console.log("User logged out:", data)
-  //   this.userState.setCurrentUser(null)
-  //   this.userState.setAuth(false)
-  // }
 }
