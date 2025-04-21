@@ -19,11 +19,11 @@ export default class Footer extends View {
   }
 
   private setLogo(): void {
-    const logo = new BaseComponent({ tag: "a", classNames: ["footer__logo"] })
-    logo.setAttribute("href", "https://rs.school/courses/javascript-preschool-ru")
-    logo.setTextContent("")
+    const link = new BaseComponent({ tag: "a", classNames: ["footer__logo-link"] })
+    link.setAttribute("href", "https://rs.school/courses/javascript-preschool-ru")
+    link.setTextContent("RSschool")
 
-    this.wrapper.appendChildComponent(logo)
+    this.wrapper.appendChildComponent(link)
   }
 
   private setAuthor(name: string): void {

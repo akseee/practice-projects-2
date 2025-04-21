@@ -15,11 +15,15 @@
   opacity: 0.7;
 }
 
-.footer__logo {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+.footer__logo-link {
+  border-radius: var(--border-radius);
   background-color: var(--color-white);
+  padding: 1em;
+  font-size: 0.7em;
+  height: 100%;
+  width: 100px;
+  display: inline-block;
+  text-align: center;
 }
 
 .footer__link {
