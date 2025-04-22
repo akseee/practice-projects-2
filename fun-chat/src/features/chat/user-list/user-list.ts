@@ -7,9 +7,9 @@ export default class UserList extends BaseComponent {
     super({ tag: "ul", classNames: ["chat__user-list"] })
   }
 
-  public setUsers(list: TUser[], current: TCurrentUser): void {
+  public setUsers(list: TUser[], current: TCurrentUser | null): void {
     list.forEach((user, index) => {
-      if (current.login === user.login) return
+      if (current !== null && current.login === user.login) return
       const userItem = new UserItem(user)
       if (index === 3) {
         userItem.setActiveChat(true)
