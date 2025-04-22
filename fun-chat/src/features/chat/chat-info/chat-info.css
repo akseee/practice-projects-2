@@ -1,5 +1,5 @@
-.chat__dialogue {
-  grid-area: dialogue;
+.chat__info {
+  grid-area: info;
   width: 100%;
   height: 100%;
   box-shadow: var(--box-shadow);

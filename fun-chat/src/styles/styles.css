@@ -12,3 +12,9 @@
 @import url("../components/about-content/about-content.css");
 
 @import url("../features/login/login-form/login-form.css");
+@import url("../features/chat/chat.css");
+
+@import url("../features/chat/user-list/user-list.css");
+@import url("../features/chat/dialogue/dialogue.css");
+@import url("../features/chat/chat-info/chat-info.css");
+@import url("../features/chat/user-item/user-item.css");

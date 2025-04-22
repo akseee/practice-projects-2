@@ -92,7 +92,12 @@ export default class App {
       {
         path: EnumPages.CHATS,
         callback: (): void => {
-          const chatsPage = new ChatsPage(this.chatsState, this.userState, this.router)
+          const chatsPage = new ChatsPage(
+            this.chatsState,
+            this.userState,
+            this.router,
+            this.wsService,
+          )
           this.main.setContent(chatsPage)
 
           const user = this.userState.currentUser()

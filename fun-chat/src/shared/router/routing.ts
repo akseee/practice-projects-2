@@ -24,14 +24,6 @@ export default class Router {
   }
 
   public navigate(url: string, replace: boolean = false): void {
-    const newHash = `#/${url}`
-
-    if (replace) {
-      location.replace(newHash)
-    } else {
-      location.hash = newHash
-    }
-
     const route = this.routes.find((routeItem) => routeItem.path === url)
     if (!route) {
       this.redirectToNotFound()
@@ -48,6 +40,22 @@ export default class Router {
     if (isAuth && route.isUnauth) {
       this.navigate(EnumPages.CHATS, true)
       return
+    }
+
+    if (location.pathname !== "/") {
+      history.replaceState(null, "", "/")
+    }
+
+    const newHash = `#/${url}`
+
+    if (replace) {
+      if (location.hash !== newHash) {
+        location.replace(newHash)
+      }
+    } else {
+      if (location.hash !== newHash) {
+        location.hash = newHash
+      }
     }
 
     route.callback()
@@ -67,6 +75,17 @@ export default class Router {
   }
 
   public getCurrentPath(): string {
-    return location.hash.slice(2) || ""
+    const hash = location.hash.slice(2)
+    if (hash) return hash
+
+    const path = location.pathname.slice(1)
+
+    if (path) {
+      history.replaceState(null, "", "/")
+      location.hash = `#/${path}`
+      return path
+    }
+
+    return ""
   }
 }

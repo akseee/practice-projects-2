@@ -8,7 +8,12 @@ export type TCurrentUser = {
   isLogined: boolean
 }
 
-export type WSTypes = "USER_LOGIN" | "USER_LOGOUT" | "ERROR"
+export type TUser = {
+  login: string
+  isLogined: boolean
+}
+
+export type WSTypes = "USER_LOGIN" | "USER_LOGOUT" | "ERROR" | "USER_ACTIVE" | "USER_INACTIVE"
 
 export type TUserAuthRequest = {
   user: {
@@ -16,12 +21,21 @@ export type TUserAuthRequest = {
     password: string
   }
 }
-
 export type TUserAuthResponse = {
   user: {
     login: string
     isLogined: boolean
   }
+}
+
+export type TAllAuthenticatedUsersRequest = null
+export type TAllAuthenticatedUsersResponse = {
+  users: TUser[]
+}
+
+export type TAllUnauthorizedUsersRequest = null
+export type TAllUnauthorizedUsersResponse = {
+  users: TUser[]
 }
 
 export type TErrorResponse = {
@@ -46,10 +60,38 @@ export type UserLoginResponse = WSResponseBase<"USER_LOGIN", TUserAuthResponse>
 export type UserLogoutRequest = WSRequestBase<"USER_LOGOUT", TUserAuthRequest>
 export type UserLogoutResponse = WSResponseBase<"USER_LOGOUT", TUserAuthResponse>
 
+export type AllAuthenticatedUsersRequest = WSRequestBase<
+  "USER_ACTIVE",
+  TAllAuthenticatedUsersRequest
+>
+export type AllAuthenticatedUsersResponse = WSResponseBase<
+  "USER_ACTIVE",
+  TAllAuthenticatedUsersResponse
+>
+
+export type AllUnauthorizedUsersRequest = WSRequestBase<
+  "USER_INACTIVE",
+  TAllUnauthorizedUsersRequest
+>
+export type AllUnauthorizedUsersResponse = WSResponseBase<
+  "USER_INACTIVE",
+  TAllUnauthorizedUsersResponse
+>
 export type ErrorMessage = WSResponseBase<"ERROR", TErrorResponse>
 
-export type WSRequest = UserLoginRequest | UserLogoutRequest
-export type WSResponse = UserLoginResponse | UserLogoutResponse | ErrorMessage
+export type WSRequest =
+  | UserLoginRequest
+  | UserLogoutRequest
+  | AllAuthenticatedUsersRequest
+  | AllUnauthorizedUsersRequest
+
+export type WSResponse =
+  | UserLoginResponse
+  | UserLogoutResponse
+  | ErrorMessage
+  | AllAuthenticatedUsersResponse
+  | AllUnauthorizedUsersResponse
+
 export type WSMessage = WSRequest | WSResponse
 
 export type WSHandlers = {

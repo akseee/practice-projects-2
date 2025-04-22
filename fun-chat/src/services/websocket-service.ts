@@ -6,6 +6,12 @@ import {
   type UserLoginResponse,
   type UserLogoutResponse,
   type ErrorMessage,
+  type AllAuthenticatedUsersResponse,
+  type AllUnauthorizedUsersResponse,
+  type UserLoginRequest,
+  type UserLogoutRequest,
+  type AllAuthenticatedUsersRequest,
+  type AllUnauthorizedUsersRequest,
 } from "../shared/types/types"
 
 export default class WebSocketService {
@@ -44,12 +50,12 @@ export default class WebSocketService {
     })
   }
 
-  private sendRequest<T extends WSResponse>(
-    type: Extract<WSRequest, { type: T["type"] }>["type"],
-    payload: Extract<WSRequest, { type: T["type"] }>["payload"],
-  ): Promise<T | ErrorMessage> {
+  private sendRequest<T extends WSRequest, R extends WSResponse>(
+    type: T["type"],
+    payload: T["payload"],
+  ): Promise<R | ErrorMessage> {
     const id = crypto.randomUUID()
-    const message: WSRequest = { id, type, payload }
+    const message: T = { id, type, payload } as T
 
     return new Promise((resolve, reject) => {
       const timer = setTimeout(() => {
@@ -59,7 +65,7 @@ export default class WebSocketService {
 
       this.pendingRequests.set(id, (response: WSMessage) => {
         if (response.id === id && response.type === type) {
-          resolve(response as T)
+          resolve(response as R)
         } else if (response.type === "ERROR") {
           resolve(response as ErrorMessage)
         } else {
@@ -78,11 +84,73 @@ export default class WebSocketService {
     })
   }
 
+  private sendStrictRequest<T extends WSRequest, R extends WSResponse>(
+    type: T["type"],
+    payload: T["payload"],
+  ): Promise<R> {
+    const id = crypto.randomUUID()
+    const message: T = { id, type, payload } as T
+
+    return new Promise((resolve, reject) => {
+      const timer = setTimeout(() => {
+        this.pendingRequests.delete(id)
+        reject(new Error(`Request ${type} timed out`))
+      }, 5000)
+
+      this.pendingRequests.set(id, (response: WSMessage) => {
+        if (response.id === id && response.type === type) {
+          resolve(response as R)
+          clearTimeout(timer)
+        } else {
+          reject(new Error(`Unexpected response type: ${response.type}`))
+          clearTimeout(timer)
+        }
+      })
+
+      if (this.socket.readyState === WebSocket.OPEN) {
+        this.socket.send(JSON.stringify(message))
+      } else {
+        this.pendingRequests.delete(id)
+        clearTimeout(timer)
+        reject(new Error("WebSocket is not connected"))
+      }
+    })
+  }
+
   public login(login: string, password: string): Promise<UserLoginResponse | ErrorMessage> {
-    return this.sendRequest<UserLoginResponse>("USER_LOGIN", { user: { login, password } })
+    return this.sendRequest<UserLoginRequest, UserLoginResponse>("USER_LOGIN", {
+      user: { login, password },
+    })
   }
 
   public logout(login: string, password: string): Promise<UserLogoutResponse | ErrorMessage> {
-    return this.sendRequest<UserLogoutResponse>("USER_LOGOUT", { user: { login, password } })
+    return this.sendRequest<UserLogoutRequest, UserLogoutResponse>("USER_LOGOUT", {
+      user: { login, password },
+    })
+  }
+
+  public getAllAuthenticatedUsers(): Promise<AllAuthenticatedUsersResponse> {
+    return this.sendStrictRequest<AllAuthenticatedUsersRequest, AllAuthenticatedUsersResponse>(
+      "USER_ACTIVE",
+      null,
+    )
+  }
+
+  public getAllUnauthorizedUsers(): Promise<AllUnauthorizedUsersResponse> {
+    return this.sendStrictRequest<AllUnauthorizedUsersRequest, AllUnauthorizedUsersResponse>(
+      "USER_INACTIVE",
+      null,
+    )
+  }
+
+  public on<T extends WSMessage["type"]>(
+    type: T,
+    handler: (data: Extract<WSMessage, { type: T }>) => void,
+  ): void {
+    this.handlers[type] = handler
+  }
+
+  public close(): void {
+    this.socket.close()
   }
 }

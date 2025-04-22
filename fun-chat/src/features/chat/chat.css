@@ -1,0 +1,18 @@
+.chat-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr 4fr;
+  min-height: 480px;
+  max-height: 500px;
+  gap: 1em;
+  align-items: center;
+  grid-template-areas:
+    "list info"
+    "list dialogue";
+
+  margin: 2em;
+  padding: 2em;
+  border-radius: var(--border-radius);
+  background-color: var(--color-cream);
+  box-shadow: var(--box-shadow);
+}
