@@ -14,7 +14,7 @@ export default class ChatsPage extends BaseComponent {
   ) {
     super({ tag: "section", classNames: ["chats-page"] })
 
-    const chat = new Chat(ws)
+    const chat = new Chat(ws, userState)
 
     this.appendChildComponent(chat)
   }

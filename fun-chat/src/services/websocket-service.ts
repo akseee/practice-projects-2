@@ -143,13 +143,6 @@ export default class WebSocketService {
     )
   }
 
-  public on<T extends WSMessage["type"]>(
-    type: T,
-    handler: (data: Extract<WSMessage, { type: T }>) => void,
-  ): void {
-    this.handlers[type] = handler
-  }
-
   public close(): void {
     this.socket.close()
   }
