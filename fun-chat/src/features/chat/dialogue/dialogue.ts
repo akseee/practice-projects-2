@@ -1,20 +1,52 @@
+import MessageField from "../../../components/message-field/message-field"
 import { type TMessage } from "../../../shared/types/types"
 import BaseComponent from "../../../shared/view/base-component"
 
+const mock1: TMessage = {
+  id: "123123123",
+  from: "my g",
+  to: "attaxe",
+  text: " swear, my cat understands every word I say. swear, my cat understands every word I say. swear, my cat understands every word I say.",
+  datetime: 1745500672725,
+  status: {
+    isDelivered: false,
+    isReaded: false,
+    isEdited: false,
+  },
+}
+
+const mock2: TMessage = {
+  id: "123123123",
+  from: "attaxe",
+  to: "my g",
+  text: "If life gives you lemons, make lemonade… then wonder who gave you life lemons.",
+  datetime: 1745500672725,
+  status: {
+    isDelivered: false,
+    isReaded: false,
+    isEdited: false,
+  },
+}
 export default class Dialogue extends BaseComponent {
-  public messageWrapper: BaseComponent
+  public input: BaseComponent
+  public messages: BaseComponent
   constructor() {
     super({ tag: "div", classNames: ["chat__dialogue"] })
 
-    this.messageWrapper = new BaseComponent({ tag: "div", classNames: ["message-wrapper"] })
-  }
-  public clearMessages(): void {
-    this.destroyChildren()
+    this.messages = new BaseComponent({ tag: "div", classNames: ["messages-wrapper"] })
+    this.input = new BaseComponent({ tag: "div", classNames: ["input-wrapper"] })
+    this.addMessage(mock1, true)
+    this.addMessage(mock2, false)
+    this.appendChildrenComponents([this.messages, this.input])
   }
 
-  public addMessage(message: TMessage): void {
-    const messageElement = new BaseComponent({ tag: "div", classNames: ["chat__message"] })
-    messageElement.setTextContent(`${message.from}: ${message.text}`)
-    this.appendChildComponent(messageElement)
+  public clearMessages(): void {
+    this.messages.destroyChildren()
+  }
+
+  public addMessage(message: TMessage, owner: boolean): void {
+    const messageElement = new MessageField()
+    messageElement.setData(message, owner)
+    this.messages.appendChildComponent(messageElement)
   }
 }

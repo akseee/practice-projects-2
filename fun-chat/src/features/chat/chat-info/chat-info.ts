@@ -4,6 +4,8 @@ import BaseComponent from "../../../shared/view/base-component"
 export default class ChatInfo extends BaseComponent {
   constructor() {
     super({ tag: "div", classNames: ["chat__info"] })
+
+    this.setData({ login: "Choose chat", isLogined: false })
   }
 
   public setData(user: TUser): void {
@@ -13,7 +15,10 @@ export default class ChatInfo extends BaseComponent {
     const icon = new BaseComponent({ tag: "div", classNames: ["chat__user-item__status"] })
 
     name.setTextContent(user.login)
-    if (user.isLogined) {
+    if (user.login === "Choose chat" && user.isLogined === false) {
+      icon.removeClass("offline")
+      icon.removeClass("online")
+    } else if (user.isLogined) {
       icon.addClass("online")
       icon.removeClass("offline")
     } else {

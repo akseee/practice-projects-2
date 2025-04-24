@@ -26,6 +26,12 @@ export type TMessage = {
   }
 }
 
+export type TMessageStatus = {
+  isDelivered: boolean
+  isReaded: boolean
+  isEdited: boolean
+}
+
 export type WSTypes =
   | "USER_LOGIN"
   | "USER_LOGOUT"
