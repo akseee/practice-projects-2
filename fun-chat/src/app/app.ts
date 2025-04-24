@@ -133,6 +133,10 @@ export default class App {
         path: EnumPages.ABOUT,
         callback: (): void => {
           const aboutPage = new AboutPage()
+          aboutPage.setNavigation(() => {
+            this.router.navigate(EnumPages.LOGIN, false)
+            console.log("looser")
+          })
           this.main.setContent(aboutPage)
         },
         isProtected: false,

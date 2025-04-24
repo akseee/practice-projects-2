@@ -10,4 +10,8 @@ export default class AboutPage extends BaseComponent {
 
     this.appendChildComponent(this.content)
   }
+
+  public setNavigation(callback: () => void): void {
+    this.content.setNavigation(callback)
+  }
 }

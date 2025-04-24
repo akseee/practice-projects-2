@@ -70,6 +70,7 @@ export default class Header extends View {
       event.preventDefault()
       this.router.navigate(EnumPages.ABOUT)
     })
+
     this.wrapper.appendChildComponent(link)
   }
 }

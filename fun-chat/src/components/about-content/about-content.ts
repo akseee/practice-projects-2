@@ -1,4 +1,5 @@
 import BaseComponent from "../../shared/view/base-component"
+import Button from "../button/button"
 
 export default class AboutContent extends BaseComponent {
   public wrapper: BaseComponent
@@ -27,5 +28,10 @@ export default class AboutContent extends BaseComponent {
       `The application was developed to demonstrate the Fun Chat assignment as part of the RSSchool JS/FE 2024Q4 course.`,
     )
     this.wrapper.appendChildrenComponents([text, text2])
+  }
+
+  public setNavigation(callback: () => void): void {
+    const button = new Button("back", callback, "button")
+    this.wrapper.appendChildComponent(button)
   }
 }
