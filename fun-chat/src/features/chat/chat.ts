@@ -61,9 +61,8 @@ export default class Chat extends BaseComponent {
   public async onUserClick(user: TUser): Promise<void> {
     try {
       this.chatInfo.setData(user)
-      // this.startChatWithUser(user);
       this.dialogue.clearMessages()
-      // await this.loadMessageHistory(user); //
+      await this.loadMessageHistory(user.login)
       console.log("hi")
     } catch (error) {
       console.log("error has occured while loading chat", error)
@@ -74,7 +73,7 @@ export default class Chat extends BaseComponent {
     try {
       const response = await this.ws.sendMessage(to, text)
       if (response.type === "MSG_SEND" && response.payload.message) {
-        this.dialogue.addMessage(response.payload.message)
+        this.dialogue.addMessage(response.payload.message, false)
       }
     } catch (error) {
       console.error("Failed to send message:", error)
@@ -84,8 +83,18 @@ export default class Chat extends BaseComponent {
   protected async loadMessageHistory(user: string): Promise<void> {
     try {
       const response = await this.ws.fetchMessageHistory(user)
-      if (response.payload.messages) {
-        response.payload.messages.forEach((message: TMessage) => this.dialogue.addMessage(message))
+      const messages = response.payload.messages
+
+      if (messages) {
+        if (messages.length === 0) {
+          this.dialogue.setEmptyChat()
+          return
+        }
+        messages.forEach((message: TMessage) => {
+          const owner = message.from === this.user?.login
+
+          this.dialogue.addMessage(message, owner)
+        })
       }
     } catch (error) {
       console.error("Failed to load message history:", error)

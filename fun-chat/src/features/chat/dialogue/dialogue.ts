@@ -27,6 +27,7 @@ const mock2: TMessage = {
     isEdited: false,
   },
 }
+
 export default class Dialogue extends BaseComponent {
   public input: BaseComponent
   public messages: BaseComponent
@@ -38,6 +39,15 @@ export default class Dialogue extends BaseComponent {
     this.addMessage(mock1, true)
     this.addMessage(mock2, false)
     this.appendChildrenComponents([this.messages, this.input])
+  }
+
+  public setEmptyChat(): void {
+    this.clearMessages()
+
+    const text = new BaseComponent({ tag: "p", classNames: ["empty-chat__text"] })
+    text.setTextContent("the beginning of the dialogue")
+
+    this.messages.appendChildComponent(text)
   }
 
   public clearMessages(): void {
