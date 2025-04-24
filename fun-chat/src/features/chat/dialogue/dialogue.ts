@@ -6,6 +6,8 @@ import MessageInput from "../message-input/message-input"
 export default class Dialogue extends BaseComponent {
   public input: MessageInput
   public messages: BaseComponent
+  public text: BaseComponent
+
   constructor() {
     super({ tag: "div", classNames: ["chat__dialogue"] })
 
@@ -14,15 +16,15 @@ export default class Dialogue extends BaseComponent {
 
     this.appendChildrenComponents([this.messages, this.input])
     this.setDefaultChat()
+    this.text = new BaseComponent({ tag: "p", classNames: ["empty-chat__text"] })
   }
 
   public setEmptyChat(): void {
     this.clearMessages()
+    this.text.removeClass("visually-hidden")
+    this.text.setTextContent("the beginning of the dialogue")
 
-    const text = new BaseComponent({ tag: "p", classNames: ["empty-chat__text"] })
-    text.setTextContent("the beginning of the dialogue")
-
-    this.messages.appendChildComponent(text)
+    this.messages.appendChildComponent(this.text)
   }
 
   public setDefaultChat(): void {
@@ -36,13 +38,13 @@ export default class Dialogue extends BaseComponent {
   }
 
   public async clearMessages(): Promise<void> {
-    setTimeout(() => {
-      this.messages.destroyChildren()
-    }, 0)
+    this.messages.destroyChildren()
   }
 
   public addMessage(message: TMessage, owner: boolean): void {
     const messageElement = new MessageField()
+    this.text.addClass("visually-hidden")
+
     messageElement.setData(message, owner)
     this.messages.appendChildComponent(messageElement)
     this.scrollToBottom()

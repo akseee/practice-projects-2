@@ -42,19 +42,15 @@ export default class Router {
       return
     }
 
-    if (location.pathname !== "/") {
-      history.replaceState(null, "", "/")
-    }
-
     const newHash = `#/${url}`
 
     if (replace) {
       if (location.hash !== newHash) {
-        location.replace(newHash)
+        history.replaceState(null, "", location.pathname + newHash)
       }
     } else {
       if (location.hash !== newHash) {
-        location.hash = newHash
+        location.hash = `/${url}`
       }
     }
 
@@ -75,17 +71,6 @@ export default class Router {
   }
 
   public getCurrentPath(): string {
-    const hash = location.hash.slice(2)
-    if (hash) return hash
-
-    const path = location.pathname.slice(1)
-
-    if (path) {
-      history.replaceState(null, "", "/")
-      location.hash = `#/${path}`
-      return path
-    }
-
-    return ""
+    return location.hash.slice(2) || ""
   }
 }

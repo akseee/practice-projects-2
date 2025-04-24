@@ -25,9 +25,12 @@ export default class MessageInput extends BaseComponent {
 
     const newListener = (): void => {
       const text: string | void = this.input.getValue()
-      if (typeof text === "string") {
-        callback(text.trim())
-        this.input.setValue("")
+      if (text !== "void") {
+        if (text.trim() !== "") {
+          callback(text.trim())
+          this.input.setValue("")
+        }
+        return
       }
     }
 
