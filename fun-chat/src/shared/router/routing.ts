@@ -65,6 +65,14 @@ export default class Router {
     route.callback()
   }
 
+  public forward(): void {
+    history.forward()
+  }
+
+  public back(): void {
+    history.back()
+  }
+
   public browserChangeHandler(): void {
     const path = this.getCurrentPath()
     this.navigate(path, true)

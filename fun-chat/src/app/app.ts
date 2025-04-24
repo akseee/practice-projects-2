@@ -133,7 +133,7 @@ export default class App {
         callback: (): void => {
           const aboutPage = new AboutPage()
           aboutPage.setNavigation(() => {
-            this.router.navigate(EnumPages.LOGIN, false)
+            this.router.back()
           })
           this.main.setContent(aboutPage)
         },
