@@ -2,9 +2,8 @@
   display: grid;
   grid-template-columns: 1fr 2fr;
   grid-template-rows: max-content 1fr;
-  min-height: 480px;
-  max-height: 500px;
   gap: 1em;
+  max-height: 100%;
   align-items: center;
   grid-template-areas:
     "list info"

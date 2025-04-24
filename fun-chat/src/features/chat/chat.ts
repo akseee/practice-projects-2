@@ -62,7 +62,7 @@ export default class Chat extends BaseComponent {
     try {
       this.chatInfo.setData(user)
       // this.startChatWithUser(user);
-      // this.dialogue.clearMessages(); // EMPTY CHAT
+      this.dialogue.clearMessages()
       // await this.loadMessageHistory(user); //
       console.log("hi")
     } catch (error) {

@@ -6,10 +6,12 @@
 @import url("../components/header/header.css");
 @import url("../components/layout/main-layout.css");
 
+@import url("../components/about-content/about-content.css");
+
 @import url("../components/button/button.css");
 @import url("../components/input/input.css");
 @import url("../components/error-span/error-span.css");
-@import url("../components/about-content/about-content.css");
+@import url("../components/user-item/user-item.css");
 
 @import url("../features/login/login-form/login-form.css");
 @import url("../features/chat/chat.css");
@@ -17,4 +19,3 @@
 @import url("../features/chat/user-list/user-list.css");
 @import url("../features/chat/dialogue/dialogue.css");
 @import url("../features/chat/chat-info/chat-info.css");
-@import url("../features/chat/user-item/user-item.css");
