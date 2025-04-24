@@ -5,4 +5,9 @@
   box-shadow: var(--box-shadow);
   background-color: var(--color-cream-lighter);
   border-radius: var(--border-radius);
+
+  display: flex;
+  justify-content: space-between;
+  padding: 1em 2em;
+  align-items: center;
 }

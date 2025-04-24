@@ -84,7 +84,6 @@ export default class LoginForm extends BaseComponent {
         return
       }
 
-      this.state.addUserToSessionStorage(response.payload.user)
       this.state.setCurrentUser(response.payload.user)
       this.state.setUserDetails({ login, password })
 

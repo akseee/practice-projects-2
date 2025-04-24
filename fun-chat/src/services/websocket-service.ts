@@ -12,6 +12,10 @@ import {
   type UserLogoutRequest,
   type AllAuthenticatedUsersRequest,
   type AllUnauthorizedUsersRequest,
+  type SendMessageRequest,
+  type SendMessageResponse,
+  type FetchMessageHistoryRequest,
+  type FetchMessageHistoryResponse,
 } from "../shared/types/types"
 
 export default class WebSocketService {
@@ -22,14 +26,13 @@ export default class WebSocketService {
 
   constructor() {
     this.socket = new WebSocket(this.url)
+    this.socket.addEventListener("open", () => {
+      console.log("[WebSocket] Connection established")
+    })
     this.init()
   }
 
   private init(): void {
-    this.socket.addEventListener("open", () => {
-      console.log("[WebSocket] Connection established")
-    })
-
     this.socket.addEventListener("message", (event: MessageEvent) => {
       try {
         const data: WSMessage = JSON.parse(event.data)
@@ -117,6 +120,16 @@ export default class WebSocketService {
     })
   }
 
+  public ready(): Promise<void> {
+    if (this.socket.readyState === WebSocket.OPEN) {
+      return Promise.resolve()
+    }
+
+    return new Promise((resolve) => {
+      this.socket.addEventListener("open", () => resolve(), { once: true })
+    })
+  }
+
   public login(login: string, password: string): Promise<UserLoginResponse | ErrorMessage> {
     return this.sendRequest<UserLoginRequest, UserLoginResponse>("USER_LOGIN", {
       user: { login, password },
@@ -140,6 +153,21 @@ export default class WebSocketService {
     return this.sendStrictRequest<AllUnauthorizedUsersRequest, AllUnauthorizedUsersResponse>(
       "USER_INACTIVE",
       null,
+    )
+  }
+
+  public sendMessage(to: string, text: string): Promise<SendMessageResponse> {
+    return this.sendStrictRequest<SendMessageRequest, SendMessageResponse>("MSG_SEND", {
+      message: { to, text },
+    })
+  }
+
+  public fetchMessageHistory(login: string): Promise<FetchMessageHistoryResponse> {
+    return this.sendStrictRequest<FetchMessageHistoryRequest, FetchMessageHistoryResponse>(
+      "MSG_FROM_USER",
+      {
+        user: { login },
+      },
     )
   }
 

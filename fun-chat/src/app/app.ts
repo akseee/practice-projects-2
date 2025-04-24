@@ -33,6 +33,8 @@ export default class App {
 
     this.main = new MainLayout()
     this.header = new Header(this.router)
+
+    this.checkAuth()
   }
 
   public render(): void {
@@ -67,6 +69,28 @@ export default class App {
       }
     } catch (error) {
       console.error("Logout error:", error)
+    }
+  }
+
+  protected async checkAuth(): Promise<void> {
+    try {
+      await this.wsService.ready()
+      const data = await this.userState.getDetailsFromSessionStorage()
+      if (data) {
+        console.log("logging")
+        const response = await this.wsService.login(data.login, data.password)
+        if (response.type === "ERROR") {
+          console.log("error:", response.payload.error)
+          return
+        }
+
+        this.userState.setCurrentUser(response.payload.user)
+        this.userState.setUserDetails(data)
+
+        this.router.navigate(EnumPages.CHATS, true)
+      }
+    } catch (error) {
+      console.error("Login error:", error)
     }
   }
 

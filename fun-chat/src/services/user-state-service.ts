@@ -4,6 +4,11 @@ export default class UserState {
   private _currentUser: null | TCurrentUser = null
   private _userDetails: null | TUserDetails = null
 
+  constructor() {
+    this.getUserFromSessionStorage()
+    this.getDetailsFromSessionStorage()
+  }
+
   public currentUser(): null | TCurrentUser {
     return this._currentUser
   }
@@ -14,19 +19,25 @@ export default class UserState {
 
   public setCurrentUser(user: null | TCurrentUser): void {
     this._currentUser = user
-    this.addUserToSessionStorage(user)
+    this.addCurrentUserToSessionStorage(user)
   }
 
   public setUserDetails(user: null | TUserDetails): void {
     this._userDetails = user
+    this.addUserDetailsToSessionStorage(user)
   }
 
-  public addUserToSessionStorage(user: TCurrentUser | null): void {
+  public addCurrentUserToSessionStorage(user: TCurrentUser | null): void {
     sessionStorage.setItem("user", JSON.stringify(user))
+  }
+
+  public addUserDetailsToSessionStorage(user: TUserDetails | null): void {
+    sessionStorage.setItem("user-details", JSON.stringify(user))
   }
 
   public removeUserFromSessionStorage(): void {
     sessionStorage.removeItem("user")
+    sessionStorage.removeItem("user-details")
 
     this.setCurrentUser(null)
     this.setUserDetails(null)
@@ -42,5 +53,17 @@ export default class UserState {
     const parsedUser = JSON.parse(user)
     this.setCurrentUser(parsedUser)
     return parsedUser
+  }
+
+  public getDetailsFromSessionStorage(): TUserDetails | null {
+    const details = sessionStorage.getItem("user-details")
+
+    if (details === null) {
+      return null
+    }
+
+    const parsedDetails = JSON.parse(details)
+    this.setUserDetails(parsedDetails)
+    return parsedDetails
   }
 }

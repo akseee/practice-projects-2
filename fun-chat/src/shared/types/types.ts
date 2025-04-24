@@ -13,7 +13,27 @@ export type TUser = {
   isLogined: boolean
 }
 
-export type WSTypes = "USER_LOGIN" | "USER_LOGOUT" | "ERROR" | "USER_ACTIVE" | "USER_INACTIVE"
+export type TMessage = {
+  id: string
+  from: string
+  to: string
+  text: string
+  datetime: number
+  status: {
+    isDelivered: boolean
+    isReaded: boolean
+    isEdited: boolean
+  }
+}
+
+export type WSTypes =
+  | "USER_LOGIN"
+  | "USER_LOGOUT"
+  | "ERROR"
+  | "USER_ACTIVE"
+  | "USER_INACTIVE"
+  | "MSG_FROM_USER"
+  | "MSG_SEND"
 
 export type TUserAuthRequest = {
   user: {
@@ -38,6 +58,25 @@ export type TAllUnauthorizedUsersResponse = {
   users: TUser[]
 }
 
+export type TSendMessageRequest = {
+  message: {
+    to: string
+    text: string
+  }
+}
+export type TSendMessageResponse = {
+  message: TMessage
+}
+
+export type TFetchMessageHistoryRequest = {
+  user: {
+    login: string
+  }
+}
+export type TFetchMessageHistoryResponse = {
+  messages: TMessage[]
+}
+
 export type TErrorResponse = {
   error: string
 }
@@ -59,6 +98,15 @@ export type UserLoginResponse = WSResponseBase<"USER_LOGIN", TUserAuthResponse>
 
 export type UserLogoutRequest = WSRequestBase<"USER_LOGOUT", TUserAuthRequest>
 export type UserLogoutResponse = WSResponseBase<"USER_LOGOUT", TUserAuthResponse>
+
+export type SendMessageRequest = WSResponseBase<"MSG_SEND", TSendMessageRequest>
+export type SendMessageResponse = WSResponseBase<"MSG_SEND", TSendMessageResponse>
+
+export type FetchMessageHistoryRequest = WSRequestBase<"MSG_FROM_USER", TFetchMessageHistoryRequest>
+export type FetchMessageHistoryResponse = WSRequestBase<
+  "MSG_FROM_USER",
+  TFetchMessageHistoryResponse
+>
 
 export type AllAuthenticatedUsersRequest = WSRequestBase<
   "USER_ACTIVE",
@@ -84,6 +132,8 @@ export type WSRequest =
   | UserLogoutRequest
   | AllAuthenticatedUsersRequest
   | AllUnauthorizedUsersRequest
+  | SendMessageRequest
+  | FetchMessageHistoryRequest
 
 export type WSResponse =
   | UserLoginResponse
@@ -91,6 +141,8 @@ export type WSResponse =
   | ErrorMessage
   | AllAuthenticatedUsersResponse
   | AllUnauthorizedUsersResponse
+  | SendMessageResponse
+  | FetchMessageHistoryResponse
 
 export type WSMessage = WSRequest | WSResponse
 
