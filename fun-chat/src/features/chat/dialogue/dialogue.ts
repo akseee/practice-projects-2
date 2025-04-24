@@ -1,44 +1,19 @@
 import MessageField from "../../../components/message-field/message-field"
 import { type TMessage } from "../../../shared/types/types"
 import BaseComponent from "../../../shared/view/base-component"
-
-const mock1: TMessage = {
-  id: "123123123",
-  from: "my g",
-  to: "attaxe",
-  text: " swear, my cat understands every word I say. swear, my cat understands every word I say. swear, my cat understands every word I say.",
-  datetime: 1745500672725,
-  status: {
-    isDelivered: false,
-    isReaded: false,
-    isEdited: false,
-  },
-}
-
-const mock2: TMessage = {
-  id: "123123123",
-  from: "attaxe",
-  to: "my g",
-  text: "If life gives you lemons, make lemonade… then wonder who gave you life lemons.",
-  datetime: 1745500672725,
-  status: {
-    isDelivered: false,
-    isReaded: false,
-    isEdited: false,
-  },
-}
+import MessageInput from "../message-input/message-input"
 
 export default class Dialogue extends BaseComponent {
-  public input: BaseComponent
+  public input: MessageInput
   public messages: BaseComponent
   constructor() {
     super({ tag: "div", classNames: ["chat__dialogue"] })
 
-    this.messages = new BaseComponent({ tag: "div", classNames: ["messages-wrapper"] })
-    this.input = new BaseComponent({ tag: "div", classNames: ["input-wrapper"] })
-    this.addMessage(mock1, true)
-    this.addMessage(mock2, false)
+    this.messages = new BaseComponent({ tag: "ul", classNames: ["messages-wrapper"] })
+    this.input = new MessageInput()
+
     this.appendChildrenComponents([this.messages, this.input])
+    this.setDefaultChat()
   }
 
   public setEmptyChat(): void {
@@ -50,13 +25,35 @@ export default class Dialogue extends BaseComponent {
     this.messages.appendChildComponent(text)
   }
 
-  public clearMessages(): void {
-    this.messages.destroyChildren()
+  public setDefaultChat(): void {
+    this.clearMessages()
+
+    const text = new BaseComponent({ tag: "p", classNames: ["empty-chat__text"] })
+    text.setTextContent("click on chat top start a conversation!")
+
+    this.messages.appendChildComponent(text)
+    this.input.disableFields()
+  }
+
+  public async clearMessages(): Promise<void> {
+    setTimeout(() => {
+      this.messages.destroyChildren()
+    }, 0)
   }
 
   public addMessage(message: TMessage, owner: boolean): void {
     const messageElement = new MessageField()
     messageElement.setData(message, owner)
     this.messages.appendChildComponent(messageElement)
+    this.scrollToBottom()
+  }
+
+  public setSendHandler(callback: (text: string) => void): void {
+    this.input.setSendingCallback(callback)
+  }
+
+  public scrollToBottom(): void {
+    const element = this.messages.getNode()
+    element.scrollTop = element.scrollHeight
   }
 }

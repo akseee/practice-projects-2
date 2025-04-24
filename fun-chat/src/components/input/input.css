@@ -25,3 +25,16 @@
   color: inherit;
   opacity: 1;
 }
+
+.input[disabled] {
+  pointer-events: none;
+  background-color: transparent;
+}
+
+.input[disabled]:focus {
+  background-color: transparent;
+}
+
+.input[disabled]:active {
+  background-color: transparent;
+}

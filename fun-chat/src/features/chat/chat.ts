@@ -60,10 +60,16 @@ export default class Chat extends BaseComponent {
 
   public async onUserClick(user: TUser): Promise<void> {
     try {
-      this.chatInfo.setData(user)
       this.dialogue.clearMessages()
       await this.loadMessageHistory(user.login)
-      console.log("hi")
+      this.dialogue.scrollToBottom()
+      this.chatInfo.setData(user)
+
+      this.dialogue.setSendHandler((text: string) => {
+        void this.sendMessage(user.login, text)
+      })
+
+      this.dialogue.input.enableFields()
     } catch (error) {
       console.log("error has occured while loading chat", error)
     }
@@ -72,8 +78,10 @@ export default class Chat extends BaseComponent {
   public async sendMessage(to: string, text: string): Promise<void> {
     try {
       const response = await this.ws.sendMessage(to, text)
+      this.dialogue.scrollToBottom()
+
       if (response.type === "MSG_SEND" && response.payload.message) {
-        this.dialogue.addMessage(response.payload.message, false)
+        this.dialogue.addMessage(response.payload.message, true)
       }
     } catch (error) {
       console.error("Failed to send message:", error)

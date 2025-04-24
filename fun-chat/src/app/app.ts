@@ -77,7 +77,6 @@ export default class App {
       await this.wsService.ready()
       const data = await this.userState.getDetailsFromSessionStorage()
       if (data) {
-        console.log("logging")
         const response = await this.wsService.login(data.login, data.password)
         if (response.type === "ERROR") {
           console.log("error:", response.payload.error)
@@ -135,7 +134,6 @@ export default class App {
           const aboutPage = new AboutPage()
           aboutPage.setNavigation(() => {
             this.router.navigate(EnumPages.LOGIN, false)
-            console.log("looser")
           })
           this.main.setContent(aboutPage)
         },

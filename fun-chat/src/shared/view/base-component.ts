@@ -113,4 +113,10 @@ export default class BaseComponent {
 
     return undefined
   }
+
+  public setValue(value: string): void {
+    if (this.node instanceof HTMLInputElement) {
+      this.node.value = value
+    }
+  }
 }

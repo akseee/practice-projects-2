@@ -1,5 +1,5 @@
 .chat__message-field {
-  min-height: 60px;
+  height: min-content;
   display: grid;
   grid-template-rows: max-content 1fr;
   width: 70%;
@@ -27,6 +27,9 @@
 
 .chat__message-text {
   padding: 0.5em;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  white-space: normal;
   background-color: var(--color-brightening);
 }
 

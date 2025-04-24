@@ -7,7 +7,7 @@ export default class MessageField extends BaseComponent {
   public messageText
   public messageExtra
   constructor() {
-    super({ tag: "div", classNames: ["chat__message-field"] })
+    super({ tag: "li", classNames: ["chat__message-field"] })
 
     this.messageData = new BaseComponent({ tag: "div", classNames: ["chat__message-data"] })
     this.messageText = new BaseComponent({ tag: "p", classNames: ["chat__message-text"] })
