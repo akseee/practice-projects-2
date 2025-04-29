@@ -16,7 +16,7 @@
   background-color: var(--hover);
 }
 
-.chat__user-item.active .chat__user-item-wrapper {
+.chat__user-item-wrapper.active {
   background-color: #e5ffd4;
 }
 

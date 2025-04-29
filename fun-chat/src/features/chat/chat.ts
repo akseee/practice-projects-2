@@ -79,6 +79,7 @@ export default class Chat extends BaseComponent {
       this.dialogue.addMessage(message, false)
     } else {
       getNotifications().showNotification(`New message from ${message.from}`, "message")
+      this.userList.setNewMessagesFromUser(data.payload.message.from)
     }
   }
 

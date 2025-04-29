@@ -14,16 +14,23 @@ export default class UserList extends BaseComponent {
 
     children.forEach((child) => {
       const login = child.getNode().dataset.login
-      if (user && login === user.login) {
-        child.addClass("active")
-      } else {
-        child.removeClass("active")
+      if (user && login === user.login && child instanceof UserItem) {
+        child.setActiveChat(true)
+        child.resetUnreadCount()
+      } else if (user && login !== user.login && child instanceof UserItem) {
+        child.setActiveChat(false)
       }
     })
   }
 
-  public setNewMessagesFromUser(): void {
-    console.log("new messages")
+  public setNewMessagesFromUser(from: string): void {
+    const children = this.getChildren()
+    children.find((child) => {
+      const login = child.getNode().dataset.login
+      if (login === from && child instanceof UserItem) {
+        child.incrementUnreadCount()
+      }
+    })
   }
 
   public setUsers(
@@ -43,6 +50,7 @@ export default class UserList extends BaseComponent {
       })
 
       this.appendChildComponent(userItem)
+      console.log(this.getChildren())
     })
   }
 }
