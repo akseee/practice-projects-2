@@ -3,7 +3,7 @@
   width: 100%;
   box-shadow: var(--box-shadow);
   border-radius: var(--border-radius);
-  background-color: var(--color-cream-lighter);
+  background-color: #e5ffd4;
   display: grid;
   grid-template-rows: 1fr 70px;
   height: 100%;
