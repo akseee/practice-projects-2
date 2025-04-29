@@ -1,4 +1,10 @@
-import { type TMessage, type TCurrentUser, type TUser } from "../../shared/types/types"
+import {
+  type TMessage,
+  type TCurrentUser,
+  type TUser,
+  type UserExternalLoginResponse,
+  type UserExternalLogoutResponse,
+} from "../../shared/types/types"
 import type UserState from "../../services/user-state-service"
 import type WebSocketService from "../../services/websocket-service"
 import BaseComponent from "../../shared/view/base-component"
@@ -6,6 +12,7 @@ import ChatInfo from "./chat-info/chat-info"
 import Dialogue from "./dialogue/dialogue"
 import UserList from "./user-list/user-list"
 import type ChatsState from "../../services/chats-state-service"
+import { getNotifications } from "../../components/notification/notification-singleton"
 
 export default class Chat extends BaseComponent {
   protected userList: UserList
@@ -27,6 +34,9 @@ export default class Chat extends BaseComponent {
     this.chats = chatsState
     this.ws = ws
 
+    this.ws.on("USER_EXTERNAL_LOGIN", this.handleExternalLogin.bind(this))
+    this.ws.on("USER_EXTERNAL_LOGOUT", this.handleExternalLogout.bind(this))
+
     this.userList = new UserList()
     this.dialogue = new Dialogue()
     this.chatInfo = new ChatInfo()
@@ -36,6 +46,23 @@ export default class Chat extends BaseComponent {
 
     this.appendChildrenComponents([this.userList, this.dialogue, this.chatInfo])
     this.loadUsers()
+  }
+
+  private handleExternalLogin(message: UserExternalLoginResponse): void {
+    const { login, isLogined } = message.payload.user
+    if (isLogined) {
+      getNotifications().showNotification(`User ${login} is online now`, "user")
+      this.loadUsers()
+    }
+  }
+
+  private handleExternalLogout(message: UserExternalLogoutResponse): void {
+    const { login, isLogined } = message.payload.user
+    if (!isLogined) {
+      getNotifications().showNotification(`User ${login} is offline now`, "user")
+
+      this.loadUsers()
+    }
   }
 
   public async loadUsers(): Promise<void> {

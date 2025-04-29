@@ -40,6 +40,8 @@ export type WSTypes =
   | "USER_INACTIVE"
   | "MSG_FROM_USER"
   | "MSG_SEND"
+  | "USER_EXTERNAL_LOGIN"
+  | "USER_EXTERNAL_LOGOUT"
 
 export type TUserAuthRequest = {
   user: {
@@ -47,6 +49,7 @@ export type TUserAuthRequest = {
     password: string
   }
 }
+
 export type TUserAuthResponse = {
   user: {
     login: string
@@ -85,6 +88,13 @@ export type TFetchMessageHistoryResponse = {
 
 export type TErrorResponse = {
   error: string
+}
+
+export type TUserExternalAuthResponse = {
+  user: {
+    login: string
+    isLogined: boolean
+  }
 }
 
 export interface WSRequestBase<T extends WSTypes, P> {
@@ -131,6 +141,17 @@ export type AllUnauthorizedUsersResponse = WSResponseBase<
   "USER_INACTIVE",
   TAllUnauthorizedUsersResponse
 >
+
+export type UserExternalLoginResponse = WSResponseBase<
+  "USER_EXTERNAL_LOGIN",
+  TUserExternalAuthResponse
+>
+
+export type UserExternalLogoutResponse = WSResponseBase<
+  "USER_EXTERNAL_LOGOUT",
+  TUserExternalAuthResponse
+>
+
 export type ErrorMessage = WSResponseBase<"ERROR", TErrorResponse>
 
 export type WSRequest =
@@ -149,6 +170,8 @@ export type WSResponse =
   | AllUnauthorizedUsersResponse
   | SendMessageResponse
   | FetchMessageHistoryResponse
+  | UserExternalLoginResponse
+  | UserExternalLogoutResponse
 
 export type WSMessage = WSRequest | WSResponse
 

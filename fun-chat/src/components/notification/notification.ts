@@ -5,12 +5,21 @@ export default class Notifications extends BaseComponent {
     super({ tag: "div", classNames: ["notifications"] })
   }
 
-  public addNotification(text: string): void {
+  public addNotification(text: string, type: string): void {
     const notification = new BaseComponent({ tag: "div", classNames: ["notification"] })
     const content = new BaseComponent({ tag: "p", classNames: ["notification__text"] })
 
     content.setTextContent(text)
+
     notification.appendChildComponent(content)
+
+    if (type === "error") {
+      notification.addClass("error")
+      notification.removeClass("user")
+    } else {
+      notification.removeClass("error")
+      notification.addClass("user")
+    }
     this.appendChildComponent(notification)
 
     this.hideNotification(notification)
@@ -22,11 +31,12 @@ export default class Notifications extends BaseComponent {
     }
   }
 
-  public showNotification(text: string): void {
+  public showNotification(text: string, type: string): void {
     if (!document.body.contains(this.getNode())) {
       document.querySelector(".body")!.append(this.getNode())
     }
-    this.addNotification(text)
+
+    this.addNotification(text, type)
   }
 
   public hideNotification(element: BaseComponent): void {

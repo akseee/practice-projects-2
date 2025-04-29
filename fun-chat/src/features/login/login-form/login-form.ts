@@ -70,7 +70,7 @@ export default class LoginForm extends BaseComponent {
       const response = await this.ws.login(login, password)
 
       if (response.type === "ERROR") {
-        getNotifications().showNotification(response.payload.error)
+        getNotifications().showNotification(response.payload.error, "error")
         return
       }
 

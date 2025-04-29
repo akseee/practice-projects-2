@@ -57,7 +57,7 @@ export default class App {
       if (user) {
         const response = await this.wsService.logout(user.login, user.password)
         if (response.type === "ERROR") {
-          getNotifications().showNotification(response.payload.error)
+          getNotifications().showNotification(response.payload.error, "error")
           return
         }
 
@@ -80,7 +80,7 @@ export default class App {
       if (data) {
         const response = await this.wsService.login(data.login, data.password)
         if (response.type === "ERROR") {
-          getNotifications().showNotification(response.payload.error)
+          getNotifications().showNotification(response.payload.error, "error")
           return
         }
 

@@ -53,6 +53,10 @@ export default class WebSocketService {
     })
   }
 
+  public close(): void {
+    this.socket.close()
+  }
+
   private sendRequest<T extends WSRequest, R extends WSResponse>(
     type: T["type"],
     payload: T["payload"],
@@ -130,6 +134,10 @@ export default class WebSocketService {
     })
   }
 
+  public on<T extends keyof WSHandlers>(type: T, handler: WSHandlers[T]): void {
+    this.handlers[type] = handler
+  }
+
   public login(login: string, password: string): Promise<UserLoginResponse | ErrorMessage> {
     return this.sendRequest<UserLoginRequest, UserLoginResponse>("USER_LOGIN", {
       user: { login, password },
@@ -169,9 +177,5 @@ export default class WebSocketService {
         user: { login },
       },
     )
-  }
-
-  public close(): void {
-    this.socket.close()
   }
 }

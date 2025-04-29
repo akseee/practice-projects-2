@@ -12,6 +12,7 @@ export default class UserList extends BaseComponent {
     current: TCurrentUser | null,
     onClick: (user: TUser) => void,
   ): void {
+    this.destroyChildren()
     list.forEach((user) => {
       if (current !== null && current.login === user.login) return
       const userItem = new UserItem()

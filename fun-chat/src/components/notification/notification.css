@@ -9,11 +9,22 @@
 }
 
 .notification {
-  background-color: var(--error);
-  color: white;
   font-weight: bold;
   border-radius: var(--border-radius);
+  border: 1px solid transparent;
   padding: 1em 3em;
   min-height: 50px;
   width: fit-content;
+}
+
+.error {
+  background-color: var(--error);
+  border-color: var(--color-white);
+  color: var(--color-white);
+}
+
+.user {
+  color: var(--color-celadon-darker);
+  background-color: var(--color-cream-lighter);
+  border-color: var(--color-celadon-darker);
 }

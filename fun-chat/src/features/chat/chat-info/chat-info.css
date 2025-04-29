@@ -3,7 +3,7 @@
   width: 100%;
   height: 100%;
   box-shadow: var(--box-shadow);
-  background-color: var(--color-cream-lighter);
+  background-color: #e5ffd4;
   border-radius: var(--border-radius);
 
   display: flex;
