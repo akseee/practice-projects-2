@@ -4,6 +4,7 @@ import {
   type TUser,
   type UserExternalLoginResponse,
   type UserExternalLogoutResponse,
+  RecieveMessageResponse,
 } from "../../shared/types/types"
 import type UserState from "../../services/user-state-service"
 import type WebSocketService from "../../services/websocket-service"
@@ -36,6 +37,11 @@ export default class Chat extends BaseComponent {
 
     this.ws.on("USER_EXTERNAL_LOGIN", this.handleExternalLogin.bind(this))
     this.ws.on("USER_EXTERNAL_LOGOUT", this.handleExternalLogout.bind(this))
+    this.ws.on("MSG_SEND", (data) => {
+      if (data.type === "MSG_SEND" && "payload" in data && "message" in data.payload) {
+        this.handleRecieveMessage(data as RecieveMessageResponse)
+      }
+    })
 
     this.userList = new UserList()
     this.dialogue = new Dialogue()
@@ -48,21 +54,26 @@ export default class Chat extends BaseComponent {
     this.loadUsers()
   }
 
-  private handleExternalLogin(message: UserExternalLoginResponse): void {
-    const { login, isLogined } = message.payload.user
+  private handleExternalLogin(data: UserExternalLoginResponse): void {
+    const { login, isLogined } = data.payload.user
     if (isLogined) {
       getNotifications().showNotification(`User ${login} is online now`, "user")
       this.loadUsers()
     }
   }
 
-  private handleExternalLogout(message: UserExternalLogoutResponse): void {
-    const { login, isLogined } = message.payload.user
+  private handleExternalLogout(data: UserExternalLogoutResponse): void {
+    const { login, isLogined } = data.payload.user
     if (!isLogined) {
       getNotifications().showNotification(`User ${login} is offline now`, "user")
 
       this.loadUsers()
     }
+  }
+
+  private handleRecieveMessage(data: RecieveMessageResponse): void {
+    const message = data.payload.message
+    this.dialogue.addMessage(message, false)
   }
 
   public async loadUsers(): Promise<void> {

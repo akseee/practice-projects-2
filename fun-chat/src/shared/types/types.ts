@@ -97,6 +97,10 @@ export type TUserExternalAuthResponse = {
   }
 }
 
+export type TRecieveMessageResponse = {
+  message: TMessage
+}
+
 export interface WSRequestBase<T extends WSTypes, P> {
   id: string
   type: T
@@ -152,6 +156,8 @@ export type UserExternalLogoutResponse = WSResponseBase<
   TUserExternalAuthResponse
 >
 
+export type RecieveMessageResponse = WSResponseBase<"MSG_SEND", TRecieveMessageResponse>
+
 export type ErrorMessage = WSResponseBase<"ERROR", TErrorResponse>
 
 export type WSRequest =
@@ -172,6 +178,7 @@ export type WSResponse =
   | FetchMessageHistoryResponse
   | UserExternalLoginResponse
   | UserExternalLogoutResponse
+  | RecieveMessageResponse
 
 export type WSMessage = WSRequest | WSResponse
 
