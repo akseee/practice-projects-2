@@ -1,5 +1,5 @@
-import { type TUser } from "../../shared/types/types"
-import BaseComponent from "../../shared/view/base-component"
+import { type TUser } from "../../../shared/types/types"
+import BaseComponent from "../../../shared/view/base-component"
 
 export default class UserItem extends BaseComponent {
   public wrapper: BaseComponent

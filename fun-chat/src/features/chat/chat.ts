@@ -1,4 +1,3 @@
-import { TUser } from "./../../shared/types/types"
 import {
   type TMessage,
   type TCurrentUser,

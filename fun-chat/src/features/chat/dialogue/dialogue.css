@@ -6,7 +6,8 @@
   background-color: #e5ffd4;
   display: grid;
   grid-template-rows: 1fr 70px;
-  height: 100%;
+  max-height: 100%;
+  min-height: 100%;
 }
 
 .messages-wrapper {

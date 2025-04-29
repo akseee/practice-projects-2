@@ -6,7 +6,7 @@
   flex-direction: column;
   gap: 1em;
 
-  overflow-y: scroll;
+  overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: transparent transparent;
+  scrollbar-color: var(--color-celadon-darker) transparent;
 }

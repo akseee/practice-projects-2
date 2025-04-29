@@ -11,7 +11,6 @@
 @import url("../components/button/button.css");
 @import url("../components/input/input.css");
 @import url("../components/error-span/error-span.css");
-@import url("../components/user-item/user-item.css");
 @import url("../components/message-field/message-field.css");
 @import url("../components/notification/notification.css");
 
@@ -22,3 +21,4 @@
 @import url("../features/chat/dialogue/dialogue.css");
 @import url("../features/chat/chat-info/chat-info.css");
 @import url("../features/chat/message-input/message-input.css");
+@import url("../features/chat/user-item/user-item.css");

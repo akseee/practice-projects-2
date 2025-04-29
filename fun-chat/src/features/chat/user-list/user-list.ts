@@ -1,6 +1,6 @@
 import { type TCurrentUser, type TUser } from "../../../shared/types/types"
 import BaseComponent from "../../../shared/view/base-component"
-import UserItem from "../../../components/user-item/user-item"
+import UserItem from "../user-item/user-item"
 
 export default class UserList extends BaseComponent {
   public activeChat: null | TUser = null

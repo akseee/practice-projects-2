@@ -3,7 +3,7 @@
   grid-template-columns: 1fr 2fr;
   grid-template-rows: max-content 1fr;
   gap: 1em;
-  min-height: 700px;
+  max-height: 70svh;
   align-items: center;
   grid-template-areas:
     "list info"
