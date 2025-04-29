@@ -1,10 +1,11 @@
+import { TUser } from "./../../shared/types/types"
 import {
   type TMessage,
   type TCurrentUser,
   type TUser,
   type UserExternalLoginResponse,
   type UserExternalLogoutResponse,
-  RecieveMessageResponse,
+  type RecieveMessageResponse,
 } from "../../shared/types/types"
 import type UserState from "../../services/user-state-service"
 import type WebSocketService from "../../services/websocket-service"
@@ -24,6 +25,7 @@ export default class Chat extends BaseComponent {
   protected onClick
 
   protected user: TCurrentUser | null
+  public activeChat: null | TUser = null
   constructor(
     protected ws: WebSocketService,
     protected userState: UserState,
@@ -73,7 +75,11 @@ export default class Chat extends BaseComponent {
 
   private handleRecieveMessage(data: RecieveMessageResponse): void {
     const message = data.payload.message
-    this.dialogue.addMessage(message, false)
+    if (this.activeChat?.login == message.from) {
+      this.dialogue.addMessage(message, false)
+    } else {
+      getNotifications().showNotification(`New message from ${message.from}`, "message")
+    }
   }
 
   public async loadUsers(): Promise<void> {
@@ -99,13 +105,18 @@ export default class Chat extends BaseComponent {
   public async onUserClick(user: TUser): Promise<void> {
     try {
       this.dialogue.clearMessages()
-      await this.loadMessageHistory(user.login)
       this.dialogue.scrollToBottom()
+
+      await this.loadMessageHistory(user.login)
+
       this.chatInfo.setData(user)
+      this.activeChat = user
 
       this.dialogue.setSendHandler((text: string) => {
         void this.sendMessage(user.login, text)
       })
+
+      this.userList.setActiveChat(user)
 
       this.dialogue.input.enableFields()
     } catch (error) {

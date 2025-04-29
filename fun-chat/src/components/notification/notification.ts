@@ -15,11 +15,12 @@ export default class Notifications extends BaseComponent {
 
     if (type === "error") {
       notification.addClass("error")
-      notification.removeClass("user")
-    } else {
-      notification.removeClass("error")
+    } else if (type === "user") {
       notification.addClass("user")
+    } else {
+      notification.addClass("message")
     }
+
     this.appendChildComponent(notification)
 
     this.hideNotification(notification)

@@ -26,7 +26,7 @@ export default class UserItem extends BaseComponent {
     }
 
     this.setStatus(user.isLogined)
-    this.setAttribute("dataset-login", user.login)
+    this.getNode().dataset.login = user.login
   }
 
   private setLogin(login: string): void {
@@ -47,14 +47,6 @@ export default class UserItem extends BaseComponent {
     }
 
     this.wrapper.appendChildComponent(icon)
-  }
-
-  public setActiveChat(active: boolean): void {
-    if (active) {
-      this.wrapper.addClass("active")
-    } else {
-      this.wrapper.removeClass("active")
-    }
   }
 
   public setNewMessages(amount: number = 0): void {

@@ -24,10 +24,11 @@ export default class MessageField extends BaseComponent {
     this.setTime(message.datetime)
 
     this.setMessageText(message.text)
+    this.setStatus(message.status)
 
     if (owner) {
       this.appendChildComponent(this.messageExtra)
-      this.setStatus(message.status)
+      // this.setStatus(message.status)
       this.setControls()
     }
   }
