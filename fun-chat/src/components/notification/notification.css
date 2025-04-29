@@ -1,0 +1,19 @@
+.notifications {
+  position: absolute;
+  bottom: 100px;
+  right: 2em;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.notification {
+  background-color: var(--error);
+  color: white;
+  font-weight: bold;
+  border-radius: var(--border-radius);
+  padding: 1em 3em;
+  min-height: 50px;
+  width: fit-content;
+}

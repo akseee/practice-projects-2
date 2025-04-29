@@ -18,4 +18,5 @@
   --online: var(--color-celadon-lighter);
   --offline: #ff00003f;
   --hover: #ff99004d;
+  --error: #ff660083;
 }

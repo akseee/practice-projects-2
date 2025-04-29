@@ -4,15 +4,14 @@ import Button from "../../../components/button/button"
 import type UserState from "../../../services/user-state-service"
 import type WebSocketService from "../../../services/websocket-service"
 import { EnumPages } from "../../../shared/router/routes"
-import ErrorSpan from "../../../components/error-span/error-span"
 import type Router from "../../../shared/router/routing"
+import { getNotifications } from "../../../components/notification/notification-singleton"
 
 export default class LoginForm extends BaseComponent {
   public loginInput: Input
   public passwordInput: Input
   public loginButton: Button
 
-  public errorSpan: ErrorSpan
   public form: BaseComponent
 
   public router: Router
@@ -36,24 +35,15 @@ export default class LoginForm extends BaseComponent {
     this.loginButton.addClass("login__button")
     this.loginButton.disable()
 
-    this.errorSpan = new ErrorSpan()
-
     this.loginInput.addListener("input", () => {
-      this.errorSpan.setError(false, "")
       this.toggleLoginButton()
     })
 
     this.passwordInput.addListener("input", () => {
-      this.errorSpan.setError(false, "")
       this.toggleLoginButton()
     })
 
-    this.form.appendChildrenComponents([
-      this.loginInput,
-      this.passwordInput,
-      this.loginButton,
-      this.errorSpan,
-    ])
+    this.form.appendChildrenComponents([this.loginInput, this.passwordInput, this.loginButton])
 
     this.form.addListener("submit", this.handleSubmit.bind(this))
     this.appendChildComponent(this.form)
@@ -80,7 +70,7 @@ export default class LoginForm extends BaseComponent {
       const response = await this.ws.login(login, password)
 
       if (response.type === "ERROR") {
-        this.errorSpan.setError(true, response.payload.error)
+        getNotifications().showNotification(response.payload.error)
         return
       }
 

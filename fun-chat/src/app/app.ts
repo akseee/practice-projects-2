@@ -1,6 +1,7 @@
 import Footer from "../components/footer/footer"
 import Header from "../components/header/header"
 import MainLayout from "../components/layout/main-layout"
+import { getNotifications } from "../components/notification/notification-singleton"
 import AboutPage from "../pages/about-page"
 import ChatsPage from "../pages/chats-page"
 import LoginPage from "../pages/login-page"
@@ -56,7 +57,7 @@ export default class App {
       if (user) {
         const response = await this.wsService.logout(user.login, user.password)
         if (response.type === "ERROR") {
-          console.log("Logout error:", response.payload.error)
+          getNotifications().showNotification(response.payload.error)
           return
         }
 
@@ -79,7 +80,7 @@ export default class App {
       if (data) {
         const response = await this.wsService.login(data.login, data.password)
         if (response.type === "ERROR") {
-          console.log("error:", response.payload.error)
+          getNotifications().showNotification(response.payload.error)
           return
         }
 

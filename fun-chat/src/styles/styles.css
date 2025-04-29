@@ -13,6 +13,7 @@
 @import url("../components/error-span/error-span.css");
 @import url("../components/user-item/user-item.css");
 @import url("../components/message-field/message-field.css");
+@import url("../components/notification/notification.css");
 
 @import url("../features/login/login-form/login-form.css");
 @import url("../features/chat/chat.css");
